@@ -6,7 +6,7 @@
 ![image](https://github.com/kevinandresbenitez/Taller_uml/assets/73619016/e41108ad-8043-4d72-8cc9-8ee291c79fcc)  <br> 
 
 1)Clonar  <br>
-`git clone https://github.com/kevinandresbenitez/Taller_uml`<br>
+`git clone https://github.com/kevinandresbenitez/Taller_SpringBoot`<br>
 2)Estaras situado en rama master, crea una rama development<br>
 `git branch development`<br>
 3)Situate en la rama development<br>
