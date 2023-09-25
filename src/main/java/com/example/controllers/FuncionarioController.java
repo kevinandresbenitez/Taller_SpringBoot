@@ -9,17 +9,19 @@ package com.example.controllers;
  * @author kevin
  */
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
-@RestController
-@RequestMapping("/funcionario")
+@Controller
+@RequestMapping("/funcionarios")
 public class FuncionarioController {
     
-    @GetMapping("/main")
-    public String main(){
-        return String.format("Estas en la pagina de funcionarios");
+    @GetMapping("/")
+    public ModelAndView index(){
+        //Cargando pagina de resources/templates/funcionario/index.html
+        return new ModelAndView("funcionario/index");
     }
 }

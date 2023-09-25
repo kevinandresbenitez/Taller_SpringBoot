@@ -28,6 +28,7 @@ dependencies {
         implementation 'org.hibernate.orm:hibernate-community-dialects:6.3.1.Final'
         implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.4'
 }
 
 tasks.named('test') {
