@@ -20,6 +20,7 @@ public class FuncionarioService {
     }
     
     public void crearFuncionario(Funcionario fun1){
+
         this.funcionarioRepository.save(fun1);
     }
     

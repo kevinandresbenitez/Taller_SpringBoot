@@ -6,20 +6,14 @@ package com.example.models;
 import java.util.List;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
  * @author kevin
  */
 @Entity
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Funcionario extends Persona implements Serializable {
 
@@ -29,7 +23,7 @@ public class Funcionario extends Persona implements Serializable {
     private Long id;
     @Column(name = "contraseña")
     private String contraseña;
-    @OneToMany(mappedBy = "funcionario")
+    @ManyToMany(mappedBy = "funcionario")
     private List<Roles> roles;
 
     public String getContraseña() {
@@ -47,7 +41,7 @@ public class Funcionario extends Persona implements Serializable {
     public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
-    
+
     public Long getId() {
         return id;
     }
