@@ -25,6 +25,7 @@ public class FuncionarioService {
     }
     
     public List<Funcionario> obtenerFuncionarios(){
+
         return this.funcionarioRepository.findAll();
     }
 
