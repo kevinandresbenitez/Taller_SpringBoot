@@ -5,13 +5,16 @@
 package com.example.models;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Column;
-
+import lombok.*;
 /**
  *
  * @author kevin
  */
 
-
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@Getter
+@ToString
 @MappedSuperclass
 public abstract class Persona{
     
@@ -31,72 +34,4 @@ public abstract class Persona{
     private int telefonoFijo;
     @Column(name = "telefonoCelular")
     private int telefonoCelular;
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
-    }
-
-    public int getTelefonoFijo() {
-        return telefonoFijo;
-    }
-
-    public void setTelefonoFijo(int telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
-    }
-
-    public int getTelefonoCelular() {
-        return telefonoCelular;
-    }
-
-    public void setTelefonoCelular(int telefonoCelular) {
-        this.telefonoCelular = telefonoCelular;
-    }
-
-    
-    
-    
 }

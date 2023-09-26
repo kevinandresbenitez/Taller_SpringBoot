@@ -29,6 +29,8 @@ dependencies {
         implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.4'
+        implementation "io.freefair.gradle:lombok-plugin:8.3"
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
 }
 
 tasks.named('test') {
