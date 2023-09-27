@@ -22,15 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @Getter
 @RequestMapping("/funcionario")
 public class FuncionarioController {
+    @Autowired
     private FuncionarioService funcionarioServices;
+    @Autowired
     private RolService rolServices;
     
-    @Autowired
-    public void FuncionarioController(FuncionarioService funcionarioServices,RolService rolServices){
-        this.funcionarioServices = funcionarioServices;
-        this.rolServices = rolServices;
-    }
-    
+        
     @GetMapping("/")
     public String list(Model modelo){
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
