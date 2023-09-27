@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Pagina Principal de funcionarios</div>
+        
+        <a href="/">Volver</a>
+        <a href="/funcionario/crear">Ir a crear funcionarios</a>
+        <div>Si hay funcionarios Se listaran Listar</div>
+        <li th:each="funcionario : ${funcionarios}">
+            <strong>Nombre Del funcionario:</strong><span th:text="${funcionario.getNombre()}"></span>
+            <strong>Roles :</strong>
+            <div th:each="rol : ${funcionario.getRoles()}">
+                <p th:text="${rol}"></p>
+            </div>
+        </li>
+        
+        
+    </body>
+</html>
