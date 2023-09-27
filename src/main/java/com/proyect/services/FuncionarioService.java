@@ -22,13 +22,8 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class FuncionarioService{
-    private final FuncionarioRepositori funcionarioRepositori;
-
     @Autowired
-    public FuncionarioService(FuncionarioRepositori funcionarioRepositori){
-        this.funcionarioRepositori = funcionarioRepositori;
-    }
-      
+    private FuncionarioRepositori funcionarioRepositori;
     public void crearFuncionario(Funcionario funcionario){
         this.funcionarioRepositori.save(funcionario);
     }
