@@ -31,13 +31,7 @@ public class FuncionarioController {
     private RolService rolServices;
     @Autowired
     private SectorService sectorService;
-    
-    @Autowired
-    public void FuncionarioController(FuncionarioService funcionarioServices,RolService rolServices){
-        this.funcionarioServices = funcionarioServices;
-        this.rolServices = rolServices;
-    }
-    
+
     @GetMapping("/")
     public String list(Model modelo){
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
