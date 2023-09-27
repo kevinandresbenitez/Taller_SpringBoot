@@ -6,6 +6,7 @@ package com.proyect.controllers;
 import com.proyect.models.Funcionario;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
+import com.proyect.services.SectorService;
 import java.util.List;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @Getter
 @RequestMapping("/funcionario")
 public class FuncionarioController {
-    private FuncionarioService funcionarioServices;
-    private RolService rolServices;
-    
     @Autowired
-    public void FuncionarioController(FuncionarioService funcionarioServices,RolService rolServices){
-        this.funcionarioServices = funcionarioServices;
-        this.rolServices = rolServices;
-    }
+    private FuncionarioService funcionarioServices;
+    @Autowired
+    private RolService rolServices;
+    @Autowired
+    private SectorService sectorService;
     
+        
     @GetMapping("/")
     public String list(Model modelo){
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
