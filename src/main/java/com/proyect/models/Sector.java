@@ -13,9 +13,15 @@ public class Sector {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name="secto_trabajo")
+    @Column(name="sector_trabajo")
     private String sectorTrabajo;
     @ManyToOne
     @JoinColumn(name="id_funcionario")
     private Funcionario funcionario;
+    
+    
+    @Override
+    public String toString() {
+        return this.sectorTrabajo;
+    }
 }

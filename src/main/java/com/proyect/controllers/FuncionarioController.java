@@ -6,6 +6,7 @@ package com.proyect.controllers;
 import com.proyect.models.Funcionario;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
+import com.proyect.services.SectorService;
 import java.util.List;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class FuncionarioController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private RolService rolServices;
+    @Autowired
+    private SectorService sectorService;
     
         
     @GetMapping("/")

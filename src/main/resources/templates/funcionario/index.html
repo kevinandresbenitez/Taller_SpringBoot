@@ -14,15 +14,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         
         <a href="/">Volver</a>
         <a href="/funcionario/crear">Ir a crear funcionarios</a>
-        <div>Si hay funcionarios Se listaran Listar</div>
-        <li th:each="funcionario : ${funcionarios}">
-            <strong>Nombre Del funcionario:</strong><span th:text="${funcionario.getNombre()}"></span>
-            <strong>Roles :</strong>
-            <div th:each="rol : ${funcionario.getRoles()}">
-                <p th:text="${rol}"></p>
+        
+        <div>
+            
+            <h2>Funcionarios</h2>
+            <div th:each="funcionario : ${funcionarios}">
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del funcionario:</strong><br>
+                <span th:text="${funcionario.getNombre()}"></span><br>
+                
+                <strong>Roles :</strong>
+                <div th:each="rol : ${funcionario.getRoles()}" th:text="${rol}"></div><br>
+                
+                <strong>Sectores: :</strong><br>
+                <div th:each="sector : ${funcionario.getSectores()}" th:text="${sector}"></div><br>
+                
             </div>
-        </li>
-        
-        
+  
+        </div>  
+
     </body>
 </html>
