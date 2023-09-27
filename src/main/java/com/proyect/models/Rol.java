@@ -18,6 +18,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @Table(name="rol")
+@ToString
 public class Rol implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +29,6 @@ public class Rol implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;
-    
-    
-    @Override
-    public String toString() {
-        return this.rol.name();
-    }
+
+
 }

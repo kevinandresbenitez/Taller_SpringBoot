@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @Getter
 @RequestMapping("/funcionario")
 public class FuncionarioController {
+    @Autowired
     private FuncionarioService funcionarioServices;
+    @Autowired
     private RolService rolServices;
     
     @Autowired

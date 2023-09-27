@@ -11,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProyectApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(ProyectApplication.class, args);
+
     }
     
     @GetMapping("/")

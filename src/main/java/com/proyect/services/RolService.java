@@ -19,13 +19,8 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class RolService{
-    private final RolRepositori rolRepositori;
-
     @Autowired
-    public RolService(RolRepositori rolRepositori){
-        this.rolRepositori = rolRepositori;
-    }
-    
+    private RolRepositori rolRepositori;
     public List<Rol> listarRoles(){
         return this.rolRepositori.findAll();
     }
