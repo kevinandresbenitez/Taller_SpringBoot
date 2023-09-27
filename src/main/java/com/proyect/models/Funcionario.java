@@ -27,6 +27,6 @@ public class Funcionario extends Persona implements Serializable {
     private String contraseña;
     @OneToMany(mappedBy = "funcionario")
     private List<Rol> roles;
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "funcionario")
     private List<Sector> sectores;
 }
