@@ -33,4 +33,8 @@ public class FuncionarioService{
     public List<Funcionario> listarFuncionarios(){
         return this.funcionarioRepositori.findAll();
     }
+    
+    public Optional<Funcionario> obtenerFuncionarioPorId(Long id){
+        return this.funcionarioRepositori.findById(id);
+    }
 }
