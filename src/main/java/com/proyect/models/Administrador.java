@@ -1,22 +1,20 @@
 package com.proyect.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Administrador extends Funcionario{
+@Table(name="administrador")
+public class Administrador{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private Long id_funcionario;
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario")
+    private Funcionario funcionario;
 }
