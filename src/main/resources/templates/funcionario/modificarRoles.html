@@ -11,5 +11,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <div>Aca pongo un formulario para modificar los roles de este funcionario</div>
+        <strong>Nombre funcionario<strong/>
+        <p th:text="${funcionario.getNombre()}"></p>
+        <form th:action="@{/funcionario/modificar/roles/{id}(id=${funcionario.getId()})}" method="post" >
+            <!-- Enumeracion-->
+            <label  th:each="rol:${roles}" >
+                <p th:text="${rol}"></p>
+                <input type="checkbox" th:value="${rol}" name="rol" />
+            </label>
+            <!-- Opcion extra para quitar roles-->
+                
+            <input type="submit" value="Modificar Roles"></input>
+        </form>
     </body>
 </html>
