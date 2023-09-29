@@ -4,6 +4,7 @@
  */
 package com.proyect.repositories;
 import com.proyect.models.Rol;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RolRepositori extends JpaRepository<Rol, Long> {
-    
+    List<Rol> findByFuncionarioId(Long funcionarioId);
 }
