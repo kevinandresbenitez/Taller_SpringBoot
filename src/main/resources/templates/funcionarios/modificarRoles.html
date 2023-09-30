@@ -13,7 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div>Aca pongo un formulario para modificar los roles de este funcionario</div>
         <strong>Nombre funcionario<strong/>
         <p th:text="${funcionario.getNombre()}"></p>
-        <form th:action="@{/funcionario/modificar/roles/{id}(id=${funcionario.getId()})}" method="post" >
+        <form th:action="@{/funcionarios/modificar/roles/{id}(id=${funcionario.getId()})}" method="post" >
             <!-- Enumeracion-->
             <label  th:each="rol:${roles}" >
                 <p th:text="${rol}"></p>
