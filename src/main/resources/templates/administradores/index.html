@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Pagina Principal de Administradores</div>
+        
+        <a href="/">Volver</a>
+        <a href="/administradores/asignarFuncionario">Asignar un funcionario como administrador</a>
+        
+        <div>
+            
+            <h2>Administradores</h2>
+            <div th:each="administrador : ${administradores}">
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del Administrador</strong><br>
+                <span th:text="${administrador.getFuncionario.getNombre()}"></span><br>
+                <strong>ID del administrador</strong><br>
+                <span th:text="${administrador.getId()}"></span><br>
+                <strong>ID del funcionario</strong><br>
+                <span th:text="${administrador.getFuncionario.getId()}"></span><br>
+                
+                <a th:href="@{/administradores/eliminar/{id}(id=${administrador.getId()})}">Eliminar como administrador</a>
+            </div>
+  
+        </div>  
+
+    </body>
+</html>
