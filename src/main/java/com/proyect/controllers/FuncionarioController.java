@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Setter
 @Getter
-@RequestMapping("/funcionario")
+@RequestMapping("/funcionarios")
 public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioServices;
@@ -41,12 +41,12 @@ public class FuncionarioController {
     public String list(Model modelo){
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
         modelo.addAttribute("funcionarios",funcionarios);
-        return "funcionario/index";
+        return "funcionarios/index";
     }
     
     @GetMapping("/crear")
     public String createForm(){        
-        return "funcionario/crear";
+        return "funcionarios/crear";
     }
     
     @PostMapping("/crear")
@@ -55,7 +55,7 @@ public class FuncionarioController {
         funcionario.setNombre(nombre);
         this.funcionarioServices.crearFuncionario(funcionario);
         //Una vez creado redirijo
-        return "redirect:/funcionario/";
+        return "redirect:/funcionarios/";
     }
     
     @GetMapping("/modificar/{id}")
@@ -64,11 +64,11 @@ public class FuncionarioController {
         
         //Si no existe el funcionario redirijir a funcionario
         if(!funcionario.isPresent()){
-            return "redirect:/funcionario/";
+            return "redirect:/funcionarios/";
         }
         
         modelo.addAttribute("funcionario",funcionario.get());
-        return "funcionario/modificar";
+        return "funcionarios/modificar";
     }
     
     @GetMapping("/modificar/roles/{id}")
@@ -77,13 +77,13 @@ public class FuncionarioController {
         
         //Si no existe el funcionario redirijir a funcionario
         if(!funcionario.isPresent()){
-            return "redirect:/funcionario/";
+            return "redirect:/funcionarios/";
         }
         //Envio informacion del usuario y la enum de roles
         
         modelo.addAttribute("roles",TipoRol.values());
         modelo.addAttribute("funcionario",funcionario.get());
-        return "funcionario/modificarRoles";
+        return "funcionarios/modificarRoles";
     }
     
     @PostMapping("/modificar/roles/{id}")
@@ -93,7 +93,7 @@ public class FuncionarioController {
         
         //Si no existe el funcionario y no hay roles
         if(rolesEnviados == null || funcionario.isEmpty()){
-            return "redirect:/funcionario/";
+            return "redirect:/funcionarios/";
         }
         
         // Creando una lsta de roles
@@ -107,6 +107,6 @@ public class FuncionarioController {
         this.administradorService.modificarRol(funcionario.get(),roles);
         
         //Redirijir al final */
-        return "redirect:/funcionario/";
+        return "redirect:/funcionarios/";
     }
 }
