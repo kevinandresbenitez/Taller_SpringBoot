@@ -1,13 +1,16 @@
 package com.proyect.services;
 
+import com.proyect.models.Administrador;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Rol;
+import com.proyect.repositories.AdministradorRepositori;
 import com.proyect.repositories.FuncionarioRepositori;
 import com.proyect.repositories.RolRepositori;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdministradorService {
@@ -16,6 +19,8 @@ public class AdministradorService {
     FuncionarioRepositori funcionarioRepositori;
     @Autowired
     RolRepositori rolRepositori;
+    @Autowired
+    AdministradorRepositori administradorRepositori;
 
     public void modificarRol(Funcionario funcionario, List<Rol> roles){
         /* Manera No me funciona
@@ -37,4 +42,28 @@ public class AdministradorService {
         }
  
     }
+    
+    public List<Administrador> listarAdministradores(){
+        return this.administradorRepositori.findAll();    
+    }
+    
+    public void eliminarAdministradorPorId(Long id){
+        this.administradorRepositori.deleteById(id);
+    }
+    
+    public void crearAdministradorParaFuncionario(Funcionario funcionario){
+        Administrador administrador = new Administrador();
+        administrador.setFuncionario(funcionario);
+        this.administradorRepositori.save(administrador);
+    
+    }
+    public Optional<Administrador> obtenerAdministradorPorFuncionarioId(Long id){
+        return this.administradorRepositori.findByFuncionarioId(id);
+    }
+            
+    public void eliminarAdministradorParaFuncionario(Funcionario funcionario){
+        Administrador administrador = this.administradorRepositori.findByFuncionario(funcionario);
+        this.administradorRepositori.delete(administrador);
+    }
+    
 }
