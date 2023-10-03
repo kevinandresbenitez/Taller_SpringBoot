@@ -16,6 +16,8 @@ import lombok.*;
 @Entity
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

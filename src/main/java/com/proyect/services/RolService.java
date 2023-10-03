@@ -4,7 +4,7 @@
  */
 package com.proyect.services;
 import com.proyect.models.Rol;
-import com.proyect.repositories.RolRepositori;
+import com.proyect.repositories.RolRepository;
 import java.util.List;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +20,15 @@ import org.springframework.stereotype.Service;
 @Setter
 public class RolService{
     @Autowired
-    private RolRepositori rolRepositori;
+    private RolRepository rolRepository;
 
     
     public List<Rol> listarRoles(){
-        return this.rolRepositori.findAll();
+        return this.rolRepository.findAll();
     }
     
     public void crear(Rol rol){
-        this.rolRepositori.save(rol);
+        this.rolRepository.save(rol);
     }
     
 }
