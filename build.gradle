@@ -8,7 +8,9 @@ group = 'com.proyect'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '20.0.1'
+
+	sourceCompatibility = '20'
+
 }
 
 configurations {

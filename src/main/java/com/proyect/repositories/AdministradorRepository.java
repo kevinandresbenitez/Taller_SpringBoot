@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.proyect.repositories;
+import com.proyect.models.Administrador;
 import com.proyect.models.Funcionario;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface FuncionarioRepositori extends JpaRepository<Funcionario, Long> {
-    
+public interface AdministradorRepository extends JpaRepository<Administrador, Long> {
+      Administrador findByFuncionario(Funcionario funcionario);
+      Optional<Administrador> findByFuncionarioId(Long id);
 }

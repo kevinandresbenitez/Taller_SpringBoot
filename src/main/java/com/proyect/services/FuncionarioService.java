@@ -4,9 +4,8 @@
  */
 package com.proyect.services;
 import com.proyect.models.Funcionario;
-import com.proyect.models.Rol;
-import com.proyect.repositories.FuncionarioRepositori;
-import com.proyect.repositories.RolRepositori;
+import com.proyect.repositories.FuncionarioRepository;
+
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -23,18 +22,18 @@ import org.springframework.stereotype.Service;
 @Setter
 public class FuncionarioService{
     @Autowired
-    private FuncionarioRepositori funcionarioRepositori;
+    private FuncionarioRepository funcionarioRepository;
 
       
     public void crearFuncionario(Funcionario funcionario){
-        this.funcionarioRepositori.save(funcionario);
+        this.funcionarioRepository.save(funcionario);
     }
     
     public List<Funcionario> listarFuncionarios(){
-        return this.funcionarioRepositori.findAll();
+        return this.funcionarioRepository.findAll();
     }
     
     public Optional<Funcionario> obtenerFuncionarioPorId(Long id){
-        return this.funcionarioRepositori.findById(id);
+        return this.funcionarioRepository.findById(id);
     }
 }
