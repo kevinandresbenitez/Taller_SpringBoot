@@ -8,11 +8,11 @@ group = 'com.proyect'
 version = '0.0.1-SNAPSHOT'
 
 java {
-<<<<<<< HEAD
+
 	sourceCompatibility = '20'
-=======
+
 	sourceCompatibility = '20.0.1'
->>>>>>> 75c0ddc10eab9b331d0f2e5aa8f22a159610f7f1
+
 }
 
 configurations {
