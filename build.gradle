@@ -11,8 +11,6 @@ java {
 
 	sourceCompatibility = '20'
 
-	sourceCompatibility = '20.0.1'
-
 }
 
 configurations {
