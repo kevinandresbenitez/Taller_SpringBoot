@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name="persona")
+@Table(name="paciente")
 public class Paciente extends Persona implements Serializable{
     @OneToMany(mappedBy = "paciente")
     private List<contactoPaciente> contactos;
