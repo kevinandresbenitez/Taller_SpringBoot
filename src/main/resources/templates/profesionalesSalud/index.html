@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Pagina Principal de profesionalesDeSalud</div>
+        
+        <a href="/">Volver</a>
+        <a href="/profesionalSalud/asignarFuncionario">Asignar funcionario como profesional de la salud</a>
+        <a href="/profesionalSalud/enfermeros">Ir a Enfermeros</a>
+        <a href="/profesionalSalud/medicos">Ir a medicos</a>
+        
+        <div>
+            
+            <h2>Profesionales de la salud</h2>
+            <div th:each="profesionalSalud : ${profesionalesSalud}">
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del Profesional de la salud</strong><br>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
+                <strong>Nro Matricula del profesional de la salud</strong><br>
+                <span th:text="${profesionalSalud.getNroMatricula()}"></span><br>
+                <strong>Nombre funcionario</strong><br>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
+                <strong>ID del profesional de la salud</strong><br>
+                <span th:text="${profesionalSalud.getId()}"></span><br>
+                <strong>ID del funcionario</strong><br>
+                <span th:text="${profesionalSalud.getFuncionario.getId()}"></span><br>
+                
+                <a th:href="@{/profesionalSalud/eliminar/{id}(id=${profesionalSalud.getId()})}">Eliminar como profesional de salud</a>
+            </div>
+  
+        </div>  
+
+    </body>
+</html>
