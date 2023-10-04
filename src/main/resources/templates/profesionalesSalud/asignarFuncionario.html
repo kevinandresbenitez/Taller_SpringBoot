@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Asignar funcionario</div>
+            <div>
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del funcionario:</strong><br>
+                <span th:text="${funcionario.getNombre()}"></span><br>
+                <form th:action="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}" method="post">
+                    <input type="hidden" name="id" th:value="${funcionario.getId()}">
+                    <span>Agregar matricula</span>
+                    <input type="text" name="nroMatricula" min="3">
+                    <input type="submit" value="Asignar">
+                </form>
+            </div>
+    </body>
+</html>
