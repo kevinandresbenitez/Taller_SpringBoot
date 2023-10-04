@@ -22,7 +22,7 @@ public class PacienteController {
     public String listaPaciente(Model model){
         List<Paciente> pacientes =pacienteService.listarPacientes();
         model.addAttribute("funcionarios",pacientes);
-        return"pacientes/listarpacientes";
+        return"pacientes/index";
     }
     @PostMapping("/agregarpacientes")
     public String crearPaciente(@RequestParam("nombre") String nombre,@RequestParam("dni") int dni){
