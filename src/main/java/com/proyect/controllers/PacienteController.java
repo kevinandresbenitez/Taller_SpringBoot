@@ -19,10 +19,14 @@ public class PacienteController {
     PacienteService pacienteService;
 
     @GetMapping("/")
-    public String listaPaciente(Model model){
+    public String list(Model model){
         List<Paciente> pacientes =pacienteService.listarPacientes();
-        model.addAttribute("funcionarios",pacientes);
+        model.addAttribute("pacientes",pacientes);
         return"pacientes/index";
+    }
+    @GetMapping("/agregarpacientes")
+    public String mostrarForm(){
+        return "/pacientes/agregarpacientes";
     }
     @PostMapping("/agregarpacientes")
     public String crearPaciente(@RequestParam("nombre") String nombre,@RequestParam("dni") int dni){
