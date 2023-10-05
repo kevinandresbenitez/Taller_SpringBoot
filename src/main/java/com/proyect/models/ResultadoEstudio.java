@@ -34,6 +34,6 @@ public class ResultadoEstudio {
     @Column(name = "informeEstudio")
     private String informeEstudio;
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
+    @JoinColumn(name = "id_paciente")
     private Paciente paciente;
 }
