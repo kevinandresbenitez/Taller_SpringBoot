@@ -25,5 +25,9 @@ public class PacienteService {
     public List<Paciente> listarPacientes(){
         return pacienteRepository.findAll();
     }
+
+    public Optional<Paciente> findById(Long id) {
+        return pacienteRepository.findById(id);
+    }
     //public Triage asignarTriage();
 }
