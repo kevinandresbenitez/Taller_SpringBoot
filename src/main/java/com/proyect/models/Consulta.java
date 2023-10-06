@@ -32,6 +32,9 @@ public class Consulta {
     private String diagnosticosClinicos;
     @OneToMany(mappedBy = "consulta")
     private List<ResultadoEstudio> resultadosEstudios;
+    @ManyToOne
+    @JoinColumn(name="id_paciente")
+    private Paciente paciente;
 
 
 }
