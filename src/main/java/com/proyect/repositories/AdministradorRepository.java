@@ -19,4 +19,5 @@ import org.springframework.stereotype.Repository;
 public interface AdministradorRepository extends JpaRepository<Administrador, Long> {
       Administrador findByFuncionario(Funcionario funcionario);
       Optional<Administrador> findByFuncionarioId(Long id);
+      Boolean existsByFuncionarioId(Long id);
 }

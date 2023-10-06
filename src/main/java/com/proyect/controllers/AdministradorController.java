@@ -45,15 +45,15 @@ public class AdministradorController {
         
     @GetMapping("/asignarFuncionario/{id}")
     public String processAssing(@PathVariable("id") Long id){
-        Optional<Administrador> administradorExistente = this.administradorService.obtenerAdministradorPorFuncionarioId(id);
-        Optional<Funcionario> funcionarioExistente = this.funcionarioServices.obtenerFuncionarioPorId(id);
-                
+        Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
+        Boolean esAdministrador = this.administradorService.esFuncionarioAdministrador(id);
+        
         // Si el funcionario no existe o ya es un administrador
-        if(administradorExistente.isPresent() || funcionarioExistente.isEmpty()){
+        if(funcionario.isEmpty() || esAdministrador){
             return "redirect:/administradores/";
         }
-        
-        this.administradorService.crearAdministradorParaFuncionario(funcionarioExistente.get());  
+
+        this.administradorService.asignarFuncionarioComoAministrador(funcionario.get());  
         return "redirect:/administradores/";
     }
         
