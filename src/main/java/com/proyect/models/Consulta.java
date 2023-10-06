@@ -8,12 +8,18 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
+import lombok.*;
 
 /**
  *
  * @author ulise
  */
 @Entity
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
 @Table(name="consulta")
 public class Consulta {
     @Id
