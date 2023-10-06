@@ -51,6 +51,7 @@ public class PacienteController {
         model.addAttribute("paciente",paciente.get());
         return"pacientes/modificar";
     }
+    /*
     @GetMapping("/resultadosestudios/index/{id}")
     public String listaResultadoEstudios(Model model,@PathVariable("id")Long id){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
@@ -77,5 +78,5 @@ public class PacienteController {
         paciente.agregarResultadoEstudios(resultadoEstudiosNuevo);
         return"/pacientes/resultadoestudios/"+paciente.getId();
     }
-
+    */
 }

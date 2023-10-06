@@ -29,9 +29,9 @@ public class ResultadoEstudio {
     private Date fecha;
     @Column(name = "hora")
     private String hora;
-    @Column(name = "tipoInforme")
+    @Column(name = "tipo_informe")
     private String tipoInforme;
-    @Column(name = "informeEstudio")
+    @Column(name = "informe_studio")
     private String informeEstudio;
     @ManyToOne
     @JoinColumn(name = "id_consulta")
