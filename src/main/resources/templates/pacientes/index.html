@@ -10,7 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<a href="/pacientes/agregarpacientes">Ir a agregar pacientes</a>
+<a href="/pacientes/crear">Ir a agregar pacientes</a>
+<a href="/pacientes/resultadosestudios/">Ir a resultado de estudios</a>
 <div class="container mt-5">
     <h2 class="mb-4">Lista de Pacientes</h2>
 
@@ -20,6 +21,12 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>DNI</th>
+            <th>ESTADO CIVIL</th>
+            <th>EMAIL</th>
+            <th>TELEFONO FIJO</th>
+            <th>TELEFONO CELULAR</th>
+            <th>FECHA NACIMIENTO</th>
+
         </tr>
         </thead>
         <tbody>
@@ -28,6 +35,11 @@
             <td th:text="${paciente.id}"></td>
             <td th:text="${paciente.nombre}"></td>
             <td th:text="${paciente.dni}"></td>
+            <td th:text="${paciente.estadoCivil}"></td>
+            <td th:text="${paciente.email}"></td>
+            <td th:text="${paciente.telefonoFijo}"></td>
+            <td th:text="${paciente.telefonoCelular}"></td>
+            <td th:text="${paciente.fechaNacimiento}"></td>
         </tr>
         </tbody>
     </table>
