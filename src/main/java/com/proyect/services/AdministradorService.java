@@ -51,19 +51,20 @@ public class AdministradorService {
         this.administradorRepository.deleteById(id);
     }
     
-    public void crearAdministradorParaFuncionario(Funcionario funcionario){
+    public void asignarFuncionarioComoAministrador(Funcionario funcionario){
         Administrador administrador = new Administrador();
         administrador.setFuncionario(funcionario);
         this.administradorRepository.save(administrador);
     
     }
-    public Optional<Administrador> obtenerAdministradorPorFuncionarioId(Long id){
-        return this.administradorRepository.findByFuncionarioId(id);
-    }
             
     public void eliminarAdministradorParaFuncionario(Funcionario funcionario){
         Administrador administrador = this.administradorRepository.findByFuncionario(funcionario);
         this.administradorRepository.delete(administrador);
+    }
+
+    public Boolean esFuncionarioAdministrador(Long id) {
+        return this.administradorRepository.existsByFuncionarioId(id);
     }
     
 }
