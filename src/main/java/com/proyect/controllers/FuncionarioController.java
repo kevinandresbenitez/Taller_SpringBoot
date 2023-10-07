@@ -6,7 +6,6 @@ package com.proyect.controllers;
 import com.proyect.enums.TipoRol;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Rol;
-import com.proyect.services.AdministradorService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
@@ -34,8 +33,6 @@ public class FuncionarioController {
     private RolService rolServices;
     @Autowired
     private SectorService sectorService;
-    @Autowired
-    private AdministradorService administradorService;
         
     @GetMapping("/")
     public String list(Model modelo){
@@ -104,7 +101,7 @@ public class FuncionarioController {
         }
         
         //Agregando los nuevos roles
-        this.administradorService.modificarRol(funcionario.get(),roles);
+        this.funcionarioServices.modificarRol(funcionario.get(),roles);
         
         //Redirijir al final */
         return "redirect:/funcionarios/";
