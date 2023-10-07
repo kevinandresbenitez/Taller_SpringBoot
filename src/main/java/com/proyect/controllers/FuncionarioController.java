@@ -63,7 +63,7 @@ public class FuncionarioController {
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
-        if(!funcionario.isPresent()){
+        if(funcionario.isEmpty()){
             atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
@@ -77,7 +77,7 @@ public class FuncionarioController {
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
-        if(!funcionario.isPresent()){
+        if(funcionario.isEmpty()){
             atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
