@@ -18,6 +18,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div>
             
             <h2>Administradores</h2>
+            <h3 th:text="${mensaje}"></h3>
             <div th:each="administrador : ${administradores}">
                 <strong>-----------------------------------------------</strong><br>
                 <strong>Nombre Del Administrador</strong><br>
