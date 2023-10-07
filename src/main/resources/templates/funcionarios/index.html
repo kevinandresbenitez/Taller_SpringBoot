@@ -31,6 +31,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div th:each="sector : ${funcionario.getSectores()}" th:text="${sector}"></div><br>
                 
                 <a th:href="@{/funcionarios/modificar/{id}(id=${funcionario.getId()})}">Modificar</a>
+                <a th:href="@{/funcionarios/eliminar/{id}(id=${funcionario.getId()})}">Eliminar</a>
             </div>
   
         </div>  

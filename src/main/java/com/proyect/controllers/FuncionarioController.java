@@ -59,11 +59,12 @@ public class FuncionarioController {
     }
     
     @GetMapping("/modificar/{id}")
-    public String modify(Model modelo,@PathVariable("id") Long id){
+    public String modify(Model modelo,@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
         if(!funcionario.isPresent()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
         
@@ -72,11 +73,12 @@ public class FuncionarioController {
     }
     
     @GetMapping("/modificar/roles/{id}")
-    public String modifyRol(Model modelo,@PathVariable("id") Long id){
+    public String modifyRol(Model modelo,@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
         if(!funcionario.isPresent()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
         //Envio informacion del usuario y la enum de roles
@@ -93,6 +95,7 @@ public class FuncionarioController {
         
         //Si no existe el funcionario y no hay roles
         if(rolesEnviados == null || funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe o no hay roles");
             return "redirect:/funcionarios/";
         }
         
