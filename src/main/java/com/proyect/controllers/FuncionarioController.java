@@ -113,4 +113,11 @@ public class FuncionarioController {
         atributosMensaje.addFlashAttribute("mensaje","Se modificaron los roles adecuadamente");
         return "redirect:/funcionarios/";
     }
+    
+    @GetMapping("/eliminar/{id}")
+    public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        this.funcionarioServices.eliminarFuncionarioPorId(id);
+        atributosMensaje.addFlashAttribute("mensaje","Eliminando funcionario adecuadamente");
+        return "redirect:/funcionarios/";
+    }
 }

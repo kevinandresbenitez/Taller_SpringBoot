@@ -60,4 +60,8 @@ public class FuncionarioService{
     public Optional<Funcionario> obtenerFuncionarioPorId(Long id){
         return this.funcionarioRepository.findById(id);
     }
+    
+    public void eliminarFuncionarioPorId(Long id){
+        this.funcionarioRepository.deleteById(id);
+    }
 }
