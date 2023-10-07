@@ -6,7 +6,6 @@ package com.proyect.controllers;
 import com.proyect.enums.TipoRol;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Rol;
-import com.proyect.services.AdministradorService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -34,8 +34,6 @@ public class FuncionarioController {
     private RolService rolServices;
     @Autowired
     private SectorService sectorService;
-    @Autowired
-    private AdministradorService administradorService;
         
     @GetMapping("/")
     public String list(Model modelo){
@@ -50,20 +48,23 @@ public class FuncionarioController {
     }
     
     @PostMapping("/crear")
-    public String processFormCreation(@RequestParam("nombre") String nombre){
+    public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
         Funcionario funcionario = new Funcionario();
         funcionario.setNombre(nombre);
         this.funcionarioServices.crearFuncionario(funcionario);
-        //Una vez creado redirijo
+        
+        //Una vez creado redirijo y envio un mensaje de creacion correcta        
+        atributosMensaje.addFlashAttribute("mensaje","Se creo un funcionario Adecuadamente");
         return "redirect:/funcionarios/";
     }
     
     @GetMapping("/modificar/{id}")
-    public String modify(Model modelo,@PathVariable("id") Long id){
+    public String modify(Model modelo,@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
-        if(!funcionario.isPresent()){
+        if(funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
         
@@ -72,11 +73,12 @@ public class FuncionarioController {
     }
     
     @GetMapping("/modificar/roles/{id}")
-    public String modifyRol(Model modelo,@PathVariable("id") Long id){
+    public String modifyRol(Model modelo,@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         //Si no existe el funcionario redirijir a funcionario
-        if(!funcionario.isPresent()){
+        if(funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe");
             return "redirect:/funcionarios/";
         }
         //Envio informacion del usuario y la enum de roles
@@ -87,12 +89,13 @@ public class FuncionarioController {
     }
     
     @PostMapping("/modificar/roles/{id}")
-    public String processFormModifyRol(@PathVariable("id") Long id,@RequestParam(name = "rol",required = false) List<TipoRol> rolesEnviados){
+    public String processFormModifyRol(@PathVariable("id") Long id,@RequestParam(name = "rol",required = false) List<TipoRol> rolesEnviados,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         List<Rol> roles =new ArrayList<>();
         
         //Si no existe el funcionario y no hay roles
         if(rolesEnviados == null || funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","El funcionario no existe o no hay roles");
             return "redirect:/funcionarios/";
         }
         
@@ -104,9 +107,17 @@ public class FuncionarioController {
         }
         
         //Agregando los nuevos roles
-        this.administradorService.modificarRol(funcionario.get(),roles);
+        this.funcionarioServices.modificarRol(funcionario.get(),roles);
         
-        //Redirijir al final */
+        //Redirijir al final mas un mensaje */
+        atributosMensaje.addFlashAttribute("mensaje","Se modificaron los roles adecuadamente");
+        return "redirect:/funcionarios/";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        this.funcionarioServices.eliminarFuncionarioPorId(id);
+        atributosMensaje.addFlashAttribute("mensaje","Eliminando funcionario adecuadamente");
         return "redirect:/funcionarios/";
     }
 }
