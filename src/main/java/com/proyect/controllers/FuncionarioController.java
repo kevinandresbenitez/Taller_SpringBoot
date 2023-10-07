@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -47,11 +48,13 @@ public class FuncionarioController {
     }
     
     @PostMapping("/crear")
-    public String processFormCreation(@RequestParam("nombre") String nombre){
+    public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
         Funcionario funcionario = new Funcionario();
         funcionario.setNombre(nombre);
         this.funcionarioServices.crearFuncionario(funcionario);
-        //Una vez creado redirijo
+        
+        //Una vez creado redirijo y envio un mensaje de creacion correcta        
+        atributosMensaje.addFlashAttribute("mensaje","Se creo un funcionario Adecuadamente");
         return "redirect:/funcionarios/";
     }
     
@@ -84,7 +87,7 @@ public class FuncionarioController {
     }
     
     @PostMapping("/modificar/roles/{id}")
-    public String processFormModifyRol(@PathVariable("id") Long id,@RequestParam(name = "rol",required = false) List<TipoRol> rolesEnviados){
+    public String processFormModifyRol(@PathVariable("id") Long id,@RequestParam(name = "rol",required = false) List<TipoRol> rolesEnviados,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         List<Rol> roles =new ArrayList<>();
         
@@ -103,7 +106,8 @@ public class FuncionarioController {
         //Agregando los nuevos roles
         this.funcionarioServices.modificarRol(funcionario.get(),roles);
         
-        //Redirijir al final */
+        //Redirijir al final mas un mensaje */
+        atributosMensaje.addFlashAttribute("mensaje","Se modificaron los roles adecuadamente");
         return "redirect:/funcionarios/";
     }
 }
