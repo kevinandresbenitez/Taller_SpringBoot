@@ -26,6 +26,7 @@
             <th>TELEFONO FIJO</th>
             <th>TELEFONO CELULAR</th>
             <th>FECHA NACIMIENTO</th>
+            <th>ACCIONES</th>
 
         </tr>
         </thead>
@@ -40,6 +41,10 @@
             <td th:text="${paciente.telefonoFijo}"></td>
             <td th:text="${paciente.telefonoCelular}"></td>
             <td th:text="${paciente.fechaNacimiento}"></td>
+            <td>
+                <a th:href="@{/pacientes/triages/{id}(id=${paciente.getId()})}">Ir a Triages</a>
+                <a th:href="@{/pacientes/consultas/{id}(id=${paciente.getId()})}">Ir a Consultas</a>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -1,47 +1,34 @@
 package com.proyect.controllers;
 
-import com.proyect.models.Triage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.proyect.utils.TriageCalculador;
+import com.proyect.utils.TriageObject;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/pacientes/triages")
 public class TriageController {
-    private int puntuacionTotal;
-    private String colorNivel = " ";
-    private String tiempoEspera = " ";
-    private int nivel;
-    private Map<String, Integer> niveles = new HashMap<>();
-    private Map<String, String> tiemposDeEspera = new HashMap<>();
 
-    public TriageController() {
-
-        niveles.put("Rojo", 1);
-        niveles.put("Naranja", 2);
-        niveles.put("Amarillo", 3);
-        niveles.put("Verde", 4);
-        niveles.put("Azul", 5);
-
-
-        tiemposDeEspera.put("Rojo", "Inmediata");
-        tiemposDeEspera.put("Naranja", "15 minutos");
-        tiemposDeEspera.put("Amarillo", "60 minutos");
-        tiemposDeEspera.put("Verde", "2 horas");
-        tiemposDeEspera.put("Azul", "4 horas");
-
+    @GetMapping("/{id}") // Id del paciente para mostrar la lista de triages
+    public String listarTriages(@PathVariable("id") Long id) {
+        // Buscamos los triages de este paciente y se los mostramos
+        // Faltan hacer los repositoris 
+        return "pacientes/triages/index";
     }
-
-    @GetMapping("/ingreso-valores-sintomas")
-    public String mostrarFormulario() {
-        return "ingreso-valores-sintomas";
+    
+    @GetMapping("/agregar/{id}") // Id del paciente a asignar triage
+    public String mostrarFormulario(@PathVariable("id") Long id){
+        return "pacientes/triages/crear";
     }
-    @PostMapping("/form-triage")
+    
+    @PostMapping("/agregar/{id}") // Procesamos el triage y lo guardamos
     public String calcularPuntuacionTotal(
+            @PathVariable("id") Long id,
             @RequestParam("respiracion") int respiracion,
             @RequestParam("pulso") int pulso,
             @RequestParam("estadoMental") int estadoMental,
@@ -56,8 +43,7 @@ public class TriageController {
             @RequestParam("sangrado") int sangrado,
             Model model) {
 
-        Triage triage = new Triage();
-
+        TriageCalculador triage = new TriageCalculador();
         triage.setRespiracion(respiracion);
         triage.setPulso(pulso);
         triage.setEstadoMental(estadoMental);
@@ -70,52 +56,33 @@ public class TriageController {
         triage.setSignosShock(signosShock);
         triage.setLesionesLeves(lesionesLeves);
         triage.setSangrado(sangrado);
+        
+        // Obteniendo punuacion y respectivo color, tiempo de espera ...
+        int puntuacion = triage.obtenerPuntuacion();
+        TriageObject TriageResultante = triage.segunPuntuacionObtenerTriageObject(puntuacion);
+        // Aca tenemos que hacer un new Triage() y luego guardarlo en un service
+        // Este traiage al guardarse, podra verse desde la pagina principal de traige del paciente
 
-        puntuacionTotal = calcularPuntuacionTotal(triage);
-
-
-        model.addAttribute("puntuacionTotal", puntuacionTotal);
-
-        return "redirect:/resultado-triage";
+        return "redirect:/" + id;
     }
 
-    private int calcularPuntuacionTotal(Triage triage) {
-
-        int puntuacionTotal = triage.getRespiracion() + triage.getPulso() + triage.getEstadoMental() +
-                triage.getConciencia() + triage.getDolorPechoRespirar() + triage.getLesionesGraves() + triage.getFiebre() + triage.getVomitos() + triage.getDolorAbdominal() +
-                triage.getSignosShock() + triage.getLesionesLeves() + triage.getSangrado();
-
-        return puntuacionTotal;
-    }
 
     @GetMapping("/resultado-triage")
     public String resultadoTriage(Model model) {
-
-        if (puntuacionTotal >= 15) {
-            colorNivel = "Rojo";
-        } else if (puntuacionTotal >= 10 ) {
-            colorNivel = "Naranja";
-        } else if (puntuacionTotal >= 9) {
-            colorNivel = "Amarillo";
-        } else if (puntuacionTotal >= 5) {
-            colorNivel = "Verde";
-        } else {
-            colorNivel = "Azul";
-        }
-
+        /*
         nivel = niveles.get(colorNivel);
         tiempoEspera = tiemposDeEspera.get(colorNivel);
 
         model.addAttribute("nivel", nivel);
         model.addAttribute("colorNivel", colorNivel);
         model.addAttribute("tiempoEspera", tiempoEspera);
-
+        */
         return "resultado-triage";
     }
 
     @PostMapping("/cambiar-color")
     public String cambiarColor(String nuevoColor, Model model) {
-
+        /*
         if (niveles.containsKey(nuevoColor)) {
 
             this.colorNivel = nuevoColor;
@@ -129,6 +96,8 @@ public class TriageController {
             model.addAttribute("mensaje", mensaje);
             return "pagina-de-error";
         }
+        */
+        return "resultado-triage";
     }
 
 }
