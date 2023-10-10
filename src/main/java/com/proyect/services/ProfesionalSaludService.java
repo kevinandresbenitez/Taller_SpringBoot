@@ -41,8 +41,9 @@ public class ProfesionalSaludService{
         this.profesionalRepository.deleteById(id);
     }
 
-    public Boolean esFuncionarioProfesionalSaludPorId(Long id) {
+    public Boolean esFuncionarioProfesionalSalud(Long id) {
         return this.profesionalRepository.existsByFuncionarioId(id);
     }
+    
     
 }

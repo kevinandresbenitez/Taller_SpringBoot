@@ -7,6 +7,7 @@ import com.proyect.models.Administrador;
 import com.proyect.models.Funcionario;
 import com.proyect.services.AdministradorService;
 import com.proyect.services.FuncionarioService;
+import com.proyect.services.ProfesionalSaludService;
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -29,6 +30,8 @@ public class AdministradorController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private AdministradorService administradorService;
+    @Autowired
+    private ProfesionalSaludService profesionalSaludService;
         
     @GetMapping("/")
     public String list(Model modelo){
@@ -48,13 +51,22 @@ public class AdministradorController {
     public String processAssing(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         Boolean esAdministrador = this.administradorService.esFuncionarioAdministrador(id);
+        Boolean esProfesionalSalud = this.profesionalSaludService.esFuncionarioProfesionalSalud(id);
         
-        // Si el funcionario no existe o ya es un administrador
-        if(funcionario.isEmpty() || esAdministrador){
-            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como administrador, ya que el funcionario no existe o ya es administrador");
+        //Verificaciones del funcionario
+        if(funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como administrador, ya que el funcionario no existe");
             return "redirect:/administradores/";
         }
-
+        if(esAdministrador){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como administrador, ya que el funcionario ya fue asignado como administrador");
+            return "redirect:/administradores/";
+        }
+        if(esProfesionalSalud){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como administrador, ya que el funcionario es un profesional de la salud");
+            return "redirect:/administradores/";
+        }
+        
         this.administradorService.asignarFuncionarioComoAministrador(funcionario.get());
         atributosMensaje.addFlashAttribute("mensaje","Se a asignado adecuadamente al funcionario como administrador");
         return "redirect:/administradores/";
@@ -63,7 +75,7 @@ public class AdministradorController {
     @GetMapping("/eliminar/{id}")
     public String delete(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         this.administradorService.eliminarAdministradorPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Se a revocado la administracion del funcionario");
+        atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como administrador");
         return "redirect:/administradores/";
     }
         

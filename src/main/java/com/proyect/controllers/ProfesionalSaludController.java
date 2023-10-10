@@ -5,6 +5,7 @@
 package com.proyect.controllers;
 import com.proyect.models.Funcionario;
 import com.proyect.models.ProfesionalSalud;
+import com.proyect.services.AdministradorService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.ProfesionalSaludService;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -29,6 +31,8 @@ public class ProfesionalSaludController {
     private ProfesionalSaludService profesionalSaludService;
     @Autowired
     private FuncionarioService funcionarioServices;
+    @Autowired
+    private AdministradorService administradorService;
         
     @GetMapping("/")
     public String list(Model modelo){
@@ -45,10 +49,11 @@ public class ProfesionalSaludController {
     }
     
     @GetMapping("/asignarFuncionario/{id}")
-    public String showForm(@PathVariable("id") Long id, Model model){
+    public String showForm(@PathVariable("id") Long id, Model model,RedirectAttributes atributosMensaje){
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         if(funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como profesional de salud, ya que el funcionario no existe");
             return "redirect:/profesionalSalud/";
         }
         model.addAttribute("funcionario",funcionario.get());
@@ -56,22 +61,34 @@ public class ProfesionalSaludController {
     }
     
     @PostMapping("/asignarFuncionario/{id}")
-    public String processAssing(@PathVariable("id") Long id,@RequestParam(name = "nroMatricula") Long nroMatricula){
-        Boolean funcionarioEsProfesionalSalud = this.profesionalSaludService.esFuncionarioProfesionalSaludPorId(id);
-        Optional<Funcionario> funcionarioExistente = this.funcionarioServices.obtenerFuncionarioPorId(id);
-                
-        // Si el funcionario no existe o ya es un profesional de la salud
-        if(funcionarioEsProfesionalSalud || funcionarioExistente.isEmpty()){
+    public String processAssing(@PathVariable("id") Long id,@RequestParam(name = "nroMatricula") Long nroMatricula,RedirectAttributes atributosMensaje){
+        Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
+        Boolean esAdministrador = this.administradorService.esFuncionarioAdministrador(id);
+        Boolean esProfesionalSalud = this.profesionalSaludService.esFuncionarioProfesionalSalud(id);
+
+        //Verificaciones del funcionario
+        if(funcionario.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como profesional de salud, ya que el funcionario no existe");
+            return "redirect:/profesionalSalud/";
+        }
+        if(esAdministrador){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como profesional de salud, ya que el funcionario es un administrador");
+            return "redirect:/profesionalSalud/";
+        }
+        if(esProfesionalSalud){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como profesional de salud, ya que el funcionario ya fue asignado como profesional de la salud");
             return "redirect:/profesionalSalud/";
         }
         
-        this.profesionalSaludService.asignarFuncionarioComoProfesionalSalud(funcionarioExistente.get(),nroMatricula);  
+        atributosMensaje.addFlashAttribute("mensaje","Se a asignado adecuadamente al funcionario como profesional de la salud");
+        this.profesionalSaludService.asignarFuncionarioComoProfesionalSalud(funcionario.get(),nroMatricula);  
         return "redirect:/profesionalSalud/";
     }
         
     @GetMapping("/eliminar/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         this.profesionalSaludService.eliminarProfesionalSaludPorId(id);
+        atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como profesional de la salud");
         return "redirect:/profesionalSalud/";
     }
 }
