@@ -8,8 +8,8 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
-@Table(name="medico")
-public class Medico {
+@Table(name="enfermero")
+public class Enfermero{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,6 +17,4 @@ public class Medico {
     @ManyToOne
     @JoinColumn(name = "id_prof_salud")
     private ProfesionalSalud profesionalSalud;
-    @OneToMany(mappedBy = "medico")
-    private List<Especialidad> especialidades;
 }
