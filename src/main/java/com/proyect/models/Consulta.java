@@ -42,5 +42,7 @@ public class Consulta {
     @JoinColumn(name="id_paciente")
     private Paciente paciente;
 
-
+    public void agregarResultadoEstudio(ResultadoEstudio resultadoEstudio){
+        this.resultadosEstudios.add(resultadoEstudio);
+    }
 }

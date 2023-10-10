@@ -1,5 +1,6 @@
 package com.proyect.controllers;
 
+import com.proyect.models.Consulta;
 import com.proyect.models.Paciente;
 import com.proyect.models.ResultadoEstudio;
 import com.proyect.services.PacienteService;
@@ -51,32 +52,34 @@ public class PacienteController {
         model.addAttribute("paciente",paciente.get());
         return"pacientes/modificar";
     }
-    /*
-    @GetMapping("/resultadosestudios/index/{id}")
+
+    @GetMapping("/consultas/index/{id}")
     public String listaResultadoEstudios(Model model,@PathVariable("id")Long id){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         if(paciente.getId()==null){
             return "redirect:/pacientes/";
         }
-        model.addAttribute("resultadoEstudios",paciente.getResultadoEstudios());
+        model.addAttribute("consultas",paciente.getConsultas());
         model.addAttribute("paciente",paciente);
-        return "/pacientes/resultadoestudios/index";
+        return "/pacientes/consultas/index";
     }
     @GetMapping("/resultadoestudios/crear/{id}")
-    public String crearResultadoEstudios(){
+    public String crearConsultas(){
         return "/pacientes/resultadoestudios/index";
     }
 
-    @PostMapping("/resultadoestudios/crear/{id}")
-    public String crearResultadoEstudios(@RequestParam("fecha") Date fecha,@RequestParam("hora")String hora,@RequestParam("tipoInforme") String tipoInforme,@RequestParam("informeEstudio")String informeEstudio, @PathVariable("id")Long id){
+    @PostMapping("/consultas/agregar/{id}")
+    public String crearConsultas(@RequestParam("fecha") Date fecha,@RequestParam("hora")String hora,@RequestParam("tipoInforme") String tipoInforme,@RequestParam("informeEstudio")String informeEstudio, @PathVariable("id")Long id){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         ResultadoEstudio resultadoEstudiosNuevo = new ResultadoEstudio();
         resultadoEstudiosNuevo.setInformeEstudio(informeEstudio);
         resultadoEstudiosNuevo.setHora(hora);
         resultadoEstudiosNuevo.setFecha(fecha);
         resultadoEstudiosNuevo.setTipoInforme(tipoInforme);
-        paciente.agregarResultadoEstudios(resultadoEstudiosNuevo);
+        Consulta consulta = new Consulta();
+        consulta.agregarResultadoEstudio(resultadoEstudiosNuevo);
+        paciente.agregarConsultas(consulta);
         return"/pacientes/resultadoestudios/"+paciente.getId();
     }
-    */
+
 }

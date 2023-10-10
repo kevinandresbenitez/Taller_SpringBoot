@@ -35,7 +35,7 @@ public class PacienteService {
         return pacienteRepository.findById(id).get();
     }
 /*
-    public void crearResultadoEstudio(List<ResultadoEstudio> resultadoEstudio,Long id){
+    public void crearConsulta(List<ResultadoEstudio> resultadoEstudio,Long id){
         Optional<Paciente> paciente = pacienteRepository.findById(id);
         Paciente paciente1 = paciente.get();
         paciente1.setResultadoEstudios(resultadoEstudio);
