@@ -6,6 +6,8 @@ package com.proyect.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import lombok.*;
@@ -27,9 +29,9 @@ public class Consulta {
     @Column(name="id")
     private Long id;
     @Column(name="fecha_atencion")
-    private Date fechaAtencion;
+    private LocalDate fechaAtencion;
     @Column(name="hora_atencion")
-    private Date horaAtencion;
+    private LocalTime horaAtencion;
     @Column(name="diagnostico")
     private String diagnostico;
     @Column(name="tipo_atencion")
