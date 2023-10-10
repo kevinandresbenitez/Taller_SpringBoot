@@ -16,4 +16,11 @@ public class Especialidad {
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private Medico medico;
+    @Column(name = "nombre")
+    private String nombre;
+    @Column(name = "fecha_titulacion")
+    private String fechaTitulacion;
+    @Column(name = "universidad")
+    private String universidad;
+    
 }
