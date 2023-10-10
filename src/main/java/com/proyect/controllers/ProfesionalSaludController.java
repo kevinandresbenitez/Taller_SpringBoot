@@ -91,4 +91,16 @@ public class ProfesionalSaludController {
         atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como profesional de la salud");
         return "redirect:/profesionalSalud/";
     }
+    
+    // Apartado de medicos y enfermeros
+    @GetMapping("/enfermeros/")
+    public String listEnfermereos(Model model){
+        return "profesionalesSalud/enfermeros/index";        
+    }
+    
+    @GetMapping("/medicos/")
+    public String listMedicos(Model model){
+        return "profesionalesSalud/medicos/index";
+    }
+    
 }
