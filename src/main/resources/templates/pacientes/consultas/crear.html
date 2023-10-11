@@ -7,7 +7,7 @@
 <body>
 <h2>Crear Consulta</h2>
 
-<form th:action="@{/consultas/crear/{id}(id=${paciente.id})}" method="post">
+<form th:action="@{/pacientes/consultas/crear/{id}(id=${paciente.id})}" method="post">
     <!-- Input para la fecha -->
     <label for="fecha">Fecha:</label>
     <input type="date" id="fecha" name="fecha" required>

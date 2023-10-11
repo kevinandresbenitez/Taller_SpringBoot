@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Controller
 @RequestMapping("/pacientes/consultas")
@@ -44,13 +46,13 @@ public class ConsultaControlller {
     }
 
     @PostMapping("/crear/{id}")
-    public String crearConsultas(@RequestParam("resultadosEstudios") List<ResultadoEstudio> resultadoEstudios,
-                                 @RequestParam("fecha") LocalDate fecha,
-                                 @RequestParam("hora") LocalTime hora,
+    public String crearConsultas(/*@RequestParam("resultadosEstudios") List<ResultadoEstudio> resultadoEstudios,*/
+                                 @RequestParam("fecha") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate fecha,
+                                 @RequestParam("hora") @DateTimeFormat(pattern = "HH:mm:ss") LocalTime hora,
                                  @RequestParam("diagnostico") String diagnostico,
                                  @RequestParam("tipoAtencion") String tipoAtencion,
-                                 @PathVariable("diagnosticosClinicos") String diagnosticosClinicos,
-                                 @RequestParam("id") Long id) {
+                                 @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
+                                 @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Consulta consulta = new Consulta();
         consulta.setHoraAtencion(hora);
@@ -59,7 +61,7 @@ public class ConsultaControlller {
         consulta.setPaciente(paciente);
         consulta.setDiagnostico(diagnostico);
         consulta.setDiagnosticosClinicos(diagnosticosClinicos);
-        consulta.setResultadosEstudios(resultadoEstudios);
+        //consulta.setResultadosEstudios(resultadoEstudios);
         paciente.agregarConsultas(consulta);
         consultaService.guardarConsulta(consulta);
         return "redirect:/pacientes/consultas/"+paciente.getId();

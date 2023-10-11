@@ -28,12 +28,13 @@
         </thead>
         <tbody>
         <!-- Itera sobre la lista de resultados de estudios y muestra cada uno -->
-        <tr th:each="consulta : ${paciente.consultas}">
-            <td th:text="${consulta.fecha}"></td>
-            <td th:text="${consulta.hora}"></td>
-            <td th:text="${consulta.diagnostico}"></td>
-            <td th:text="${consulta.tipoAtencion}"></td>
-            <td th:text="${consulta.diagnosticosClinicos}"></td>
+        <tr th:each="consulta : ${paciente.getConsultas()}">
+            <td th:text="${consulta.getFechaAtencion()}"></td>
+            <td th:text="${consulta.getHoraAtencion()}"></td>
+            
+            <td th:text="${consulta.getDiagnostico()}"></td>
+            <td th:text="${consulta.getTipoAtencion()}"></td>
+            <td th:text="${consulta.getDiagnosticosClinicos()}"></td>
             <td>
                 <a th:href="@{/pacientes/consultas/resultadosestudios/{id}(id=${paciente.getId()})}">Ir a resultados de estudios</a>
             </td>
