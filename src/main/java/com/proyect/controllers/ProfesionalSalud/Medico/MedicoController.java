@@ -45,7 +45,7 @@ public class MedicoController {
     
     @GetMapping("/")
     public String listMedicos(Model model){
-        List<Medico> medicos = this.medicoService.listarEnfermeros();
+        List<Medico> medicos = this.medicoService.listarMedicos();
         model.addAttribute("medicos",medicos);
         return "profesionalesSalud/medicos/index";
     }
@@ -58,8 +58,31 @@ public class MedicoController {
     }
     
     @GetMapping("/asignar/{id}")
-    public String procesarAsignacionMedico(@PathVariable("id") Long id){
-        return "redirect:/medicos/";        
+    public String procesarAsignacionMedico(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        Optional<ProfesionalSalud> profesionalSalud = this.profesionalSaludService.obtenerProfSaludPorId(id);
+        Boolean esEnfermero = this.enfermeroService.esProfSaludEnfermero(id);
+        Boolean esMedico = this.medicoService.esProfSaludMedico(id);
+        
+        if(profesionalSalud.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como medico, ya que el profesional de salud no existe");
+            return "redirect:/profesionalSalud/medicos/";       
+        }else if(esEnfermero){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como medico, ya que ya fue asignado como enfermero");
+            return "redirect:/profesionalSalud/medicos/";                   
+        }else if(esMedico){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como medico, ya que ya fue asignado como medico");
+            return "redirect:/profesionalSalud/medicos/";       
+        }
+        
+        atributosMensaje.addFlashAttribute("mensaje","El profesional de la salud fue asignado como medico correctamente");
+        this.medicoService.asignarProfSaludComoMedico(profesionalSalud.get());
+        return "redirect:/profesionalSalud/medicos/";        
     }
     
+    @GetMapping("/eliminar/{id}")
+    public String eliminarMedico(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        this.medicoService.eliminarMedicoPorId(id);
+        atributosMensaje.addFlashAttribute("mensaje","Eliminando medico adecuadamente");
+        return "redirect:/profesionalSalud/medicos/";          
+    }
 }
