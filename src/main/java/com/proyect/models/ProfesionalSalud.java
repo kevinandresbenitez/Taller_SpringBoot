@@ -1,7 +1,10 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Getter
@@ -19,4 +22,12 @@ public class ProfesionalSalud{
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;
+    
+    @OneToMany(mappedBy = "profesionalSalud")
+    @Cascade(CascadeType.DELETE_ORPHAN)
+    private List<Medico> medicos;
+    
+    @OneToMany(mappedBy = "profesionalSalud")
+    @Cascade(CascadeType.DELETE_ORPHAN)
+    private List<Enfermero> enfermeros;
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 import java.io.Serializable;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -28,9 +30,15 @@ public class Funcionario extends Persona implements Serializable {
     @Column(name = "contraseña")
     private String contraseña;
     @OneToMany(mappedBy = "funcionario")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Rol> roles;
     @OneToMany(mappedBy = "funcionario")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Sector> sectores;
     @OneToMany(mappedBy = "funcionario")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Administrador> adminitradores;
+    @OneToMany(mappedBy = "funcionario")
+    @Cascade(CascadeType.DELETE_ORPHAN)
+    private List<ProfesionalSalud> profesionalesSalud;
 }

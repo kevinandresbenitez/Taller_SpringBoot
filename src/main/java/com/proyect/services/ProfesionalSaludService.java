@@ -44,6 +44,10 @@ public class ProfesionalSaludService{
     public Boolean esFuncionarioProfesionalSalud(Long id) {
         return this.profesionalRepository.existsByFuncionarioId(id);
     }
-    
-    
-}
+
+    public Optional<ProfesionalSalud> obtenerProfSaludPorId(Long id) {
+        return this.profesionalRepository.findById(id);
+    }
+
+
+    }

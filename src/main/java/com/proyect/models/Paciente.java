@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import lombok.*;
-import com.proyect.models.Persona;
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 @Entity
 @Setter
 @Getter
@@ -20,8 +20,10 @@ public class Paciente extends Persona implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(mappedBy = "paciente")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<contactoPaciente> contactos;
     @OneToMany(mappedBy = "paciente")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Consulta> consultas;
 
     public void agregarConsultas(Consulta consulta){

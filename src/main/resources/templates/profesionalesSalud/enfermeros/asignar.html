@@ -10,28 +10,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Pagina Principal de Enfermeros</div>
+        <div>Asignando profesionales de la salud como enfermeros</div>
         
-        <a href="/profesionalSalud/">Volver</a>
-        <a href="/profesionalSalud/enfermeros/asignar/">Asignar Profesional de la salud como enfermero</a>
+        <a href="/profesionalSalud/enfermeros/">Volver</a>
+        
         <div>
             
-            <h2>Enfermeros</h2>
+            <h2>Profesionales de la salud</h2>
             <h3 th:text="${mensaje}"></h3>
-            <div th:each="enfermero : ${enfermeros}">
+            <div th:each="profesionalSalud : ${profesionalesSalud}">
                 <strong>-----------------------------------------------</strong><br>
                 <strong>Nombre Del Profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
                 <strong>Nro Matricula del profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getNroMatricula()}"></span><br>
+                <span th:text="${profesionalSalud.getNroMatricula()}"></span><br>
                 <strong>Nombre funcionario</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
                 <strong>ID del profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getId()}"></span><br>
+                <span th:text="${profesionalSalud.getId()}"></span><br>
                 <strong>ID del funcionario</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getId()}"></span><br>
+                <span th:text="${profesionalSalud.getFuncionario.getId()}"></span><br>
                 
-                <a th:href="@{/profesionalSalud/enfermero/eliminar/{id}(id=${enfermero.getId()})}">Eliminar Enfermero</a>
+                <a th:href="@{/profesionalSalud/enfermeros/asignar/{id}(id=${profesionalSalud.getId()})}">Asignar como enfermero</a>
             </div>
   
         </div>  
