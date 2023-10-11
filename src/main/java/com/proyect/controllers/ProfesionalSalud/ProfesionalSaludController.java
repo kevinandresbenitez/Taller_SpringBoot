@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.proyect.controllers;
+package com.proyect.controllers.ProfesionalSalud;
 import com.proyect.models.Enfermero;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Medico;
@@ -100,60 +100,5 @@ public class ProfesionalSaludController {
         return "redirect:/profesionalSalud/";
     }
     
-    // Apartado de medicos y enfermeros
-    @GetMapping("/enfermeros/")
-    public String listEnfermereos(Model model){
-        List<Enfermero> enfermeros = this.enfermeroService.listarEnfermeros();
-        model.addAttribute("enfermeros",enfermeros);
-        return "profesionalesSalud/enfermeros/index";        
-    }
-    
-    @GetMapping("/enfermeros/asignar/")
-    public String asignarEnfermero(Model model){
-        List<ProfesionalSalud> profSalud = this.profesionalSaludService.listarProfesionalSalud();
-        model.addAttribute("profesionalesSalud",profSalud);
-        return "profesionalesSalud/enfermeros/asignar";        
-    }
-    
-    @GetMapping("/enfermeros/asignar/{id}")
-    public String procesarAsignacionEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        Optional<ProfesionalSalud> profesionalSalud = this.profesionalSaludService.obtenerProfSaludPorId(id);
-        Boolean esEnfermero = this.enfermeroService.esProfSaludEnfermero(id);
-        Boolean esMedico = this.medicoService.esProfSaludMedico(id);
-        
-        if(profesionalSalud.isEmpty()){
-            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que el profesional de salud no existe");
-            return "redirect:/profesionalSalud/enfermeros/";       
-        }else if(esEnfermero){
-            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que ya fue asignado como enfermero");
-            return "redirect:/profesionalSalud/enfermeros/";                   
-        }else if(esMedico){
-            atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que ya fue asignado como medico");
-            return "redirect:/profesionalSalud/enfermeros/";       
-        }
-        
-        atributosMensaje.addFlashAttribute("mensaje","El profesional de la salud fue asignado como enfermero correctamente");
-        this.enfermeroService.asignarProfSaludComoEnfermero(profesionalSalud.get());
-        return "redirect:/profesionalSalud/enfermeros/";          
-    }
-    
-    @GetMapping("/medicos/")
-    public String listMedicos(Model model){
-        List<Medico> medicos = this.medicoService.listarEnfermeros();
-        model.addAttribute("medicos",medicos);
-        return "profesionalesSalud/medicos/index";
-    }
-    
-    @GetMapping("/medicos/asignar/")
-    public String asignarMedico(Model model){
-        List<ProfesionalSalud> profSalud = this.profesionalSaludService.listarProfesionalSalud();
-        model.addAttribute("profesionalesSalud",profSalud);
-        return "profesionalesSalud/medicos/asignar";
-    }
-    
-    @GetMapping("/medicos/asignar/{id}")
-    public String procesarAsignacionMedico(@PathVariable("id") Long id){
-        return "redirect:/medicos/";        
-    }
     
 }
