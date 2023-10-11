@@ -10,6 +10,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Listo los medicos</div>
+        <div>Pagina Principal de Medicos</div>
+        
+        <a href="/profesionalSalud/">Volver</a>
+        <a href="/profesionalSalud/medicos/asignar/">Asignar Profesional de la salud como Medico</a>
+        <a href="/profesionalSalud/medicos/especialidades/">Especialidades</a>
+        <div>
+            
+            <h2>Medicos</h2>
+            <h3 th:text="${mensaje}"></h3>
+            <div th:each="medico : ${medicos}">
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del Profesional de la salud</strong><br>
+                <span th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
+                <strong>Nro Matricula del profesional de la salud</strong><br>
+                <span th:text="${medico.getProfesionalSalud().getNroMatricula()}"></span><br>
+                <strong>Nombre funcionario</strong><br>
+                <span th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
+                <strong>ID del profesional de la salud</strong><br>
+                <span th:text="${medico.getProfesionalSalud().getId()}"></span><br>
+                <strong>ID del funcionario</strong><br>
+                <span th:text="${medico.getProfesionalSalud().getFuncionario.getId()}"></span><br>
+                
+                <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}">Eliminar Medico</a>
+                <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}">Agregar Especialidad</a>
+            </div>
+  
+        </div>  
+
     </body>
 </html>

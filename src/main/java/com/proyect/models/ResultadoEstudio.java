@@ -6,6 +6,9 @@ package com.proyect.models;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -26,9 +29,9 @@ public class ResultadoEstudio {
     @Column(name = "id")
     private Long id;
     @Column(name = "fecha")
-    private Date fecha;
+    private LocalDate fecha;
     @Column(name = "hora")
-    private String hora;
+    private LocalTime hora;
     @Column(name = "tipo_informe")
     private String tipoInforme;
     @Column(name = "informe_studio")

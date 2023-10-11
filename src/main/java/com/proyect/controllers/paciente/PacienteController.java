@@ -1,4 +1,4 @@
-package com.proyect.controllers;
+package com.proyect.controllers.paciente;
 
 import com.proyect.models.Consulta;
 import com.proyect.models.Paciente;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class PacienteController {
     @Autowired
     PacienteService pacienteService;
-    ConsultaService consultaService;
+
     @GetMapping("/")
     public String list(Model model) {
         List<Paciente> pacientes = pacienteService.listarPacientes();
@@ -65,36 +65,5 @@ public class PacienteController {
         return "pacientes/modificar";
     }
 
-    @GetMapping("/consultas/{id}")
-    public String listaResultadoEstudios(Model model, @PathVariable("id") Long id) {
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
-        if (paciente.getId() == null) {
-            return "redirect:/pacientes/";
-        }
-        model.addAttribute("paciente", paciente);
-        return "/pacientes/consultas/index";
-    }
-
-
-    @PostMapping("/consultas/agregar/{id}")
-    public String crearConsultas(@RequestParam("resultadoestudios") List<ResultadoEstudio> resultadoEstudios,
-                                 @RequestParam("fecha") LocalDate fecha,
-                                 @RequestParam("hora") LocalTime hora,
-                                 @RequestParam("diagnostico") String diagnostico,
-                                 @RequestParam("tipoAtencion") String tipoAtencion,
-                                 @PathVariable("diagnosticosClinicos") String diagnosticosClinicos,
-                                 @RequestParam("id") Long id) {
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
-        Consulta consulta = new Consulta();
-        consulta.setHoraAtencion(hora);
-        consulta.setFechaAtencion(fecha);
-        consulta.setTipoAtencion(tipoAtencion);
-        consulta.setPaciente(paciente);
-        consulta.setDiagnostico(diagnostico);
-        consulta.setResultadosEstudios(resultadoEstudios);
-        consultaService.guardarConsulta(consulta);
-        paciente.agregarConsultas(consulta);
-        return "/pacientes/resultadoestudios/" + paciente.getId();
-    }
 
 }

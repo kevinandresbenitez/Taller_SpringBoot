@@ -1,4 +1,4 @@
-package com.proyect.controllers;
+package com.proyect.controllers.paciente;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

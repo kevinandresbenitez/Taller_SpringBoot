@@ -26,4 +26,8 @@ public class EnfermeroService {
         enfermero.setProfesionalSalud(profesionalSalud);
         this.enfermeroRepository.save(enfermero);
     }
+    
+    public void eliminarEnfermeroPorId(Long id){
+        this.enfermeroRepository.deleteById(id);
+    }
 }

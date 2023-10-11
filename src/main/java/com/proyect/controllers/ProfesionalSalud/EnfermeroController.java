@@ -40,8 +40,6 @@ public class EnfermeroController {
     private AdministradorService administradorService;
         
    
-    
-    // Apartado de medicos y enfermeros
     @GetMapping("/")
     public String listEnfermereos(Model model){
         List<Enfermero> enfermeros = this.enfermeroService.listarEnfermeros();
@@ -64,19 +62,25 @@ public class EnfermeroController {
         
         if(profesionalSalud.isEmpty()){
             atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que el profesional de salud no existe");
-            return "redirect:/";       
+            return "redirect:/profesionalSalud/enfermeros/";       
         }else if(esEnfermero){
             atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que ya fue asignado como enfermero");
-            return "redirect:/";                   
+            return "redirect:/profesionalSalud/enfermeros/";                   
         }else if(esMedico){
             atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como enfermero, ya que ya fue asignado como medico");
-            return "redirect:/";       
+            return "redirect:/profesionalSalud/enfermeros/";       
         }
         
         atributosMensaje.addFlashAttribute("mensaje","El profesional de la salud fue asignado como enfermero correctamente");
         this.enfermeroService.asignarProfSaludComoEnfermero(profesionalSalud.get());
-        return "redirect:/";          
+        return "redirect:/profesionalSalud/enfermeros/";          
     }
-
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminarEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        this.enfermeroService.eliminarEnfermeroPorId(id);
+        atributosMensaje.addFlashAttribute("mensaje","Eliminando enfermero adecuadamente");
+        return "redirect:/profesionalSalud/enfermeros/";          
+    }
     
 }

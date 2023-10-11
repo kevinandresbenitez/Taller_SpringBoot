@@ -10,9 +10,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Asignando profesionales de la salud como medicos</div>
+        <div>Asignando profesionales de la salud como medico</div>
         
-        <a href="/profesionalSalud/enfermeros/">Volver</a>
+        <a href="/profesionalSalud/medicos/">Volver</a>
         
         <div>
             
@@ -31,7 +31,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <strong>ID del funcionario</strong><br>
                 <span th:text="${profesionalSalud.getFuncionario.getId()}"></span><br>
                 
-                <a th:href="@{/profesionalSalud/medicos/asignar/{id}(id=${profesionalSalud.getId()})}">Asignar como enfermero</a>
+                <a th:href="@{/profesionalSalud/medicos/asignar/{id}(id=${profesionalSalud.getId()})}">Asignar como medico</a>
             </div>
   
         </div>  
