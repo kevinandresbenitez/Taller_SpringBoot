@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>consultas</title>
+
+
+
+</head>
+<body>
+<a href="/pacientes/consultas/resultadosestudios/crear/${consulta.id}">Ir a agregar resultados de estudios</a>
+<div class="container mt-5">
+    <h2 class="mb-4">Consultas del paciente: <span th:text="${consultas.paciente.getNombre()}"></span></h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Tipo de informe</th>
+            <th>informe de estudio</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="resultado : ${consultas.resultadosestudios}">
+            <td th:text="${resultado.fecha}"></td>
+            <td th:text="${resultado.hora}"></td>
+            <td th:text="${resultado.tipoInforme}"></td>
+            <td th:text="${resultado.informeEstudio}"></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>

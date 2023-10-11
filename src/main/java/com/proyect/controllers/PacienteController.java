@@ -21,6 +21,7 @@ import java.util.Optional;
 public class PacienteController {
     @Autowired
     PacienteService pacienteService;
+    @Autowired
     ConsultaService consultaService;
     @GetMapping("/")
     public String list(Model model) {
@@ -66,18 +67,28 @@ public class PacienteController {
     }
 
     @GetMapping("/consultas/{id}")
-    public String listaResultadoEstudios(Model model, @PathVariable("id") Long id) {
+    public String listaConsultas(Model model, @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
-        if (paciente.getId() == null) {
+        if (paciente == null) {
             return "redirect:/pacientes/";
         }
         model.addAttribute("paciente", paciente);
         return "/pacientes/consultas/index";
     }
+    @GetMapping("/consultas/crear/{id}")
+    public String crearConsultas(Model model,@PathVariable("id")Long id){
+        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        
+        if(paciente == null){
+   
+            return "redirect:/pacientes/consultas";
+        }
+        model.addAttribute("paciente",paciente);
+        return "/pacientes/consultas/crear";
+    }
 
-
-    @PostMapping("/consultas/agregar/{id}")
-    public String crearConsultas(@RequestParam("resultadoestudios") List<ResultadoEstudio> resultadoEstudios,
+    @PostMapping("/consultas/crear/{id}")
+    public String crearConsultas(@RequestParam("resultadosEstudios") List<ResultadoEstudio> resultadoEstudios,
                                  @RequestParam("fecha") LocalDate fecha,
                                  @RequestParam("hora") LocalTime hora,
                                  @RequestParam("diagnostico") String diagnostico,
@@ -94,7 +105,40 @@ public class PacienteController {
         consulta.setResultadosEstudios(resultadoEstudios);
         consultaService.guardarConsulta(consulta);
         paciente.agregarConsultas(consulta);
-        return "/pacientes/resultadoestudios/" + paciente.getId();
+        return "/pacientes/consultas/" + paciente.getId();
+    }
+
+    @GetMapping("/consultas/resultadosestudios/{id}")
+    public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+        Consulta consultas = consultaService.obtenerConsultaPorId(id);
+        if (consultas == null) {
+            return "redirect:/pacientes/consultas/";
+        }
+        model.addAttribute("consultas", consultas);
+        return "/pacientes/consultas/resultadosestudios/index";
+    }
+
+    @GetMapping("/consultas/resultadosestudios/crear/{id}")
+    public String crearResultadoEstudios(){
+        return "/pacientes/consultas/resultadosestudios/crear";
+    }
+
+    @PostMapping("/consultas/resultadosestudios/crear/{id}")
+    public String crearResultadoEstudios(@RequestParam("fecha")LocalDate fecha,
+                                         @RequestParam("hora")LocalTime hora,
+                                         @RequestParam("tipoInforme")String tipoInforme,
+                                         @RequestParam("informeEstudio")String informeEstudio,
+                                         @RequestParam("id")Long id){
+
+        Consulta consulta = consultaService.obtenerConsultaPorId(id);
+        ResultadoEstudio resultadoEstudio = new ResultadoEstudio();
+        resultadoEstudio.setInformeEstudio(informeEstudio);
+        resultadoEstudio.setHora(hora);
+        resultadoEstudio.setFecha(fecha);
+        resultadoEstudio.setTipoInforme(tipoInforme);
+        consulta.agregarResultadoEstudio(resultadoEstudio);
+        consultaService.guardarConsulta(consulta);
+        return "/pacientes/consultas/resultadosestudios/crear/"+consulta.getId();
     }
 
 }
