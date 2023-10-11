@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.proyect.controllers.ProfesionalSalud;
+package com.proyect.controllers.ProfesionalSalud.Medico;
 import com.proyect.models.Enfermero;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Medico;
