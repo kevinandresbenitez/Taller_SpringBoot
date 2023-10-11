@@ -1,6 +1,7 @@
 package com.proyect.services;
 
 import com.proyect.models.Consulta;
+import com.proyect.models.Paciente;
 import com.proyect.repositories.ConsultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +18,6 @@ public class ConsultaService {
     public Consulta obtenerConsultaPorId(Long id){
         return consultaRepository.findById(id).get();
     }
+
+
 }

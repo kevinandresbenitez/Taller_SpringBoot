@@ -41,8 +41,8 @@
             <td th:text="${paciente.telefonoCelular}"></td>
             <td th:text="${paciente.fechaNacimiento}"></td>
             <td>
-                <a th:href="@{/pacientes/triages/{id}(id=${paciente.getId()})}">Ir a Triages</a>
-                <a th:href="@{/pacientes/consultas/{id}(id=${paciente.getId()})}">Ir a Consultas</a>
+                <a th:href="@{triages/{id}(id=${paciente.getId()})}">Ir a Triages</a>
+                <a th:href="@{consultas/{id}(id=${paciente.getId()})}">Ir a Consultas</a>
             </td>
         </tr>
         </tbody>
