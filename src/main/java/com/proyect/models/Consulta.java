@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -40,6 +41,7 @@ public class Consulta {
     @Column(name="diagnosticos_clinicos")
     private String diagnosticosClinicos;
     @OneToMany(mappedBy = "consulta")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private List<ResultadoEstudio> resultadosEstudios;
     @ManyToOne
     @JoinColumn(name="id_paciente")

@@ -30,7 +30,4 @@ public class Paciente extends Persona implements Serializable{
         this.consultas.add(consulta);
     }
 
-    public void agregarResultadoEstudioAConsultas(ResultadoEstudio resultadoEstudio){
-
-    }
 }

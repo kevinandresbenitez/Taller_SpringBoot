@@ -5,6 +5,7 @@ import com.proyect.models.Paciente;
 import com.proyect.models.ResultadoEstudio;
 import com.proyect.services.ConsultaService;
 import com.proyect.services.PacienteService;
+import com.proyect.services.ResultadoEstudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +13,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Controller
 @RequestMapping("/pacientes/consultas")
-public class ConsultaControlller {
+public class ConsultaController {
     @Autowired
     ConsultaService consultaService;
     @Autowired
     PacienteService pacienteService;
+    @Autowired
+    ResultadoEstudioService resultadoEstudioService;
+
+
     @GetMapping("/{id}")
     public String listaConsultas(Model model, @PathVariable("id") Long id) {
         Optional<Paciente> paciente = pacienteService.findById(id);
@@ -47,16 +49,16 @@ public class ConsultaControlller {
 
     @PostMapping("/crear/{id}")
     public String crearConsultas(/*@RequestParam("resultadosEstudios") List<ResultadoEstudio> resultadoEstudios,*/
-                                 @RequestParam("fecha") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate fecha,
-                                 @RequestParam("hora") @DateTimeFormat(pattern = "HH:mm:ss") LocalTime hora,
                                  @RequestParam("diagnostico") String diagnostico,
                                  @RequestParam("tipoAtencion") String tipoAtencion,
                                  @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
                                  @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Consulta consulta = new Consulta();
-        consulta.setHoraAtencion(hora);
-        consulta.setFechaAtencion(fecha);
+        LocalDate fechahoy = LocalDate.now();
+        LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+        consulta.setHoraAtencion(tiempohoy);
+        consulta.setFechaAtencion(fechahoy);
         consulta.setTipoAtencion(tipoAtencion);
         consulta.setPaciente(paciente);
         consulta.setDiagnostico(diagnostico);
@@ -69,34 +71,39 @@ public class ConsultaControlller {
 
     @GetMapping("/resultadosestudios/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
-        Consulta consultas = consultaService.obtenerConsultaPorId(id);
-        if (consultas == null) {
+        Consulta consulta = consultaService.obtenerConsultaPorId(id);
+        if (consulta == null) {
             return "redirect:/pacientes/consultas/";
         }
-        model.addAttribute("consultas", consultas);
-        return "/pacientes/consultas/resultadosestudios/index";
+        model.addAttribute("consulta", consulta);
+        return "pacientes/consultas/resultadosestudios/index";
     }
 
     @GetMapping("/resultadosestudios/crear/{id}")
-    public String crearResultadoEstudios(){
+    public String crearResultadoEstudios(Model model,@PathVariable("id")Long id) {
+        Consulta consulta = consultaService.obtenerConsultaPorId(id);
+        if(consulta == null){
+            return "redirect:/pacientes/";
+        }
+        model.addAttribute("consulta",consulta);
         return "/pacientes/consultas/resultadosestudios/crear";
     }
 
     @PostMapping("/resultadosestudios/crear/{id}")
-    public String crearResultadoEstudios(@RequestParam("fecha")LocalDate fecha,
-                                         @RequestParam("hora")LocalTime hora,
-                                         @RequestParam("tipoInforme")String tipoInforme,
+    public String crearResultadoEstudios(@RequestParam("tipoInforme")String tipoInforme,
                                          @RequestParam("informeEstudio")String informeEstudio,
-                                         @RequestParam("id")Long id){
-
+                                         @PathVariable("id")Long id){
+        LocalDate fechahoy = LocalDate.now();
+        LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         ResultadoEstudio resultadoEstudio = new ResultadoEstudio();
         resultadoEstudio.setInformeEstudio(informeEstudio);
-        resultadoEstudio.setHora(hora);
-        resultadoEstudio.setFecha(fecha);
+        resultadoEstudio.setHora(tiempohoy);
+        resultadoEstudio.setFecha(fechahoy);
         resultadoEstudio.setTipoInforme(tipoInforme);
         consulta.agregarResultadoEstudio(resultadoEstudio);
+        resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
         consultaService.guardarConsulta(consulta);
-        return "/pacientes/consultas/resultadosestudios/crear/"+consulta.getId();
+        return "redirect:/pacientes/consultas/resultadosestudios/"+consulta.getId();
     }
 }

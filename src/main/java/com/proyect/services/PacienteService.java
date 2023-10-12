@@ -32,7 +32,13 @@ public class PacienteService {
     }
 
     public Paciente obtenerPacienteById(Long id){
-        return pacienteRepository.findById(id).get();
+        Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+
+        if (pacienteOptional.isPresent()) {
+            return pacienteOptional.get();
+        } else {
+            return null;
+        }
     }
 /*
     public void crearConsulta(List<ResultadoEstudio> resultadoEstudio,Long id){

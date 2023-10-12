@@ -6,13 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>consultas</title>
 
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
+        h2 {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            margin-right: 10px; /* Añadido para separar los enlaces */
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<a href="/pacientes/consultas/resultadosestudios/crear/${consulta.id}">Ir a agregar resultados de estudios</a>
+<a th:href="@{/pacientes/consultas/resultadosestudios/crear/{id}(id=${consulta.getId()})}" class="button">Ir a agregar resultados de estudios</a>
+
 <div class="container mt-5">
-    <h2 class="mb-4">Consultas del paciente: <span th:text="${consultas.paciente.getNombre()}"></span></h2>
+    <h2 class="mb-4">Resultado de estudios del paciente: <span th:text="${consulta.getPaciente.getNombre()}"></span></h2>
 
     <table class="table">
         <thead>
@@ -21,14 +88,14 @@
             <th>Fecha</th>
             <th>Hora</th>
             <th>Tipo de informe</th>
-            <th>informe de estudio</th>
+            <th>Informe de estudio</th>
 
 
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="resultado : ${consultas.resultadosestudios}">
+        <tr th:each="resultado : ${consulta.resultadosEstudios}">
             <td th:text="${resultado.fecha}"></td>
             <td th:text="${resultado.hora}"></td>
             <td th:text="${resultado.tipoInforme}"></td>
@@ -39,8 +106,6 @@
         </tbody>
     </table>
 </div>
-
-
 
 </body>
 </html>

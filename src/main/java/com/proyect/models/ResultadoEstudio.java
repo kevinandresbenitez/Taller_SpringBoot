@@ -34,7 +34,7 @@ public class ResultadoEstudio {
     private LocalTime hora;
     @Column(name = "tipo_informe")
     private String tipoInforme;
-    @Column(name = "informe_studio")
+    @Column(name = "informe_estudio")
     private String informeEstudio;
     @ManyToOne
     @JoinColumn(name = "id_consulta")
