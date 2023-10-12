@@ -1,7 +1,10 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 @Entity
@@ -13,14 +16,10 @@ public class Especialidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_medico")
-    private Medico medico;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "fecha_titulacion")
-    private String fechaTitulacion;
-    @Column(name = "universidad")
-    private String universidad;
     
+    @OneToMany(mappedBy = "especialidad")
+    @Cascade(CascadeType.DELETE_ORPHAN)
+    private List<Titulo> titulos;
 }

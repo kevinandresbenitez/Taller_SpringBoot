@@ -4,6 +4,7 @@ import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
 import com.proyect.repositories.MedicoRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,9 @@ public class MedicoService {
     
     public void eliminarMedicoPorId(Long id){
         this.medicoRepository.deleteById(id);
+    }
+
+    public Optional<Medico> obtenerMedicoPorId(Long id) {
+        return this.medicoRepository.findById(id);
     }
 }

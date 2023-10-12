@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Pagina Principal de Medicos</div>
+        
+        <a href="/profesionalSalud/medicos/">Volver</a>
+        <a th:href="@{/profesionalSalud/medicos/titulaciones/crear/{id}(id=${medico.getId()})}">Agregar Titulo</a>
+        <div>
+            
+            <h2>Titulos del Medico</h2>
+            <h3 th:text="${mensaje}"></h3>
+            <div>
+                <div th:each="titulo: ${medico.getTitulos()}">
+                    <strong>Nombre Universidad</strong><br>
+                    <p th:text="${titulo.getUniversidad()}"></p>
+                    <strong>Fecha Titulacion</strong><br>
+                    <p th:text="${titulo.getFechaGraduacion()}"></p>
+                    <strong>Nombre Especialidad</strong><br>
+                    <p th:text="${titulo.getEspecialidad().getNombre()}"></p>
+                    <a th:href="@{/profesionalSalud/medicos/titulaciones/eliminar/{id_medico}/{id}(id=${titulo.getId()},id_medico=${medico.getId()})}">Eliminar Titulacion</a>
+                </div>
+            </div>
+  
+        </div>  
+
+    </body>
+</html>

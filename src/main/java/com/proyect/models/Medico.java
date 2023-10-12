@@ -19,7 +19,8 @@ public class Medico {
     @ManyToOne
     @JoinColumn(name = "id_prof_salud")
     private ProfesionalSalud profesionalSalud;
+    
     @OneToMany(mappedBy = "medico")
     @Cascade(CascadeType.DELETE_ORPHAN)
-    private List<Especialidad> especialidades;
+    private List<Titulo> titulos;
 }
