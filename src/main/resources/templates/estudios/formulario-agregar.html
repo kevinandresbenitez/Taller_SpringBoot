@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Formulario de Agregar Estudio</title>
+</head>
+<body>
+<h1>Formulario de Agregar Estudio</h1>
+<form action="/resultado-estudio/agregar" method="post" th:object="${resultadoEstudio}">
+  <!-- Campos del formulario para agregar estudio -->
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre" th:field="*{nombre}" />
+
+  <!-- Agregar más campos según tus necesidades -->
+
+  <button type="submit">Agregar Estudio</button>
+</form>
+</body>
+</html>

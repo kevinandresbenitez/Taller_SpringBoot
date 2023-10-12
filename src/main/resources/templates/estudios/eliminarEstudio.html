@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eliminar Estudio</title>
+</head>
+<body>
+<h1>Eliminar Estudio</h1>
+<p>¿Estás seguro de que deseas eliminar este estudio?</p>
+<form th:action="@{/resultado-estudio/eliminar/{id}}" th:object="${resultadoEstudio}" method="get">
+  <input type="hidden" id="id" name="id" th:value="${resultadoEstudio.id}">
+  <button type="submit">Eliminar</button>
+</form>
+</body>
+</html>
