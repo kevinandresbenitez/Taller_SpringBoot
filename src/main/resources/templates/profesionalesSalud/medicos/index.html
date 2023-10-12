@@ -31,9 +31,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <span th:text="${medico.getProfesionalSalud().getId()}"></span><br>
                 <strong>ID del funcionario</strong><br>
                 <span th:text="${medico.getProfesionalSalud().getFuncionario.getId()}"></span><br>
-                
+                <strong>Titulaciones</strong>
+                <div th:each="titulo: ${medico.getTitulos()}">
+                    <strong>Nombre Universidad</strong><br>
+                    <p th:text="${titulo.getUniversidad()}"></p>
+                    <strong>Fecha Titulacion</strong><br>
+                    <p th:text="${titulo.getFechaGraduacion()}"></p>
+                    <strong>Nombre Especialidad</strong><br>
+                    <p th:text="${titulo.getEspecialidad().getNombre()}"></p>
+                </div> 
                 <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}">Eliminar Medico</a>
-                <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}">Agregar Especialidad</a>
+                <a th:href="@{/profesionalSalud/medicos/titulaciones/{id}(id=${medico.getId()})}">Configurar Titulaciones</a>
             </div>
   
         </div>  
