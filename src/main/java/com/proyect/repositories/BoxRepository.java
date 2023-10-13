@@ -6,11 +6,13 @@ package com.proyect.repositories;
 
 import com.proyect.models.Box;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author eduardo
  */
+@Repository
 public interface BoxRepository extends JpaRepository<Box, Long> {
   
 }

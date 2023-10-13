@@ -4,10 +4,13 @@
  */
 package com.proyect.controllers;
 
+import com.proyect.models.Box;
 import com.proyect.services.BoxService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,6 +23,13 @@ public class BoxController {
     @Autowired
     BoxService boxService;
     
-   
+      @GetMapping("/lista-boxes")
+      
+         public String listBox(Model model) {
+             List<Box> box = boxService.listarBox();
+             model.addAttribute("box", box);
+             return "box/list";
     
+   
+    }  
 }

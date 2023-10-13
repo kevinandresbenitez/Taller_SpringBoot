@@ -7,6 +7,7 @@ package com.proyect.services;
 import com.proyect.models.Box;
 import com.proyect.repositories.BoxRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,35 +18,39 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class BoxService {
+
     @Autowired
-    
     BoxRepository boxRepository;
-    
-     public Box crearBox(int numero, boolean ocupado) {
+
+    public Box crearBox(int numero, boolean ocupado) {
         Box box = new Box();
         box.setNumero(numero);
         box.setOcupado(ocupado);
         return boxRepository.save(box);
     }
-      public void habilitarBox(Long id) {
-         if (boxRepository.existsById(id)) {
+
+    public List<Box> listarBox() {
+        return boxRepository.findAll();
+    }
+
+    public void habilitarBox(Long id) {
+        if (boxRepository.existsById(id)) {
             Box box = boxRepository.findById(id).get();
             box.setHabilitado(true);
             boxRepository.save(box);
-         }else{
-          
-      }
+        } else {
+
+        }
     }
 
     public void deshabilitarBox(Long id) {
-            if (boxRepository.existsById(id)) {
+        if (boxRepository.existsById(id)) {
             Box box = boxRepository.findById(id).get();
             box.setHabilitado(false);
             boxRepository.save(box);
-         }else{
-          
-      }
-    
-        }
-}
+        } else {
 
+        }
+
+    }
+}
