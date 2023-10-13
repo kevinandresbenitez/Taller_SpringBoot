@@ -102,7 +102,7 @@ public class ConsultaController {
         resultadoEstudio.setFecha(fechahoy);
         resultadoEstudio.setTipoInforme(tipoInforme);
         consulta.agregarResultadoEstudio(resultadoEstudio);
-        resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
+        //resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
         consultaService.guardarConsulta(consulta);
         return "redirect:/pacientes/consultas/resultadosestudios/"+consulta.getId();
     }
