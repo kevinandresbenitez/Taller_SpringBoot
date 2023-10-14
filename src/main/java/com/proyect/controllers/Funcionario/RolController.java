@@ -71,16 +71,15 @@ public class RolController {
         }
         
         
+        // Remuevo los roles anteriores
+        funcionario.get().getRoles().removeAll(funcionario.get().getRoles());
+        
         
         //Si los roles existen los agrego al funcionario
         for (Long id_rol : RolesId) {
             Optional<Rol> rol = this.rolServices.obtenerPorId(id_rol);
-            
             if(rol.isPresent()){
-                // Al rol le setteo el funcionario
                 rol.get().getFuncionarios().add(funcionario.get());
-                // Al funcionario le setteo el rol y elimino los anteriores
-                funcionario.get().getRoles().removeAll(funcionario.get().getRoles());
                 funcionario.get().getRoles().add(rol.get());
                 //Guardo
                 this.rolServices.crear(rol.get());
