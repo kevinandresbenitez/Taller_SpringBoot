@@ -8,22 +8,26 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  *
  * @author ulise
  */
+
 @Entity
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
+@AllArgsConstructor
 @Table(name="consulta")
 public class Consulta {
     @Id
@@ -41,13 +45,14 @@ public class Consulta {
     @Column(name="diagnosticos_clinicos")
     private String diagnosticosClinicos;
     @OneToMany(mappedBy = "consulta")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<ResultadoEstudio> resultadosEstudios;
     @ManyToOne
     @JoinColumn(name="id_paciente")
     private Paciente paciente;
 
+
     public void agregarResultadoEstudio(ResultadoEstudio resultadoEstudio){
         this.resultadosEstudios.add(resultadoEstudio);
     }
-}
+    }

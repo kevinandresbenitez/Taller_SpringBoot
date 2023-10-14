@@ -23,11 +23,17 @@
             max-width: 400px;
             width: 100%;
             text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
         }
 
         h2 {
             color: #007bff;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         label {
@@ -54,11 +60,26 @@
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para los campos de resultados de estudios */
+        #resultadosEstudiosContainer {
+            margin-top: 20px;
+        }
+
+        #resultadosEstudiosContainer > div {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-<form th:action="@{/pacientes/consultas/crear/{id}(id=${paciente.id})}" method="post">
+<form th:action="@{/pacientes/consultas/crear/{id}(id=${paciente.id})}" method="post" id="consultaForm">
     <h2>Crear Consulta</h2>
 
     <label for="diagnostico">Diagnóstico:</label>
@@ -70,9 +91,53 @@
     <label for="diagnosticosClinicos">Diagnósticos Clínicos:</label>
     <input type="text" id="diagnosticosClinicos" name="diagnosticosClinicos" required>
 
-    <input type="hidden" id="id" name="id" th:value="${paciente.id}">
+    <div>
+
+        <label for="resultadosEstudios">Resultados de estudios:</label>
+        <div>
+            <label for="resultadosEstudios[${indiceResultadoEstudio}].tipoInforme">Tipo de Informe:</label>
+            <input type="text" id="tipoInforme${indiceResultadoEstudio}" name="tipoInforme[]" required>
+
+            <label for="resultadosEstudios[${indiceResultadoEstudio}].informeEstudio">Informe de Estudio:</label>
+            <input type="text" id="informeEstudio${indiceResultadoEstudio}" name="informeEstudio[]" required>
+
+            <br>
+        </div>
+        <div id="resultadosEstudiosContainer"></div>
+    </div>
+    <!-- Contenedor para resultados de estudios -->
+
+    <!-- Botón para agregar más campos de resultados de estudios -->
+    <button type="button" onclick="agregarCampoResultadoEstudio()">Agregar otro resultado de estudio</button>
 
     <button type="submit">Crear Consulta</button>
 </form>
+
+<!-- JavaScript para agregar campos de resultados de estudios dinámicamente -->
+<script th:inline="javascript">
+    var indiceResultadoEstudio = 1;
+
+    function agregarCampoResultadoEstudio() {
+        var container = document.getElementById('resultadosEstudiosContainer');
+
+        var nuevoCampo =
+            `<div>
+                <label for="resultadosEstudios[${indiceResultadoEstudio}].tipoInforme">Tipo de Informe:</label>
+                <input type="text" id="tipoInforme${indiceResultadoEstudio}" name="tipoInforme[]" required>
+
+                <label for="resultadosEstudios[${indiceResultadoEstudio}].informeEstudio">Informe de Estudio:</label>
+                <input type="text" id="informeEstudio${indiceResultadoEstudio}" name="informeEstudio[]" required>
+
+                <br>
+            </div>`;
+
+        container.innerHTML += nuevoCampo;
+
+
+        indiceResultadoEstudio++;
+    }
+
+</script>
 </body>
 </html>
+

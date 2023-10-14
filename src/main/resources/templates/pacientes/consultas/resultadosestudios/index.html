@@ -76,7 +76,6 @@
     </style>
 </head>
 <body>
-<a th:href="@{/pacientes/consultas/resultadosestudios/crear/{id}(id=${consulta.getId()})}" class="button">Ir a agregar resultados de estudios</a>
 
 <div class="container mt-5">
     <h2 class="mb-4">Resultado de estudios del paciente: <span th:text="${consulta.getPaciente.getNombre()}"></span></h2>
@@ -100,7 +99,6 @@
             <td th:text="${resultado.hora}"></td>
             <td th:text="${resultado.tipoInforme}"></td>
             <td th:text="${resultado.informeEstudio}"></td>
-
         </tr>
 
         </tbody>
