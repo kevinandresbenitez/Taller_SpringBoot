@@ -21,9 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author ulise
  */
+
 @Entity
 @Setter
-
 @NoArgsConstructor
 @Getter
 @ToString
@@ -55,4 +55,4 @@ public class Consulta {
     public void agregarResultadoEstudio(ResultadoEstudio resultadoEstudio){
         this.resultadosEstudios.add(resultadoEstudio);
     }
-}
+    }

@@ -23,12 +23,12 @@ public class BoxController {
     @Autowired
     BoxService boxService;
     
-      @GetMapping("/lista-boxes")
+      @GetMapping("/")
       
          public String listBox(Model model) {
              List<Box> box = boxService.listarBox();
              model.addAttribute("box", box);
-             return "box/list";
+             return "boxes/index";
     
    
     }  

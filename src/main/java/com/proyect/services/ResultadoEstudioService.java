@@ -18,11 +18,11 @@ public class ResultadoEstudioService {
         return resultadoEstudioRepository.findAll();
     }
 
-    public void agregarEstudio(ResultadoEstudio resultadoEstudio) {
+    public void guardarResultadoEstudio(ResultadoEstudio resultadoEstudio) {
         resultadoEstudioRepository.save(resultadoEstudio);
     }
 
-<<<<<<< HEAD
+
     public void eliminarEstudio(Long id) {
         resultadoEstudioRepository.deleteById(id);
     }
@@ -34,7 +34,6 @@ public class ResultadoEstudioService {
     public ResultadoEstudio obtenerEstudioPorId(Long id) {
         return resultadoEstudioRepository.findById(id).orElse(null);
     }
-=======
->>>>>>> ad30c64de5632ecd6bcda11966c5ee91985afc2d
+
 }
 

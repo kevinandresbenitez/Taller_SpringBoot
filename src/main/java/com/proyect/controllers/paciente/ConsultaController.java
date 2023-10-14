@@ -78,7 +78,6 @@ public class ConsultaController {
                 resultado.setFecha(fechahoy);
                 resultado.setHora(tiempohoy);
                 resultado.setConsulta(consulta);
-                System.out.println(consulta.getId());
                 consulta.agregarResultadoEstudio(resultado);
                 resultadoEstudioService.guardarResultadoEstudio(resultado);
             }
