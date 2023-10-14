@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -48,13 +50,15 @@ public class ConsultaController {
     }
 
     @PostMapping("/crear/{id}")
-    public String crearConsultas(/*@RequestParam("resultadosEstudios") List<ResultadoEstudio> resultadoEstudios,*/
+    public String crearConsultas(@RequestParam(value = "tipoInforme[]", required = false) List<String> tiposInformes,
+                                 @RequestParam(value = "informeEstudio[]", required = false) List<String> informesEstudios,
                                  @RequestParam("diagnostico") String diagnostico,
                                  @RequestParam("tipoAtencion") String tipoAtencion,
                                  @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
                                  @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Consulta consulta = new Consulta();
+        consulta.setResultadosEstudios(new ArrayList<>());
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         consulta.setHoraAtencion(tiempohoy);
@@ -63,9 +67,28 @@ public class ConsultaController {
         consulta.setPaciente(paciente);
         consulta.setDiagnostico(diagnostico);
         consulta.setDiagnosticosClinicos(diagnosticosClinicos);
+        consultaService.guardarConsulta(consulta);
         //consulta.setResultadosEstudios(resultadoEstudios);
+
+        if (tiposInformes != null && informesEstudios != null) {
+            for (int i = 0; i < tiposInformes.size(); i++) {
+                ResultadoEstudio resultado = new ResultadoEstudio();
+                resultado.setTipoInforme(tiposInformes.get(i));
+                resultado.setInformeEstudio(informesEstudios.get(i));
+                resultado.setFecha(fechahoy);
+                resultado.setHora(tiempohoy);
+                resultado.setConsulta(consulta);
+                System.out.println(consulta.getId());
+                consulta.agregarResultadoEstudio(resultado);
+                resultadoEstudioService.guardarResultadoEstudio(resultado);
+            }
+        }
         paciente.agregarConsultas(consulta);
         consultaService.guardarConsulta(consulta);
+        pacienteService.crearPaciente(paciente);
+
+
+
         return "redirect:/pacientes/consultas/"+paciente.getId();
     }
 
@@ -79,31 +102,4 @@ public class ConsultaController {
         return "pacientes/consultas/resultadosestudios/index";
     }
 
-    @GetMapping("/resultadosestudios/crear/{id}")
-    public String crearResultadoEstudios(Model model,@PathVariable("id")Long id) {
-        Consulta consulta = consultaService.obtenerConsultaPorId(id);
-        if(consulta == null){
-            return "redirect:/pacientes/";
-        }
-        model.addAttribute("consulta",consulta);
-        return "/pacientes/consultas/resultadosestudios/crear";
-    }
-
-    @PostMapping("/resultadosestudios/crear/{id}")
-    public String crearResultadoEstudios(@RequestParam("tipoInforme")String tipoInforme,
-                                         @RequestParam("informeEstudio")String informeEstudio,
-                                         @PathVariable("id")Long id){
-        LocalDate fechahoy = LocalDate.now();
-        LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
-        Consulta consulta = consultaService.obtenerConsultaPorId(id);
-        ResultadoEstudio resultadoEstudio = new ResultadoEstudio();
-        resultadoEstudio.setInformeEstudio(informeEstudio);
-        resultadoEstudio.setHora(tiempohoy);
-        resultadoEstudio.setFecha(fechahoy);
-        resultadoEstudio.setTipoInforme(tipoInforme);
-        consulta.agregarResultadoEstudio(resultadoEstudio);
-        //resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
-        consultaService.guardarConsulta(consulta);
-        return "redirect:/pacientes/consultas/resultadosestudios/"+consulta.getId();
-    }
 }
