@@ -6,6 +6,7 @@ package com.proyect.services;
 import com.proyect.models.Rol;
 import com.proyect.repositories.RolRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,14 @@ public class RolService{
     
     public void crear(Rol rol){
         this.rolRepository.save(rol);
+    }
+    
+    public void eliminarPorId(long id){
+        this.rolRepository.deleteById(id);
+    }
+    
+    public Optional<Rol> obtenerPorId(long id){
+        return this.rolRepository.findById(id);
     }
     
 }
