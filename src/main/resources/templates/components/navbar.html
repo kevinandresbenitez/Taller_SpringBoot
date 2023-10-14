@@ -1,0 +1,44 @@
+<nav id="navbar" th:fragment="navbar">
+    <div class="navbar__logo">
+        <a class="navbar__logo__link" href="/">Hospital</a>
+    </div>
+
+    <div class="navbar__info">
+        <div class="navbar__info__items">
+        <!--Items de la barra de navegacion-->
+            <div class="navbar__info__item">
+                <a href="" class="navbar__info__item__link"></a>
+            </div>
+
+            <div class="navbar__info__item">
+                <p>Nombre del funcionario</p>
+            </div>
+
+            <!--Items despegable-->
+            <div class="navbar__info__item">
+                <button class="navbar__info__item__button__menu__toggle" id="navbar__toggle__button" onclick="toggleMenu()">
+                    <i class="fa-solid fa-gear"></i>
+                    <i class="fa-solid fa-caret-right" id="icon__toggle"></i>
+                </button>
+
+                <div class="navbar__info__item__menu" id="navbar__toggle__menu">
+                    <div class="navbar__info__item__menu__item">
+                        <a href="" class="navbar__info__item__menu__item__link">
+                            <i class="fa-solid fa-user-pen"></i>
+                            Modificar
+                        </a>
+                    </div>
+                    <div class="navbar__info__item__menu__item">
+                        <a href="" class="navbar__info__item__menu__item__link">
+                            <i class="fa-solid fa-person-running"></i>
+                            Cerrar Seccion
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--Items despegable-->
+
+        <!--Items de la barra de navegacion-->
+        </div>
+    </div>
+</nav>

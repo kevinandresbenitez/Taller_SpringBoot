@@ -1,0 +1,103 @@
+#navbar{
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#navbar .navbar__logo, #navbar .navbar__info{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+/*Logo seccion*/
+#navbar .navbar__logo{
+    background-color: #007bff;
+}
+#navbar .navbar__logo .navbar__logo__link{
+    font-size: 34px;
+    padding: 5px 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+/*Info seccion*/
+#navbar .navbar__info{
+    background-color: #007bff;
+}
+#navbar .navbar__info__items{
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: #fff;
+}
+
+#navbar .navbar__info__item{
+    padding: 5px 20px;
+    position: relative;
+}
+#navbar .navbar__info__item .navbar__info__item__button__menu__toggle{
+    height: 25px;
+    width: 50px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+/*Info seccion Seccion despegable*/
+#navbar .navbar__info__item .navbar__info__item__menu{
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    width: 200px;
+    background-color: #007bff;
+
+    display: flex;
+    flex-flow: column wrap;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.397);
+    transition: all 0.3s;
+    overflow: hidden;
+    border-radius: 5px;
+}
+#navbar .navbar__info__item .show{
+    left: calc(-100% - 25px);
+}
+
+#navbar .navbar__info__item #icon__toggle{
+    transition: all 0.3s;
+}
+#navbar .navbar__info__item .rotate{
+    transform: rotate(90deg);
+}
+
+#navbar .navbar__info__item .navbar__info__item__menu .navbar__info__item__menu__item{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#navbar .navbar__info__item .navbar__info__item__menu .navbar__info__item__menu__item .navbar__info__item__menu__item__link{
+    width: 100%;
+    height: 30px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+#navbar .navbar__info__item .navbar__info__item__menu .navbar__info__item__menu__item .navbar__info__item__menu__item__link:hover{
+    background-color: #fff ;
+    color:#007bff;
+}
+

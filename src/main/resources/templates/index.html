@@ -1,63 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página Principal</title>
+        <link rel="stylesheet" th:href="@{/css/normalice.css}"/> <!--- Acomoda css por defecto (margenes y padding)--->
+        <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/> <!--- Conjunto de iconos--->
+        <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/> <!--- Css Barra de navegacion--->
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+            }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-top: 50px;
-        }
+            .container a {
+                display: block;
+                padding: 10px;
+                margin: 10px;
+                text-align: center;
+                text-decoration: none;
+                color: #007bff;
+                background-color: #fff;
+                border-radius: 5px;
+                border: 1px solid #007bff;
+                transition: background-color 0.3s ease;
+            }
 
-        div {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
+            .container a:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <!---Berra De Navegacion --->
+        <div th:replace="components/navbar :: navbar"></div>
+        <!---Berra De Navegacion --->
+        
+        <div class="container"> 
+            <a href="funcionarios/">Ir a funcionarios</a>
+            <a href="administradores/">Ir a administradores</a>
+            <a href="profesionalSalud/">Ir a profesionales de la salud</a>
+            <a href="pacientes/">Ir a pacientes</a>
+            <a href="boxes/">Ir a Boxes</a>        
+        </div>
 
-        a {
-            display: block;
-            padding: 10px;
-            margin: 10px;
-            text-align: center;
-            text-decoration: none;
-            color: #007bff;
-            background-color: #fff;
-            border-radius: 5px;
-            border: 1px solid #007bff;
-            transition: background-color 0.3s ease;
-        }
-
-        a:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-<div>Página Principal</div>
-<a href="funcionarios/">Ir a funcionarios</a>
-<a href="administradores/">Ir a administradores</a>
-<a href="profesionalSalud/">Ir a profesionales de la salud</a>
-<a href="pacientes/">Ir a pacientes</a>
-<a href="boxes/">Ir a Boxes</a>
-</body>
+        
+        <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script><!--- Js Barra de navegacion--->
+    </body>
 </html>
 
 
