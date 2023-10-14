@@ -29,8 +29,11 @@ public class Funcionario extends Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "contraseña")
     private String contraseña;
-    @OneToMany(mappedBy = "funcionario")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ManyToMany
+    @JoinTable(name = "funcionario_rol",
+               joinColumns = @JoinColumn(name = "id_funcionario"),
+               inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private List<Rol> roles;
     @OneToMany(mappedBy = "funcionario")
     @Cascade(CascadeType.DELETE_ORPHAN)
