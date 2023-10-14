@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ResultadoEstudioService {
     @Autowired
@@ -19,6 +22,7 @@ public class ResultadoEstudioService {
         resultadoEstudioRepository.save(resultadoEstudio);
     }
 
+<<<<<<< HEAD
     public void eliminarEstudio(Long id) {
         resultadoEstudioRepository.deleteById(id);
     }
@@ -30,5 +34,7 @@ public class ResultadoEstudioService {
     public ResultadoEstudio obtenerEstudioPorId(Long id) {
         return resultadoEstudioRepository.findById(id).orElse(null);
     }
+=======
+>>>>>>> ad30c64de5632ecd6bcda11966c5ee91985afc2d
 }
 

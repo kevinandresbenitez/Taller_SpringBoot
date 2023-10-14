@@ -59,12 +59,38 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .actions-container {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .actions-container a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions-container a:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-<a href="/pacientes/crear">Ir a agregar pacientes</a>
 <div class="container mt-5">
     <h2 class="mb-4">Lista de Pacientes</h2>
+
+    <div class="button-container">
+        <a href="/pacientes/crear">Ir a agregar pacientes</a>
+    </div>
 
     <table class="table">
         <thead>
@@ -101,3 +127,5 @@
 </div>
 </body>
 </html>
+
+
