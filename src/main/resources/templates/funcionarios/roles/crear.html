@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Formulario para crear Roles</div>
+        <a href="/funcionarios/roles/">Volver</a>
+        <h3 th:text="${mensaje}"></h3>
+        
+        <form action="/funcionarios/roles/crear" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"><br>
+            <input type="submit" value="Enviar">
+        </form>
+
+    </body>
+</html>

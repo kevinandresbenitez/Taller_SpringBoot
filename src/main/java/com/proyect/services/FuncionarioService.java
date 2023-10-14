@@ -28,27 +28,7 @@ public class FuncionarioService{
     @Autowired
     RolRepository rolRepository;
 
-    public void modificarRol(Funcionario funcionario, List<Rol> roles){
-        /* Manera No me funciona
-        funcionario.setRoles(roles);
-        funcionarioRepositori.save(funcionario);
-        1*/
-        
-        /*Manera 2 Funcionar pero es menos eficaz */
-        List<Rol> rolesAntiguos = rolRepository.findByFuncionarioId(funcionario.getId());
-        
-        //Elimino roles antiguos
-        for(int i=0;rolesAntiguos.size()>i;i++){
-            rolRepository.delete(rolesAntiguos.get(i));
-        }
-        //Agrego los nuevos
-        for(int i=0;roles.size()>i;i++){
-            roles.get(i).setFuncionario(funcionario);
-            rolRepository.save(roles.get(i));
-        }
- 
-    }
-      
+
     public void crearFuncionario(Funcionario funcionario){
         this.funcionarioRepository.save(funcionario);
     }

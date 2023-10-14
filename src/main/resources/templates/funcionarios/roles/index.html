@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Pagina Principal de Roles</div>
+        
+        <a href="/funcionarios/">Volver</a>
+        <a href="/funcionarios/roles/crear">Agregar Rol</a>
+        <div>
+            
+            <h2>Roles</h2>
+            <h3 th:text="${mensaje}"></h3>
+            <div th:each="rol : ${roles}">
+                <strong>-----------------------------------------------</strong><br>
+                <strong>Nombre Del rol</strong><br>
+                <span th:text="${rol.getNombre()}"></span><br>  
+                <a th:href="@{/funcionarios/roles/eliminar/{id}(id=${rol.getId()})}">Eliminar Rol</a>
+            </div>
+  
+        </div>  
+
+    </body>
+</html>
