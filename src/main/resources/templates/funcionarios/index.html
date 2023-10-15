@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <a href="/">Volver</a>
         <a href="/funcionarios/crear">Ir a crear funcionarios</a>
         <a href="/funcionarios/roles/">Roles</a>
-        <a href="/funcionarios/sectoresTrabajo/">Sectores de Trabajo</a>
+        <a href="/funcionarios/sectores/">Sectores de Trabajo</a>
         
         <div>
             
@@ -32,12 +32,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <p th:text="${rol.getNombre()}"></p>
                 </div><br>
                 
-                <!--
-                <strong>Sectores: :</strong><br>
-                <div th:each="sector : ${funcionario.getSectores()}" th:text="${sector}"></div><br>
-                --->
+                <strong>Sectores :</strong>
+                <div th:each="sector : ${funcionario.getSectores()}">
+                    <p th:text="${sector.getNombre()}"></p>
+                </div><br>
+                
+
                 <a th:href="@{/funcionarios/roles/asignar/{id}(id=${funcionario.getId()})}">Configurar Roles</a>
-                <a th:href="@{/funcionarios/modificar/{id}(id=${funcionario.getId()})}">Configurar Sector Trabajo</a>
+                <a th:href="@{/funcionarios/sectores/asignar/{id}(id=${funcionario.getId()})}">Configurar Sectores de Trabajo</a>
                 <a th:href="@{/funcionarios/eliminar/{id}(id=${funcionario.getId()})}">Eliminar</a>
             </div>
   
