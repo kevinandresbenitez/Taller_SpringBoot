@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <strong>Nombre funcionario<strong/>
+        <p th:text="${funcionario.getNombre()}"></p>
+        <form th:action="@{/funcionarios/sectores/asignar/{id_funcionario}(id_funcionario=${funcionario.getId()})}" method="post" >
+            <!-- Enumeracion-->
+            <label  th:each="sector:${sectores}" >
+                <p th:text="${sector.getNombre()}"></p>
+                <input type="checkbox" th:value="${sector.getId()}" name="sectores_id" />
+            </label>
+            <!-- Opcion extra para quitar roles-->
+                
+            <input type="submit" value="Modificar Sector De Trabajo"></input>
+        </form>
+    </body>
+</html>

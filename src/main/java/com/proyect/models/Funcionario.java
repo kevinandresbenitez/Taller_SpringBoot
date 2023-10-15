@@ -35,8 +35,11 @@ public class Funcionario extends Persona implements Serializable {
                joinColumns = @JoinColumn(name = "id_funcionario"),
                inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private List<Rol> roles;
-    @OneToMany(mappedBy = "funcionario")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ManyToMany
+    @JoinTable(name = "funcionario_sector",
+               joinColumns = @JoinColumn(name = "id_funcionario"),
+               inverseJoinColumns = @JoinColumn(name = "id_sector"))
     private List<Sector> sectores;
     @OneToMany(mappedBy = "funcionario")
     @Cascade(CascadeType.DELETE_ORPHAN)
