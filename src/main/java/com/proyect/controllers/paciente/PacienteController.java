@@ -41,12 +41,13 @@ public class PacienteController {
                                 @RequestParam("domicilio") String domicilio,
                                 @RequestParam("telefonoCelular") int telefonoCelular,
                                 @RequestParam("telefonoFijo") int telefonoFijo,
-                                @RequestParam("fechaNacimiento") String fechaNacimiento,
+                                @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
                                 @RequestParam("estadoCivil") String estadoCivil) {
         Paciente paciente = new Paciente();
         paciente.setNombre(nombre);
         paciente.setDni(dni);
         paciente.setTelefonoFijo(telefonoFijo);
+        paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setEmail(email);
         paciente.setTelefonoCelular(telefonoCelular);
         paciente.setDomicilio(domicilio);
