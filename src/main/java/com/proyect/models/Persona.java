@@ -4,6 +4,7 @@
  */
 package com.proyect.models;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.*;
 /**
  *
@@ -25,7 +26,7 @@ public abstract class Persona{
     @Column(name = "domicilio")
     private String domicilio;
     @Column(name = "fecha_nacimiento")
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
     @Column(name = "estado_civil")
     private String estadoCivil;
     @Column(name = "email")
