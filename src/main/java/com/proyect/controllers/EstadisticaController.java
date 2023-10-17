@@ -26,16 +26,16 @@ public class EstadisticaController {
             @RequestParam("idMedico") int idMedico,
             @RequestParam("fechaInicio") Date fechaInicio,
             @RequestParam("fechaFin") Date fechaFin) {
-        return MedicoService.cantidadPacientesAtendidosPorMedico(idMedico, fechaInicio, fechaFin);
+        return medicoService.cantidadPacientesAtendidosPorMedico(idMedico, fechaInicio, fechaFin);
     }
 
-    @GetMapping("/cantidad-pacientes-por-edad")
-    public int cantidadPacientesPorEdadYfecha(
+    @GetMapping("/cantidad-pacientes-por-edad-y-fecha-atencion")
+    public int cantidadPacientesPorEdadYfechaAtencion(
             @RequestParam("edadMinima") int edadMinima,
             @RequestParam("edadMaxima") int edadMaxima,
             @RequestParam("fechaInicio") Date fechaInicio,
             @RequestParam("fechaFin") Date fechaFin) {
-        return pacienteService.cantidadPacientesPorEdadYfecha(edadMinima, edadMaxima, fechaInicio, fechaFin);
+        return pacienteService.cantidadPacientesPorEdadYfechaAtencion(edadMinima, edadMaxima, fechaInicio, fechaFin);
     }
 
     @GetMapping("/paciente-mas-consultado")
@@ -49,6 +49,6 @@ public class EstadisticaController {
     public Medico medicoMasAtendido(
             @RequestParam("fechaInicio") Date fechaInicio,
             @RequestParam("fechaFin") Date fechaFin) {
-        return MedicoService.medicoQueMasAtendio(fechaInicio, fechaFin);
+        return medicoService.medicoQueMasAtendio(fechaInicio, fechaFin);
     }
 }

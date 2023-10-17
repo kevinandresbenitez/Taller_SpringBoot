@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MedicoService {
     @Autowired
-    private static MedicoRepository medicoRepository;
+    private MedicoRepository medicoRepository;
 
-    public static List<Medico> listarMedicos(){
+    public List<Medico> listarMedicos(){
         return medicoRepository.findAll();
     }
     public Boolean esProfSaludMedico(Long idProfSalud) {
@@ -32,14 +32,14 @@ public class MedicoService {
         this.medicoRepository.deleteById(id);
     }
 
-    public static Optional<Medico> obtenerMedicoPorId(Long id) {
+    public Optional<Medico> obtenerMedicoPorId(Long id) {
         return medicoRepository.findById(id);
     }
 
-    public static int cantidadPacientesAtendidosPorMedico(long idMedico, Date fechaInicio, Date fechaFin) {
+    public int cantidadPacientesAtendidosPorMedico(long idMedico, Date fechaInicio, Date fechaFin) {
 
         // Obtener las consultas realizadas por el médico en el rango de fechas
-        List<Consulta> consultas = medicoRepository.findByMedicoIdAndFechaConsultaBetween(idMedico, fechaInicio, fechaFin);
+        List<Consulta> consultas = medicoRepository.findConsultasByIdAndConsultasFechaAtencionBetween(idMedico, fechaInicio, fechaFin);
 
         // Contar la cantidad de pacientes atendidos por el médico
         Set<Long> pacientesAtendidos = new HashSet<>();
@@ -50,7 +50,7 @@ public class MedicoService {
         return pacientesAtendidos.size();
     }
 
-    public static Medico medicoQueMasAtendio(Date fechaInicio, Date fechaFin) {
+    public Medico medicoQueMasAtendio(Date fechaInicio, Date fechaFin) {
         // Obtener todos los médicos
         List<Medico> medicos = listarMedicos();
 

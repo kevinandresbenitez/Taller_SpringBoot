@@ -50,6 +50,9 @@ public class Consulta {
     @ManyToOne
     @JoinColumn(name="id_paciente")
     private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name="id_medico")
+    private Medico medico;
 
 
     public void agregarResultadoEstudio(ResultadoEstudio resultadoEstudio){

@@ -4,6 +4,7 @@ import com.proyect.models.Consulta;
 import com.proyect.models.Paciente;
 
 import com.proyect.models.ResultadoEstudio;
+import com.proyect.repositories.ConsultaRepository;
 import com.proyect.repositories.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,10 @@ import java.util.stream.Collectors;
 @Service
 public class PacienteService {
     @Autowired
-    private static PacienteRepository pacienteRepository;
+    private PacienteRepository pacienteRepository;
+    
+    @Autowired
+    private ConsultaRepository consultaRepository;
 
     public Optional<Paciente> findByDni(int dni){
         return pacienteRepository.findByDni(dni);
@@ -47,13 +51,13 @@ public class PacienteService {
         }
     }
 
-    public int cantidadPacientesPorEdadYfecha(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
+    public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
         // Calcular las fechas de nacimiento a partir de las edades
         LocalDate fechaNacimientoMinima = LocalDate.now().minusYears(edadMaxima);
         LocalDate fechaNacimientoMaxima = LocalDate.now().minusYears(edadMinima);
 
         // Llama al método del repositorio personalizado
-        List<Paciente> pacientes = pacienteRepository.findByFechaNacimientoBetweenAndFechasBetween(
+        List<Paciente> pacientes = pacienteRepository.findByFechaNacimientoBetweenAndConsultasFechaAtencionBetween(
                 Date.from(fechaNacimientoMinima.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
                 Date.from(fechaNacimientoMaxima.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
                 fechaInicio,
@@ -66,10 +70,10 @@ public class PacienteService {
 
 
 
-    public static Paciente pacienteMasConsultado(Date fechaInicio, Date fechaFin) {
+    public Paciente pacienteMasConsultado(Date fechaInicio, Date fechaFin) {
 
         // Obtener las consultas realizadas en el rango de fechas
-        List<Consulta> consultas = pacienteRepository.findByFechas(fechaInicio, fechaFin);
+        List<Consulta> consultas = consultaRepository.findByFechaAtencionBetween(fechaInicio, fechaFin);
 
         Map<Paciente, Long> conteoPacientes = consultas.stream()
                 //Esto crea un mapa donde la clave es el paciente y el valor es el recuento de consultas para ese paciente.
@@ -84,12 +88,4 @@ public class PacienteService {
         return pacienteMasConsultado;
     }
 
-
-/*
-    public void crearConsulta(List<ResultadoEstudio> resultadoEstudio,Long id){
-        Optional<Paciente> paciente = pacienteRepository.findById(id);
-        Paciente paciente1 = paciente.get();
-        paciente1.setResultadoEstudios(resultadoEstudio);
-    }*/
-    //public Triage asignarTriage();
 }

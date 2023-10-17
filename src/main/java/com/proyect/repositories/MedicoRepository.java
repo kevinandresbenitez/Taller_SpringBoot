@@ -10,5 +10,5 @@ import java.util.List;
 public interface MedicoRepository extends JpaRepository<Medico,Long> {
     public Boolean existsByProfesionalSaludId(Long idProfSalud);
 
-    List<Consulta> findByMedicoIdAndFechaConsultaBetween(long idMedico, Date fechaInicio, Date fechaFin);
+    List<Consulta> findConsultasByIdAndConsultasFechaAtencionBetween(long idMedico, Date fechaInicio, Date fechaFin);
 }

@@ -23,4 +23,8 @@ public class Medico {
     @OneToMany(mappedBy = "medico")
     @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Titulo> titulos;
+    
+    @OneToMany(mappedBy = "medico")
+    @Cascade(CascadeType.DELETE_ORPHAN)
+    private List<Consulta> consultas;
 }
