@@ -48,9 +48,8 @@ public class FuncionarioController {
     }
     
     @PostMapping("/crear")
-    public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNombre(nombre);
+    public String processFormCreation(@ModelAttribute Funcionario funcionario,RedirectAttributes atributosMensaje){
+        funcionario.setContraseña(Integer.toString(funcionario.getDni()));
         this.funcionarioServices.crearFuncionario(funcionario);
         
         //Una vez creado redirijo y envio un mensaje de creacion correcta        
