@@ -16,10 +16,10 @@ import java.util.Date;
 @RequestMapping("/estadisticas")
 public class EstadisticaController {
     @Autowired
-    private static MedicoService medicoService;
+    private MedicoService medicoService;
 
     @Autowired
-    private static PacienteService pacienteService;
+    private PacienteService pacienteService;
 
     @GetMapping("/cantidad-pacientes-por-medico")
     public int cantidadPacientesAtendidosPorMedico(
