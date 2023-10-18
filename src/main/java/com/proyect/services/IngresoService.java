@@ -13,10 +13,10 @@ import com.proyect.repositories.IngresoRepository;
 public class IngresoService {
 
     @Autowired
-    private IngresoRepository registroRepository;
+    private IngresoRepository ingresoRepository;
 
-    public void guardarRegistro(Ingreso registro){
-        registroRepository.save(registro);
+    public void guardarIngreso(Ingreso ingreso){
+        ingresoRepository.save(ingreso);
     }
     
 }
