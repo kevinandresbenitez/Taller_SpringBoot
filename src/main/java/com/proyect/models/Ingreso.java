@@ -12,8 +12,8 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
-@Table(name="registro")
-public class Registro{
+@Table(name="ingreso")
+public class Ingreso{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

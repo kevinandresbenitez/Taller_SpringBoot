@@ -53,8 +53,8 @@ public class Consulta {
     private Medico medico;
     
     @OneToOne
-    @JoinColumn(name="id_registro")
-    private Registro registro;
+    @JoinColumn(name="id_ingreso")
+    private Ingreso ingreso;
     @OneToOne
     @JoinColumn(name="id_triage")
     private Triage triage;
