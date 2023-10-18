@@ -1,6 +1,9 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import lombok.*;
@@ -15,7 +18,7 @@ public class Registro{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
     
@@ -23,6 +26,8 @@ public class Registro{
     private String motivo;
     
     @Column(name = "fecha_registro")
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
+    @Column(name = "hora_registro")
+    private LocalTime horaRegistro;
     
 }

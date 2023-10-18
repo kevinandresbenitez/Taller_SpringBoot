@@ -1,6 +1,7 @@
 package com.proyect.services;
 
 import com.proyect.models.Especialidad;
+import com.proyect.models.Registro;
 import com.proyect.repositories.EspecialidadnRepository;
 import com.proyect.repositories.RegistroRepository;
 import java.util.List;
@@ -14,6 +15,8 @@ public class RegistroService {
     @Autowired
     private RegistroRepository registroRepository;
 
-    
+    public void guardarRegistro(Registro registro){
+        registroRepository.save(registro);
+    }
     
 }

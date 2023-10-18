@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de Triage</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+
+        .attribute-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .attribute-value {
+            margin-top: 8px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .modify-button, .confirm-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        .modify-button:hover, .confirm-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Resultado de Triage</h2>
+
+    <div class="result-container">
+        <div class="attribute-label">Nivel de Triage:</div>
+        <div class="attribute-value" th:text="${triage.getNivel()}"></div>
+    </div>
+    <div class="result-container">
+        <div class="attribute-label">Color de triage:</div>
+        <div class="attribute-value" th:text="${triage.getColor()}"></div>
+    </div>
+
+    <div class="result-container">
+        <div class="attribute-label">Tiempo de Espera Estimado:</div>
+        <div class="attribute-value" th:text="${triage.getTiempoEspera()}"></div>
+    </div>
+
+    <div class="button-container">
+        <a th:href="@{/triages/modificar/{id}(id=${triageId})}" class="modify-button">Modificar Triage</a>
+        <a th:href="@{/triages/}" class="confirm-button">Confirmar Triage</a>
+    </div>
+</div>
+</body>
+</html>
+

@@ -51,6 +51,10 @@ public class PacienteService {
         }
     }
 
+    public List<Paciente> pacientesSinTriage(){
+        return pacienteRepository.findByTriageIsNull();
+    }
+
     public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
         // Calcular las fechas de nacimiento a partir de las edades
         LocalDate fechaNacimientoMinima = LocalDate.now().minusYears(edadMaxima);

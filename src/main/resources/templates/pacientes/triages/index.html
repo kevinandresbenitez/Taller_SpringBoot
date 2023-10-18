@@ -3,15 +3,98 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+
+        a.button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Mostramos los triages del paciente</div>
-        <div>Y sus modificaciones</div>
-        <a href="" >Crear nuevo Triage</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>DNI</th>
+                <th>MOTIVO DE CONSULTA</th>
+                <th>FECHA CONSULTA</th>
+                <th>HORA CONSULTA</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Se listan los pacientes -->
+            <tr th:each="paciente : ${pacientes}">
+                <td th:text="${paciente.id}"></td>
+                <td th:text="${paciente.nombre}"></td>
+                <td th:text="${paciente.dni}"></td>
+                <td th:text="${paciente.getRegistro().getMotivo()}"></td>
+                <td th:text="${paciente.getRegistro().getFechaRegistro()}"></td>
+                <td th:text="${paciente.getRegistro().getHoraRegistro()}"></td>
+                <td>
+                    <a th:href="@{/triages/agregar/{id}(id=${paciente.getId()})}">Asignar triage</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </body>
 </html>

@@ -18,7 +18,7 @@ import lombok.*;
 @Setter
 @Getter
 public class TriageCalculador {
-    List<TriageObject> listaDeTriages = new ArrayList<>();
+    private List<TriageObject> listaDeTriages = new ArrayList<>();
     private int respiracion;
     private int pulso;
     private int estadoMental;
@@ -31,29 +31,32 @@ public class TriageCalculador {
     private int signosShock;
     private int lesionesLeves;
     private int sangrado;
-    
-    public void constructor(){
-        // Agregando los elementos por defecto
+    private Long edad;
+
+    public TriageCalculador() {
+        this.setTriageObject();
+    }
+
+    public void setTriageObject(){
         TriageObject Rojo = new TriageObject("Rojo","inmediata",1);
         TriageObject Naranja = new TriageObject("Naranja","15 minutos",2);
         TriageObject Amarillo = new TriageObject("Amarillo","60 minutos",3);
         TriageObject Verde = new TriageObject("Verde","2 horas",4);
         TriageObject Azul = new TriageObject("Azul","4 horas",5);
-        listaDeTriages.add(Rojo);
-        listaDeTriages.add(Naranja);
-        listaDeTriages.add(Verde);
-        listaDeTriages.add(Amarillo);
-        listaDeTriages.add(Azul);
+        this.listaDeTriages.add(Rojo);
+        this.listaDeTriages.add(Naranja);
+        this.listaDeTriages.add(Verde);
+        this.listaDeTriages.add(Amarillo);
+        this.listaDeTriages.add(Azul);
+    }
+    public Long obtenerPuntuacion(){
+        return getConciencia() + getFiebre() +getPulso() + getDolorAbdominal()+ getEdad()+
+                getEstadoMental()+getDolorPechoRespirar()+getLesionesGraves()+getLesionesLeves()+
+                getSangrado()+getVomitos()+getRespiracion()+getSignosShock();
+
     }
     
-    public int obtenerPuntuacion(){
-        return getPuntuacionRespiracion() + getPuntuacionPulso() + getPuntuacionEstadoMental() + getPuntuacionVomitos()
-               + getPuntuacionVomitos() + getPuntuacionDolorPechoRespirar() + getPuntuacionLesionesGraves()
-               + getPuntuacionFiebre() + getPuntuacionDolorAbdominal() + getPuntuacionSignosShock() + getPuntuacionlesionesLeves()
-               + getPuntuacionSangrado();
-    }
-    
-    public TriageObject segunPuntuacionObtenerTriageObject(int puntuacion){
+    public TriageObject segunPuntuacionObtenerTriageObject(Long puntuacion){
         //Condiciones
         if (puntuacion >= 15) {
             return listaDeTriages.get(0);
@@ -67,44 +70,77 @@ public class TriageCalculador {
             return listaDeTriages.get(4);
         }
     }
+
+    public TriageObject segunColorObtenerTriageObject(String color){
+        if(color == "Rojo"){
+            return listaDeTriages.get(0);
+        }else if(color == "Naranja"){
+            return listaDeTriages.get(1);
+        }else if(color == "Verde"){
+            return listaDeTriages.get(2);
+        }else if(color == "Amarillo"){
+            return listaDeTriages.get(3);
+        }else{
+            return listaDeTriages.get(4);
+        }
+    }
     
     // Geters y setters 
-    
-    public int getPuntuacionRespiracion(){
-        return 1;
+
+
+    public void setRespiracion(int respiracion) {
+        this.respiracion = respiracion;
     }
-        public int getPuntuacionPulso(){
-        return 1;
+
+    public void setPulso(int pulso) {
+        this.pulso = pulso;
     }
-        public int getPuntuacionEstadoMental(){
-        return 1;
+
+    public void setEstadoMental(int estadoMental) {
+        this.estadoMental = estadoMental;
     }
-        public int getPuntuacionVomitos(){
-        return 1;
+
+    public void setConciencia(int conciencia) {
+        this.conciencia = conciencia;
     }
-        
-        public int getPuntuacionDolorPechoRespirar(){
-        return 1;
+
+    public void setDolorPechoRespirar(int dolorPechoRespirar) {
+        this.dolorPechoRespirar = dolorPechoRespirar;
     }
-        public int getPuntuacionLesionesGraves(){
-        return 1;
+
+    public void setLesionesGraves(int lesionesGraves) {
+        this.lesionesGraves = lesionesGraves;
     }
-        public int getPuntuacionFiebre(){
-        return 1;
+
+    public void setFiebre(int fiebre) {
+        this.fiebre = fiebre;
     }
-        public int getPuntuacionDolorAbdominal(){
-        return 1;
+
+    public void setVomitos(int vomitos) {
+        this.vomitos = vomitos;
     }
-        public int getPuntuacionSignosShock(){
-        return 1;
+
+    public void setDolorAbdominal(int dolorAbdominal) {
+        this.dolorAbdominal = dolorAbdominal;
     }
-        public int getPuntuacionlesionesLeves(){
-        return 1;
+
+    public void setSignosShock(int signosShock) {
+        this.signosShock = signosShock;
     }
-        public int getPuntuacionSangrado(){
-        return 1;
+
+    public void setLesionesLeves(int lesionesLeves) {
+        this.lesionesLeves = lesionesLeves;
     }
-    
-    
-    
+
+    public void setSangrado(int sangrado) {
+        this.sangrado = sangrado;
+    }
+
+    public void setEdad(Long edad) {
+        if (edad > 1 && edad < 18 || edad > 60) {
+            this.edad = 1L;
+        } else {
+            this.edad = 0L;
+        }
+    }
 }
