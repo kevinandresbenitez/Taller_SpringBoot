@@ -15,13 +15,13 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class TriageObject {
-    String Color;
-    String TiempoEspera;
-    int Nivel;
+    String color;
+    String tiempoEspera;
+    int nivel;
     
     public void constructor(String color, String tiempoEspera,int nivel){
-        Color = color;
-        TiempoEspera = tiempoEspera;
-        Nivel = nivel;
+        color = color;
+        tiempoEspera = tiempoEspera;
+        nivel = nivel;
     }
 }

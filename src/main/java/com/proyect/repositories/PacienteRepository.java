@@ -13,6 +13,9 @@ public interface PacienteRepository extends JpaRepository<Paciente,Long> {
 
     public Optional<Paciente> findByDni(int dni);
 
+
+    List<Paciente> findByTriageIsNull();
+
     List<Paciente> findByFechaNacimientoBetweenAndConsultasFechaAtencionBetween(
             Date fechaNacimientoInicio, Date fechaNacimientoFin,
             Date fechaInicio, Date fechaFin

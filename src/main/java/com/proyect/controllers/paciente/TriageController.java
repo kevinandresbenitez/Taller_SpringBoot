@@ -1,7 +1,10 @@
 package com.proyect.controllers.paciente;
 
 import com.proyect.models.Paciente;
+import com.proyect.models.Triage;
+import com.proyect.repositories.TriageRepository;
 import com.proyect.services.PacienteService;
+import com.proyect.services.TriageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,19 +16,29 @@ import com.proyect.utils.TriageObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 @Controller
-@RequestMapping("/pacientes/triages")
+@RequestMapping("/triages")
 public class TriageController {
     @Autowired
     PacienteService pacienteService;
-    @GetMapping("/{id}") // Id del paciente para mostrar la lista de triages
-    public String listarTriages(@PathVariable("id") Long id) {
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+    @Autowired
+    TriageService triageService;
+    @GetMapping("/")//pacientes a espera de ser triagiados
+    public String listarTriages(Model model) {
+        List<Paciente> pacientes = pacienteService.pacientesSinTriage();
+        model.addAttribute("pacientes",pacientes);
         return "pacientes/triages/index";
     }
     
     @GetMapping("/agregar/{id}") // Id del paciente a asignar triage
-    public String mostrarFormulario(@PathVariable("id") Long id){
+    public String mostrarFormulario(@PathVariable("id") Long id,Model model){
+        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        model.addAttribute("paciente",paciente);
         return "pacientes/triages/crear";
     }
     
@@ -46,6 +59,9 @@ public class TriageController {
             @RequestParam("sangrado") int sangrado,
             Model model) {
 
+        LocalDate fechahoy = LocalDate.now();
+        LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+        Paciente paciente = pacienteService.obtenerPacienteById(id);
         TriageCalculador triage = new TriageCalculador();
         triage.setRespiracion(respiracion);
         triage.setPulso(pulso);
@@ -59,31 +75,35 @@ public class TriageController {
         triage.setSignosShock(signosShock);
         triage.setLesionesLeves(lesionesLeves);
         triage.setSangrado(sangrado);
-        
+        triage.setEdad(ChronoUnit.YEARS.between(paciente.getFechaNacimiento(),fechahoy));
         // Obteniendo punuacion y respectivo color, tiempo de espera ...
-        int puntuacion = triage.obtenerPuntuacion();
-        TriageObject TriageResultante = triage.segunPuntuacionObtenerTriageObject(puntuacion);
+        TriageObject triageResultante =
+                triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
+        Triage triageAGuardar = new Triage();
+        triageAGuardar.setColor(triageResultante.getColor());
+        triageAGuardar.setPaciente(paciente);
+        triageAGuardar.setFechaEvaluacion(fechahoy);
+        triageAGuardar.setHoraEvaluacion(tiempohoy);
+        paciente.setTriage(triageAGuardar);
+        triageService.guardarTriage(triageAGuardar);
+        pacienteService.crearPaciente(paciente);
         // Aca tenemos que hacer un new Triage() y luego guardarlo en un service
         // Este traiage al guardarse, podra verse desde la pagina principal de traige del paciente
 
-        return "redirect:/" + id;
+        return "redirect:/triages/resultadotriage/"+id;
     }
 
 
-    @GetMapping("/resultado-triage")
-    public String resultadoTriage(Model model) {
-        /*
-        nivel = niveles.get(colorNivel);
-        tiempoEspera = tiemposDeEspera.get(colorNivel);
-
-        model.addAttribute("nivel", nivel);
-        model.addAttribute("colorNivel", colorNivel);
-        model.addAttribute("tiempoEspera", tiempoEspera);
-        */
-        return "resultado-triage";
+    @GetMapping("/resultadotriage/{id}")//id del triage
+    public String resultadoTriage(Model model,@PathVariable("id")Long id) {
+        Triage triage = triageService.findTriageById(id);
+        TriageCalculador obtenerDatosTriage = new TriageCalculador();
+        TriageObject triageAMostrar = obtenerDatosTriage.segunColorObtenerTriageObject(triage.getColor());
+        model.addAttribute("triage",triageAMostrar);
+        return "pacientes/triages/resultadotriage";
     }
 
-    @PostMapping("/cambiar-color")
+    @PostMapping("/cambiarcolor")
     public String cambiarColor(String nuevoColor, Model model) {
         /*
         if (niveles.containsKey(nuevoColor)) {

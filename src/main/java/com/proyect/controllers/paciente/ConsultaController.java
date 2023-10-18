@@ -68,7 +68,6 @@ public class ConsultaController {
         consulta.setDiagnostico(diagnostico);
         consulta.setDiagnosticosClinicos(diagnosticosClinicos);
         consultaService.guardarConsulta(consulta);
-        //consulta.setResultadosEstudios(resultadoEstudios);
 
         if (tiposInformes != null && informesEstudios != null) {
             for (int i = 0; i < tiposInformes.size(); i++) {
@@ -85,8 +84,6 @@ public class ConsultaController {
         paciente.agregarConsultas(consulta);
         consultaService.guardarConsulta(consulta);
         pacienteService.crearPaciente(paciente);
-
-
 
         return "redirect:/pacientes/consultas/"+paciente.getId();
     }

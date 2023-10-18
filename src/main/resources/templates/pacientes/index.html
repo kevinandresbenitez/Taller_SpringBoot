@@ -107,7 +107,7 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Ejemplo de un paciente -->
+        <!-- Se listan los pacientes -->
         <tr th:each="paciente : ${pacientes}">
             <td th:text="${paciente.id}"></td>
             <td th:text="${paciente.nombre}"></td>
@@ -118,7 +118,6 @@
             <td th:text="${paciente.telefonoCelular}"></td>
             <td th:text="${paciente.fechaNacimiento}"></td>
             <td>
-                <a th:href="@{triages/{id}(id=${paciente.getId()})}">Ir a Triages</a>
                 <a th:href="@{consultas/{id}(id=${paciente.getId()})}">Ir a Consultas</a>
             </td>
         </tr>

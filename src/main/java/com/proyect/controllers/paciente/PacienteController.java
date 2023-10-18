@@ -1,10 +1,12 @@
 package com.proyect.controllers.paciente;
 
-import com.proyect.models.Consulta;
-import com.proyect.models.Paciente;
-import com.proyect.models.ResultadoEstudio;
+import com.proyect.models.*;
+import com.proyect.repositories.RegistroRepository;
+import com.proyect.repositories.TriageRepository;
 import com.proyect.services.ConsultaService;
 import com.proyect.services.PacienteService;
+import com.proyect.services.RegistroService;
+import com.proyect.services.TriageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,10 @@ import java.util.Optional;
 public class PacienteController {
     @Autowired
     PacienteService pacienteService;
+    @Autowired
+    RegistroService registroService;
+    @Autowired
+    private TriageService triageService;
 
     @GetMapping("/")
     public String list(Model model) {
@@ -29,10 +35,24 @@ public class PacienteController {
         return "pacientes/index";
     }
 
+    @GetMapping("/verificarexistencia")
+    public String existenciaDePaciente(){
+        return "/pacientes/verificarexistencia";
+    }
+    @PostMapping("/verificarexistencia")
+    public String existenciaDePaciente(@RequestParam("dni")int dni){
+        Optional<Paciente> paciente = pacienteService.findByDni(dni);
+        if(paciente.isEmpty()){
+            return "redirect:/pacientes/crear";
+        }
+        return "redirect:/pacientes/registros/"+paciente.get().getId();
+    }
     @GetMapping("/crear")
     public String mostrarForm() {
         return "/pacientes/crear";
     }
+
+
 
     @PostMapping("/crear")
     public String crearPaciente(@RequestParam("nombre") String nombre,
@@ -52,8 +72,11 @@ public class PacienteController {
         paciente.setTelefonoCelular(telefonoCelular);
         paciente.setDomicilio(domicilio);
         paciente.setEstadoCivil(estadoCivil);
+        paciente.setTriage(new Triage());
+        triageService.guardarTriage(paciente.getTriage());
         pacienteService.crearPaciente(paciente);
-        return "redirect:/pacientes/";
+
+        return "redirect:/pacientes/registros/"+paciente.getId();
     }
 
     @GetMapping("/modificar/{id}")

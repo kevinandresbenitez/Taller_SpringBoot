@@ -8,6 +8,7 @@ import java.time.LocalTime;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name="triage")
 public class Triage {
     @Id
@@ -20,7 +21,7 @@ public class Triage {
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private Medico medico;
-    
+    private String color;
     private LocalDate fechaEvaluacion;
     private LocalTime horaEvaluacion;  
 
