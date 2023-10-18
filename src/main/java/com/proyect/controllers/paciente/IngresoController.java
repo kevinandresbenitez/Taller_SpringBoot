@@ -2,9 +2,9 @@ package com.proyect.controllers.paciente;
 
 
 import com.proyect.models.Paciente;
-import com.proyect.models.Registro;
+import com.proyect.models.Ingreso;
 import com.proyect.services.PacienteService;
-import com.proyect.services.RegistroService;
+import com.proyect.services.IngresoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +15,10 @@ import java.time.LocalTime;
 
 
 @Controller
-@RequestMapping("/pacientes/registros")
-public class RegistroController {
+@RequestMapping("/pacientes/ingresos")
+public class IngresoController {
     @Autowired
-    RegistroService registroService;
+    IngresoService registroService;
     @Autowired
     PacienteService pacienteService;
 
@@ -26,14 +26,14 @@ public class RegistroController {
     public String formulario(Model model,@PathVariable("id")Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         model.addAttribute("paciente",paciente);
-        return "pacientes/registro/crear";
+        return "pacientes/ingresos/crear";
     }
 
     @PostMapping("/{id}")
     public String formulario(@PathVariable("id")Long id,
                              @RequestParam("motivoConsulta")String motivoConsulta){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
-        Registro registro = new Registro();
+        Ingreso registro = new Ingreso();
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         registro.setFechaRegistro(fechahoy);

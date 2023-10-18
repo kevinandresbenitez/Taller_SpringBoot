@@ -1,11 +1,10 @@
 package com.proyect.controllers.paciente;
 
 import com.proyect.models.*;
-import com.proyect.repositories.RegistroRepository;
 import com.proyect.repositories.TriageRepository;
 import com.proyect.services.ConsultaService;
 import com.proyect.services.PacienteService;
-import com.proyect.services.RegistroService;
+import com.proyect.services.IngresoService;
 import com.proyect.services.TriageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import com.proyect.repositories.IngresoRepository;
 
 @Controller
 @RequestMapping("/pacientes")
@@ -24,7 +24,7 @@ public class PacienteController {
     @Autowired
     PacienteService pacienteService;
     @Autowired
-    RegistroService registroService;
+    IngresoService registroService;
     @Autowired
     private TriageService triageService;
 
