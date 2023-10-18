@@ -23,10 +23,7 @@ import com.proyect.repositories.IngresoRepository;
 public class PacienteController {
     @Autowired
     PacienteService pacienteService;
-    @Autowired
-    IngresoService registroService;
-    @Autowired
-    private TriageService triageService;
+
 
     @GetMapping("/")
     public String list(Model model) {
@@ -35,20 +32,14 @@ public class PacienteController {
         return "pacientes/index";
     }
 
-    @GetMapping("/verificarexistencia")
-    public String existenciaDePaciente(){
-        return "/pacientes/verificarexistencia";
-    }
-    @PostMapping("/verificarexistencia")
-    public String existenciaDePaciente(@RequestParam("dni")int dni){
-        Optional<Paciente> paciente = pacienteService.findByDni(dni);
-        if(paciente.isEmpty()){
-            return "redirect:/pacientes/crear";
-        }
-        return "redirect:/pacientes/registros/"+paciente.get().getId();
-    }
+
     @GetMapping("/crear")
-    public String mostrarForm() {
+    public String mostrarForm(@RequestParam("dni") Optional<Integer> dni,Model modelo) {
+        
+        if(dni.isPresent()){
+            modelo.addAttribute("dni",dni.get());
+        }
+        
         return "/pacientes/crear";
     }
 
@@ -63,6 +54,7 @@ public class PacienteController {
                                 @RequestParam("telefonoFijo") int telefonoFijo,
                                 @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
                                 @RequestParam("estadoCivil") String estadoCivil) {
+        Optional<Paciente> VerificarPaciente = pacienteService.findByDni(dni);
         Paciente paciente = new Paciente();
         paciente.setNombre(nombre);
         paciente.setDni(dni);
@@ -72,9 +64,16 @@ public class PacienteController {
         paciente.setTelefonoCelular(telefonoCelular);
         paciente.setDomicilio(domicilio);
         paciente.setEstadoCivil(estadoCivil);
+        
+                
+        //Si esta creado ya, redirije a agregar ingreso
+        if(VerificarPaciente.isPresent()){
+            return "redirect:/pacientes/ingresos/agregar/"+VerificarPaciente.get().getId();
+        }
+        
+        
         pacienteService.crearPaciente(paciente);
-
-        return "redirect:/pacientes/registros/"+paciente.getId();
+        return "redirect:/pacientes/ingresos/agregar/"+paciente.getId();
     }
 
     @GetMapping("/modificar/{id}")
