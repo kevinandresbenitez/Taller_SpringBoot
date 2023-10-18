@@ -58,7 +58,6 @@ public class ConsultaController {
                                  @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Consulta consulta = new Consulta();
-        consulta.setResultadosEstudios(new ArrayList<>());
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         consulta.setHoraAtencion(tiempohoy);
@@ -67,23 +66,9 @@ public class ConsultaController {
         consulta.setPaciente(paciente);
         consulta.setDiagnostico(diagnostico);
         consulta.setDiagnosticosClinicos(diagnosticosClinicos);
+        consulta.setPaciente(paciente);
         consultaService.guardarConsulta(consulta);
 
-        if (tiposInformes != null && informesEstudios != null) {
-            for (int i = 0; i < tiposInformes.size(); i++) {
-                ResultadoEstudio resultado = new ResultadoEstudio();
-                resultado.setTipoInforme(tiposInformes.get(i));
-                resultado.setInformeEstudio(informesEstudios.get(i));
-                resultado.setFecha(fechahoy);
-                resultado.setHora(tiempohoy);
-                resultado.setConsulta(consulta);
-                consulta.agregarResultadoEstudio(resultado);
-                resultadoEstudioService.guardarResultadoEstudio(resultado);
-            }
-        }
-        paciente.agregarConsultas(consulta);
-        consultaService.guardarConsulta(consulta);
-        pacienteService.crearPaciente(paciente);
 
         return "redirect:/pacientes/consultas/"+paciente.getId();
     }

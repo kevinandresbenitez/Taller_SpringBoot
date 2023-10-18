@@ -84,9 +84,8 @@ public class TriageController {
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
-        paciente.setTriage(triageAGuardar);
         triageService.guardarTriage(triageAGuardar);
-        pacienteService.crearPaciente(paciente);
+        
         // Aca tenemos que hacer un new Triage() y luego guardarlo en un service
         // Este traiage al guardarse, podra verse desde la pagina principal de traige del paciente
 

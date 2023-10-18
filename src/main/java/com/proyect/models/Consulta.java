@@ -44,18 +44,20 @@ public class Consulta {
     private String tipoAtencion;
     @Column(name="diagnosticos_clinicos")
     private String diagnosticosClinicos;
-    @OneToMany(mappedBy = "consulta")
-    @Cascade(CascadeType.DELETE_ORPHAN)
-    private List<ResultadoEstudio> resultadosEstudios;
+
     @ManyToOne
     @JoinColumn(name="id_paciente")
     private Paciente paciente;
     @ManyToOne
     @JoinColumn(name="id_medico")
     private Medico medico;
+    
+    @OneToOne
+    @JoinColumn(name="id_registro")
+    private Registro registro;
+    @OneToOne
+    @JoinColumn(name="id_triage")
+    private Triage triage;
 
 
-    public void agregarResultadoEstudio(ResultadoEstudio resultadoEstudio){
-        this.resultadosEstudios.add(resultadoEstudio);
-    }
-    }
+ }
