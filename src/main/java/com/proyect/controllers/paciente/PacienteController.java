@@ -72,8 +72,6 @@ public class PacienteController {
         paciente.setTelefonoCelular(telefonoCelular);
         paciente.setDomicilio(domicilio);
         paciente.setEstadoCivil(estadoCivil);
-        paciente.setTriage(new Triage());
-        triageService.guardarTriage(paciente.getTriage());
         pacienteService.crearPaciente(paciente);
 
         return "redirect:/pacientes/registros/"+paciente.getId();
