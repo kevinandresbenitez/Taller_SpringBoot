@@ -55,15 +55,15 @@ public class IngresoController {
     public String formulario(@PathVariable("id")Long id,
                              @RequestParam("motivoConsulta")String motivoConsulta){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
-        Ingreso registro = new Ingreso();
+        Ingreso ingreso = new Ingreso();
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
-        registro.setFechaRegistro(fechahoy);
-        registro.setHoraRegistro(tiempohoy);
-        registro.setPaciente(paciente);
-        registro.setMotivo(motivoConsulta);
-        paciente.setRegistro(registro);
-        ingresoService.guardarIngreso(registro);
+        ingreso.setFechaRegistro(fechahoy);
+        ingreso.setHoraRegistro(tiempohoy);
+        ingreso.setPaciente(paciente);
+        ingreso.setMotivo(motivoConsulta);
+        paciente.setIngreso(ingreso);
+        ingresoService.guardarIngreso(ingreso);
         pacienteService.crearPaciente(paciente);
         return "redirect:/";
     }
