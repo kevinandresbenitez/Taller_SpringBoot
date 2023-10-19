@@ -1,6 +1,7 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import lombok.*;
 
 @Entity
@@ -9,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="administrador")
-public class Administrador{
+public class Administrador implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,6 +1,7 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Setter
 @Getter
 @Table(name="enfermero")
-public class Enfermero{
+public class Enfermero implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

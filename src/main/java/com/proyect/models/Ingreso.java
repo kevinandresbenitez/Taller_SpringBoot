@@ -1,6 +1,7 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,7 +14,7 @@ import lombok.*;
 @Setter
 @Getter
 @Table(name="ingreso")
-public class Ingreso{
+public class Ingreso implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
