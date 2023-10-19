@@ -84,17 +84,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <tbody>
             <!-- Se listan los pacientes -->
             <tr th:each="paciente : ${pacientes}">
-                <div th:if="${paciente.getIngreso()}"
-                    <td th:text="${paciente.getIngreso().getDni()}"></td>
-                    <td th:text="${paciente.getIngreso().getNombre()}"></td>
-                    <td th:text="${paciente.getIngreso().getDni()}"></td>
-                    <td th:text="${paciente.getIngreso().getMotivo()}"></td>
-                    <td th:text="${paciente.getIngreso().getFechaRegistro()}"></td>
-                    <td th:text="${paciente.getIngreso().getHoraRegistro()}"></td>
-                    <td>
-                        <a th:href="@{/triages/agregar/{id}(id=${paciente.getId()})}">Asignar triage</a>
-                    </td>
-                </div>
+                <td th:text="${paciente.getDni()}"></td>
+                <td th:text="${paciente.getNombre()}"></td>
+                <td th:text="${paciente.getDni()}"></td>
+                <td th:text="${paciente.getIngresos().getLast().getMotivo()}"></td>
+                <td th:text="${paciente.getIngresos().getLast().getFechaRegistro()}"></td>
+                <td th:text="${paciente.getIngresos().getLast().getHoraRegistro()}"></td>
+                <td>
+                    <a th:href="@{/triages/agregar/{id}(id=${paciente.getId()})}">Asignar triage</a>
+                </td>
             </tr>
             </tbody>
         </table>

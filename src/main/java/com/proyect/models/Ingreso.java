@@ -19,7 +19,7 @@ public class Ingreso implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
     
