@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/triages")
@@ -87,8 +88,7 @@ public class TriageController {
                 triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
         
         // Guardamos un medico por defecto hasta implementar la session
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.getFirst();
+        Optional<Medico> medico = medicoService.obtenerMedicoPorId(4L);
         
         
         // Creando el triage
@@ -97,7 +97,7 @@ public class TriageController {
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
-        triageAGuardar.setMedico(medico);
+        triageAGuardar.setMedico(medico.get());
         triageService.guardarTriage(triageAGuardar);
         
 
