@@ -55,23 +55,10 @@
             width: 100%;
         }
     </style>
-  <script>
-        function validarNumeroPositivo(input) {
-            var valor = input.value;
 
-            // Verificar si el valor es un número positivo
-            if (isNaN(valor) || Number(valor) <= 0) {
-                alert("Por favor, ingrese un número positivo.");
-                input.value = ""; // Limpiar el campo
-                setTimeout(function() {
-                    input.focus(); // Devolver el foco al campo después de un breve retraso
-                }, 0);
-            }
-        }
-    </script>
 </head>
 <body>
-<form th:action="@{/pacientes/registros/{id}(id=${paciente.id})}" method="post">
+<form th:action="@{/pacientes/ingresos/agregar/{id}(id=${paciente.id})}" method="post">
   <h2>Agregar motivo de consulta</h2>
 
   <label for="motivoConsulta">Motivo de consulta:</label>
