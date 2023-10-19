@@ -9,7 +9,7 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
-@Table(name="especialidad")
+@Table(name="titulo")
 public class Titulo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

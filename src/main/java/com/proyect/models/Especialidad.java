@@ -1,6 +1,7 @@
 package com.proyect.models;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -11,7 +12,7 @@ import org.hibernate.annotations.CascadeType;
 @Setter
 @Getter
 @Table(name="especialidad")
-public class Especialidad {
+public class Especialidad implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

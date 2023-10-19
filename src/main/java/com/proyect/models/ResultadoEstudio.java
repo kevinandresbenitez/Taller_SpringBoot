@@ -6,6 +6,7 @@ package com.proyect.models;
 
 import lombok.*;
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,7 +24,7 @@ import java.util.Date;
 @ToString
 @Table(name="resultado_estudio")
 
-public class ResultadoEstudio {
+public class ResultadoEstudio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
