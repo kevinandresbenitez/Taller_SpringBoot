@@ -25,4 +25,8 @@ public class Box {
     @JoinColumn(name="id_paciente")
     private Paciente paciente;
     
+    @OneToOne
+    @JoinColumn(name="id_medico")
+    private Medico medico;
+    
 }
