@@ -62,7 +62,7 @@ public class IngresoController {
         ingreso.setHoraRegistro(tiempohoy);
         ingreso.setPaciente(paciente);
         ingreso.setMotivo(motivoConsulta);
-        paciente.setIngreso(ingreso);
+        paciente.getIngresos().add(ingreso);
         ingresoService.guardarIngreso(ingreso);
         pacienteService.crearPaciente(paciente);
         return "redirect:/";

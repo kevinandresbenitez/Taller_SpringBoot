@@ -29,8 +29,8 @@ public class Paciente extends Persona implements Serializable{
     private List<Triage> triages;
     @OneToMany(mappedBy = "paciente")
     private List<ResultadoEstudio> resultadosEstudios;
-    @OneToOne(mappedBy = "paciente")
-    private Ingreso ingreso;
+    @OneToMany(mappedBy = "paciente")
+    private List<Ingreso> ingresos;
     public void agregarConsultas(Consulta consulta){
         this.consultas.add(consulta);
     }

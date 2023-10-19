@@ -1,8 +1,10 @@
 package com.proyect.controllers.paciente;
 
+import com.proyect.models.Medico;
 import com.proyect.models.Paciente;
 import com.proyect.models.Triage;
 import com.proyect.repositories.TriageRepository;
+import com.proyect.services.MedicoService;
 import com.proyect.services.PacienteService;
 import com.proyect.services.TriageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,12 @@ public class TriageController {
     PacienteService pacienteService;
     @Autowired
     TriageService triageService;
+    @Autowired
+    MedicoService medicoService;
+    
     @GetMapping("/")//pacientes a espera de ser triagiados
     public String listarTriages(Model model) {
-        List<Paciente> pacientes = pacienteService.pacientesSinTriage();
+        List<Paciente> pacientes = pacienteService.obtenerPacientesNecesitanSerTriagados();
         model.addAttribute("pacientes",pacientes);
         return "pacientes/triages/index";
     }
@@ -59,6 +64,7 @@ public class TriageController {
             @RequestParam("sangrado") int sangrado,
             Model model) {
 
+        // Calculando triage
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         Paciente paciente = pacienteService.obtenerPacienteById(id);
@@ -79,15 +85,23 @@ public class TriageController {
         // Obteniendo punuacion y respectivo color, tiempo de espera ...
         TriageObject triageResultante =
                 triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
+        
+        // Guardamos un medico por defecto hasta implementar la session
+        List<Medico> medicos = medicoService.listarMedicos();
+        Medico medico = medicos.getFirst();
+        
+        
+        // Creando el triage
         Triage triageAGuardar = new Triage();
         triageAGuardar.setColor(triageResultante.getColor());
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
+        triageAGuardar.setMedico(medico);
         triageService.guardarTriage(triageAGuardar);
         
-        // Aca tenemos que hacer un new Triage() y luego guardarlo en un service
-        // Este traiage al guardarse, podra verse desde la pagina principal de traige del paciente
+
+        
 
         return "redirect:/triages/resultadotriage/"+id;
     }

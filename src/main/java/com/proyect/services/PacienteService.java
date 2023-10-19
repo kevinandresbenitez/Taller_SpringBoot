@@ -51,8 +51,8 @@ public class PacienteService {
         }
     }
 
-    public List<Paciente> pacientesSinTriage(){
-        return pacienteRepository.findByTriagesIsNull();
+    public List<Paciente> obtenerPacientesNecesitanSerTriagados(){
+        return pacienteRepository.BuscarPacientesNecesitanSerTriagados();
     }
 
     public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
