@@ -5,6 +5,7 @@ import java.io.Serializable;
 import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -22,8 +23,14 @@ public class Triage implements Serializable{
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private Medico medico;
+    @OneToMany(mappedBy = "triage")
+    List<TriageModificacion> modificacionesDeTriage;
     private String color;
     private LocalDate fechaEvaluacion;
     private LocalTime horaEvaluacion;  
 
+
+    public void agregarModificacion(TriageModificacion modificacion){
+        this.modificacionesDeTriage.add(modificacion);
+    }
 }
