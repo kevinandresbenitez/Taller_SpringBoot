@@ -13,6 +13,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class TriageObject {
     String color;

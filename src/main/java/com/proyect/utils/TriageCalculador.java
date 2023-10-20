@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.proyect.utils;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import java.util.HashMap;
 import lombok.*;
@@ -72,13 +69,13 @@ public class TriageCalculador {
     }
 
     public TriageObject segunColorObtenerTriageObject(String color){
-        if(color == "Rojo"){
+        if(Objects.equals(color, "Rojo")){
             return listaDeTriages.get(0);
-        }else if(color == "Naranja"){
+        }else if(Objects.equals(color, "Naranja")){
             return listaDeTriages.get(1);
-        }else if(color == "Verde"){
+        }else if(Objects.equals(color, "Verde")){
             return listaDeTriages.get(2);
-        }else if(color == "Amarillo"){
+        }else if(Objects.equals(color, "Amarillo")){
             return listaDeTriages.get(3);
         }else{
             return listaDeTriages.get(4);

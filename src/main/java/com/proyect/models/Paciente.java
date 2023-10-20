@@ -26,10 +26,13 @@ public class Paciente extends Persona implements Serializable{
     @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Consulta> consultas;
     @OneToMany(mappedBy = "paciente")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Triage> triages;
     @OneToMany(mappedBy = "paciente")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<ResultadoEstudio> resultadosEstudios;
     @OneToMany(mappedBy = "paciente")
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Ingreso> ingresos;
     public void agregarConsultas(Consulta consulta){
         this.consultas.add(consulta);

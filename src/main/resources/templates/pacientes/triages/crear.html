@@ -1,185 +1,179 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>TODO supply a title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f9fa;
         }
 
-div {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+            margin: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
 
-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
+        div.title {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            grid-column: span 2;
+        }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-}
+        div.field-group {
+            text-align: left;
+            margin-top: 15px;
+        }
 
-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #007bff;
+        }
 
-input[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
 
-input[type="submit"]:hover {
-    background-color: #0056b3;
-}
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-<div>Formulario para los sintomas</div>
 <form th:action="@{/triages/agregar/{id}(id=${paciente.id})}" method="post">
-    <label for="respiracion">Tipo de respiracion:</label>
-    <select id="respiracion" name="respiracion">
-        <option value=0>Normal</option>
-        <option value=1>Dificultad respiratoria moderada</option>
-        <option value=2>Dificultad respiratoria grave</option>
-    </select>
+    <div class="title">Formulario para los síntomas</div>
 
-    <br>
 
-    <label for="pulso">Pulso:</label>
-    <select id="pulso" name="pulso">
-        <option value=0>Normal</option>
-        <option value=1>Anormal(rapido o lento)</option>
-    </select>
+    <div class="field-group">
+        <label for="respiracion">Tipo de respiración:</label>
+        <select id="respiracion" name="respiracion">
+            <option value=0>Normal</option>
+            <option value=1>Dificultad respiratoria moderada</option>
+            <option value=2>Dificultad respiratoria grave</option>
+        </select>
 
-    <br>
+        <label for="pulso">Pulso:</label>
+        <select id="pulso" name="pulso">
+            <option value=0>Normal</option>
+            <option value=1>Anormal(rapido o lento)</option>
+        </select>
 
-    <br>
 
-    <label for="estadoMental">Pulso:</label>
-    <select id="estadoMental" name="estadoMental">
-        <option value=0>Normal</option>
-        <option value=1>Confusión leve</option>
-        <option value=2>Confusión grave o somnolencia</option>
-    </select>
 
-    <br>
+        <label for="estadoMental">Estado mental:</label>
+        <select id="estadoMental" name="estadoMental">
+            <option value=0>Normal</option>
+            <option value=1>Confusión leve</option>
+            <option value=2>Confusión grave o somnolencia</option>
+        </select>
 
-    <br>
 
-    <label for="conciencia">Conciencia:</label>
-    <select id="conciencia" name="conciencia">
-        <option value=0>Consciente y alerta</option>
-        <option value=3>Pérdida de conciencia</option>
-    </select>
+        <label for="conciencia">Conciencia:</label>
+        <select id="conciencia" name="conciencia">
+            <option value=0>Consciente y alerta</option>
+            <option value=3>Pérdida de conciencia</option>
+        </select>
 
-    <br>
+        <label for="dolorPechoRespirar">dolor en el pecho o dificultad para respirar:</label>
+        <select id="dolorPechoRespirar" name="dolorPechoRespirar">
+            <option value=0>No presente</option>
+            <option value=1>Presente</option>
+        </select>
 
-    <br>
-    <label for="dolorPechoRespirar">dolor en el pecho o dificultad para respirar:</label>
-    <select id="dolorPechoRespirar" name="dolorPechoRespirar">
-        <option value=0>No presente</option>
-        <option value=1>Presente</option>
+        <label for="lesionesGraves">Lesiones graves:</label>
+        <select id="lesionesGraves" name="lesionesGraves">
+            <option value=0>No presente</option>
+            <option value=2>Presente</option>
 
-    </select>
+        </select>
+    </div>
 
-    <br>
+    <!-- Parte derecha -->
+    <div class="field-group">
 
-    <br>
-    <label for="lesionesGraves">Lesiones graves:</label>
-    <select id="lesionesGraves" name="lesionesGraves">
-        <option value=0>No presente</option>
-        <option value=2>Presente</option>
+        <label for="fiebre">Fiebre:</label>
+        <select id="fiebre" name="fiebre">
+            <option value=0>Sin fiebre</option>
+            <option value=1>Fiebre moderada</option>
+            <option value=2>Fiebre alta</option>
+        </select>
 
-    </select>
 
-    <br>
+        <label for="vomitos">Vómitos:</label>
+        <select id="vomitos" name="vomitos">
+            <option value=0>Sin vómitos</option>
+            <option value=1>Vómitos moderados</option>
+            <option value=2>Vómitos intensos</option>
+        </select>
 
-    <br>
-    <label for="fiebre">Lesiones graves:</label>
-    <select id="fiebre" name="fiebre">
-        <option value=0>Sin fiebre</option>
-        <option value=1>Fiebre moderada</option>
-        <option value=2>Fiebre alta</option>
-    </select>
 
-    <br>
+        <label for="dolorAbdominal">Dolor abdominal:</label>
+        <select id="dolorAbdominal" name="dolorAbdominal">
+            <option value=0>No presente</option>
+            <option value=1>Dolor abdominal moderado</option>
+            <option value=2>Dolor abdominal severo</option>
+        </select>
 
-    <br>
-    <label for="vomitos">Lesiones graves:</label>
-    <select id="vomitos" name="vomitos">
-        <option value=0>Sin vómitos</option>
-        <option value=1>Vómitos moderados</option>
-        <option value=2>Vómitos intensos</option>
-    </select>
+        <label for="signosShock">Signos de shock:</label>
+        <select id="signosShock" name="signosShock">
+            <option value=0>No presente</option>
+            <option value=3>Presentes</option>
+        </select>
 
-    <br>
+        <label for="lesionesLeves">Lesiones leves:</label>
+        <select id="lesionesLeves" name="lesionesLeves">
+            <option value=0>No presente</option>
+            <option value=1>Presentes</option>
+        </select>
 
-    <br>
-    <label for="dolorAbdominal">Lesiones graves:</label>
-    <select id="dolorAbdominal" name="dolorAbdominal">
-        <option value=0>No presente</option>
-        <option value=1>Dolor abdominal moderado</option>
-        <option value=2>Dolor abdominal severo</option>
-    </select>
-    <br>
+        <label for="sangrado">Sangrado:</label>
+        <select id="sangrado" name="sangrado">
+            <option value=0>No presente</option>
+            <option value=1>Sangrado moderado</option>
+            <option value=2>Sangrado intenso</option>
+        </select>
+    </div>
 
-    <br>
-    <label for="signosShock">Lesiones graves:</label>
-    <select id="signosShock" name="signosShock">
-        <option value=0>No presente</option>
-        <option value=3>Presentes</option>
-    </select>
-    <br>
-
-    <br>
-    <label for="lesionesLeves">Lesiones graves:</label>
-    <select id="lesionesLeves" name="lesionesLeves">
-        <option value=0>No presente</option>
-        <option value=1>Presentes</option>
-    </select>
-    <br>
-
-    <br>
-    <label for="sangrado">Lesiones graves:</label>
-    <select id="sangrado" name="sangrado">
-        <option value=0>No presente</option>
-        <option value=1>Sangrado moderado</option>
-        <option value=2>Sangrado intenso</option>
-    </select>
-    <br>
-
-    <input type="submit" value="Enviar">
+    <div class="field-group" style="grid-column: span 2;">
+        <input type="submit" value="Enviar">
+    </div>
 </form>
 </body>
 </html>
+

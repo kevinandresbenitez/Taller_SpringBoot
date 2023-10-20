@@ -3,9 +3,12 @@ package com.proyect.controllers.paciente;
 import com.proyect.models.Medico;
 import com.proyect.models.Paciente;
 import com.proyect.models.Triage;
+import com.proyect.models.TriageModificacion;
+import com.proyect.repositories.TriageModificacionRepository;
 import com.proyect.repositories.TriageRepository;
 import com.proyect.services.MedicoService;
 import com.proyect.services.PacienteService;
+import com.proyect.services.TriageModificacionService;
 import com.proyect.services.TriageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import com.proyect.utils.TriageCalculador;
 import com.proyect.utils.TriageObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,6 +37,8 @@ public class TriageController {
     TriageService triageService;
     @Autowired
     MedicoService medicoService;
+    @Autowired
+    TriageModificacionService triageModificacionService;
     
     @GetMapping("/")//pacientes a espera de ser triagiados
     public String listarTriages(Model model) {
@@ -86,7 +92,6 @@ public class TriageController {
         // Obteniendo punuacion y respectivo color, tiempo de espera ...
         TriageObject triageResultante =
                 triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
-        
         // Guardamos un medico por defecto hasta implementar la session
         List<Medico> medicos = medicoService.listarMedicos();
         Medico medico = medicos.get(medicos.size()-1);
@@ -112,29 +117,43 @@ public class TriageController {
     public String resultadoTriage(Model model,@PathVariable("id")Long id) {
         Triage triage = triageService.findTriageById(id);
         TriageCalculador obtenerDatosTriage = new TriageCalculador();
-        TriageObject triageAMostrar = obtenerDatosTriage.segunColorObtenerTriageObject(triage.getColor());
+        TriageObject triageAMostrar = new TriageObject();
+        triageAMostrar = obtenerDatosTriage.segunColorObtenerTriageObject(triage.getColor());
         model.addAttribute("triage",triageAMostrar);
+        model.addAttribute("triage1",triage);
         return "pacientes/triages/resultadotriage";
     }
+    @GetMapping("/cambiarcolor/{id}")//id del triage
+    public String modificarTriage(Model model,@PathVariable("id")Long id) {
+        Triage triage = triageService.findTriageById(id);
+        model.addAttribute("triage",triage);
+        return "pacientes/triages/modificacion";
+    }
 
-    @PostMapping("/cambiarcolor")
-    public String cambiarColor(String nuevoColor, Model model) {
-        /*
-        if (niveles.containsKey(nuevoColor)) {
+    @PostMapping("/cambiarcolor/{id}")
+    public String cambiarColor(@PathVariable("id")Long id,
+                               @RequestParam("nuevoColor") String nuevoColor,
+                               @RequestParam("motivoDeCambio") String motivoDeCambio,
+                               RedirectAttributes atributosMensaje) {
 
-            this.colorNivel = nuevoColor;
-            nivel = niveles.get(nuevoColor);
-            tiempoEspera = tiemposDeEspera.get(nuevoColor);
-
-            return "redirect:/cambio-color";
+        Triage triage = triageService.findTriageById(id);
+        TriageCalculador auxiliarTriageCalculador = new TriageCalculador();
+        TriageObject compararNivelNuevo = auxiliarTriageCalculador.segunColorObtenerTriageObject(nuevoColor);
+        TriageObject compararNivelViejo = auxiliarTriageCalculador.segunColorObtenerTriageObject(triage.getColor());
+        if (compararNivelViejo.getNivel()+2<compararNivelNuevo.getNivel() || compararNivelViejo.getNivel()-2 > compararNivelNuevo.getNivel()) {
+            atributosMensaje.addFlashAttribute("mensaje","No es posible cambiar mas de dos niveles");
+            return "redirect:/triages/cambiarcolor/"+id;
         } else {
-
-            String mensaje = " El color no es válido.";
-            model.addAttribute("mensaje", mensaje);
-            return "pagina-de-error";
+            TriageModificacion triageModificacion = new TriageModificacion();
+            triageModificacion.setTriage(triage);
+            triageModificacion.setColorViejo(triage.getColor());
+            triageModificacion.setMotivoDeCambio(motivoDeCambio);
+            triage.setColor(compararNivelNuevo.getColor());
+            triage.agregarModificacion(triageModificacion);
+            triageService.guardarTriage(triage);
+            triageModificacionService.guardarModificacion(triageModificacion);
+            return "redirect:/triages/resultadotriage/"+id;
         }
-        */
-        return "resultado-triage";
     }
 
 }
