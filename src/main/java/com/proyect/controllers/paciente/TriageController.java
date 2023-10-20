@@ -88,7 +88,8 @@ public class TriageController {
                 triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
         
         // Guardamos un medico por defecto hasta implementar la session
-        Optional<Medico> medico = medicoService.obtenerMedicoPorId(4L);
+        List<Medico> medicos = medicoService.listarMedicos();
+        Medico medico = medicos.get(medicos.size()-1);
         
         
         // Creando el triage
@@ -97,7 +98,7 @@ public class TriageController {
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
-        triageAGuardar.setMedico(medico.get());
+        triageAGuardar.setMedico(medico);
         triageService.guardarTriage(triageAGuardar);
         
 
