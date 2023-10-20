@@ -23,7 +23,7 @@ public interface PacienteRepository extends JpaRepository<Paciente,Long> {
     );
 
     /*Lista de pacientes para enviar a un box*/
-    @Query(value = "SELECT Paciente.* FROM paciente Paciente  LEFT JOIN triage on paciente.id = triage.id_paciente WHERE triage.id NOT IN (SELECT id_triage FROM Consulta )",nativeQuery = true)
+    @Query(value = "SELECT Paciente.* FROM paciente Paciente  LEFT JOIN triage on paciente.id = triage.id_paciente LEFT JOIN box on paciente.id = box.id_paciente WHERE (paciente.id IN (SELECT id_paciente FROM triage) and triage.id NOT IN (SELECT id_triage FROM consulta)) AND paciente.id NOT IN (SELECT box.id_paciente from box where id_paciente is not null)",nativeQuery = true)
     List<Paciente> BuscarPacientesNecesitanSerAtendidosEnBox();
     
     /*Lista de pacientes para crear triages*/

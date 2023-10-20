@@ -26,8 +26,8 @@ public class BoxController {
       @GetMapping("/")
       
          public String listBox(Model model) {
-             List<Box> box = boxService.listarBox();
-             model.addAttribute("box", box);
+             List<Box> boxes = boxService.listarBoxes();
+             model.addAttribute("boxes", boxes);
              return "boxes/index";
     
    

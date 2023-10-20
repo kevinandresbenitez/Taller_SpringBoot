@@ -55,6 +55,10 @@ public class PacienteService {
         return pacienteRepository.BuscarPacientesNecesitanSerTriagados();
     }
 
+    public List<Paciente> obtenerPacientesNecesitanSerAtendidosEnBox() {
+        return pacienteRepository.BuscarPacientesNecesitanSerAtendidosEnBox();
+    }
+        
     public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
         // Calcular las fechas de nacimiento a partir de las edades
         LocalDate fechaNacimientoMinima = LocalDate.now().minusYears(edadMaxima);

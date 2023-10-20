@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Boxes Disponibles</div>
+        <p>Hasta que se implemente la session voy a agregar un medico por defecto que es el que atiende</p>
+        <p>Medico de la session</p>
+        <strong th:text="${medicoSession.getProfesionalSalud().getFuncionario().getNombre()}"></strong>
+        
+        <div>
+            <h2>Boxes de atencion</h2>
+            <h3 th:text="${mensaje}"></h3>
+            <div th:each="box : ${boxes}">
+                <p>----------------------------</p><br/>
+                <strong>Numero del box</strong><br/>
+                <div th:text="${box.getNumero()}"></div><br/>
+                <strong>Estado</strong><br/>
+                
+                <!-- Si en el box esta atendiendo un medico-->
+                <div th:if="${box.estaUnMedicoAtendiendo()}">
+                    <p>En el box esta atendiendo un medico</p>
+                    <strong th:text="${box.getMedico().getProfesionalSalud().getFuncionario().getNombre()}"></strong><br/>
+                    
+                    <!-- Si hay un paciente -->
+                    <div th:if="${box.estaUnPacienteSiendoAtendido()}">
+                        <strong>Atendiendo al paciente</strong><br/>
+                        <p th:text="${box.getPaciente().getNombre()}"></p>
+                        <!-- Si estoy atendiendo -->
+                        <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                            <a th:href="@{/pacientes/consultas/crear/{id}(id=${box.getPaciente().getId})}">Despachar al paciente y generar consulta</a>      
+                            <a th:href="@{/pacientes/atenciones/posponer/{id}/{id_paciente}(id=${box.getId()},id_paciente=${box.getPaciente().getId()})}">Posponer consulta</a>      
+                        </div>
+                    </div>
+                     <!-- Si no hay un paciente -->
+                    <div th:unless="${box.estaUnPacienteSiendoAtendido()}">
+                        <strong>No se esta atendiendo un paciente</strong><br/>
+                        <!-- Si estoy atendiendo -->
+                        <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                            <a th:href="@{/pacientes/atenciones/trabajar/terminar/{id}(id=${box.getId})}">Dejar de trabajar en</a>
+                            <a th:href="@{/pacientes/atenciones/asignar/{id}(id=${box.getId})}">Traer a un paciente</a> 
+                        </div>
+                    </div>                   
+                </div>
+                 <!-- Si en el box no esta atendiendo nadie-->
+                <div th:unless="${box.estaUnMedicoAtendiendo()}">
+                    <p>En el box no esta atendiendo un medico</p>
+                    <a th:href="@{/pacientes/atenciones/trabajar/empezar/{id}(id=${box.getId})}">Trabajar en</a>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+        
+        
+    </body>
+</html>
