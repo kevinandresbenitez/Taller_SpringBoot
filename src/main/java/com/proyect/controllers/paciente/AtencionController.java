@@ -6,6 +6,8 @@ import com.proyect.services.ConsultaService;
 import com.proyect.services.PacienteService;
 import com.proyect.services.IngresoService;
 import com.proyect.services.TriageService;
+import com.proyect.utils.TriageCalculador;
+import com.proyect.utils.TriageObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import com.proyect.services.BoxService;
 import com.proyect.services.MedicoService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -120,7 +125,14 @@ public class AtencionController {
             atributos.addFlashAttribute("mensaje","No eres el medico que trabaja en el box este");
             return "redirect:/pacientes/atenciones/";
         }
+        TriageObject triageObject = new TriageObject();
         List<Paciente> pacientes = pacienteService.obtenerPacientesNecesitanSerAtendidosEnBox();
+        pacientes = pacientes.stream()
+                .sorted(Comparator
+                        .comparing((Paciente p)-> triageObject.ordenarColor(p.getTriages().get(p.getTriages().size()-1).getColor()))
+                        .thenComparing((Paciente p)-> p.getTriages().get(p.getTriages().size()-1).getHoraEvaluacion()))
+                .collect(Collectors.toList());//se ordenan los pacientes segun color, si resultan de igual color se ordena por
+                                            //hora de evaluacion del triage
         model.addAttribute("pacientes",pacientes);
         model.addAttribute("id_box",id);
         return "/pacientes/atenciones/asignar";

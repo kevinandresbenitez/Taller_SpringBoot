@@ -15,6 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div th:each="paciente : ${pacientes}">
             <strong>-----------------</strong>
             <p th:text="${paciente.getNombre}"></p>
+            <p th:text="${paciente.getTriages().get(paciente.getTriages().size()-1).getColor()}"></p>
             <a th:href="@{/pacientes/atenciones/asignar/{id}/{id_paciente}(id=${id_box},id_paciente=${paciente.getId()})}">Agregar paciente al box</a>
         </div>
         
