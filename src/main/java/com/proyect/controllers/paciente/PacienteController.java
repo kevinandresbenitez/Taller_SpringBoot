@@ -72,7 +72,7 @@ public class PacienteController {
         }
         
         
-        pacienteService.crearPaciente(paciente);
+        pacienteService.guardarPaciente(paciente);
         return "redirect:/pacientes/ingresos/agregar/"+paciente.getId();
     }
 
@@ -86,5 +86,15 @@ public class PacienteController {
         return "pacientes/modificar";
     }
 
+    @GetMapping("/buscar")
+    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model) {
+        Optional<Paciente> paciente = pacienteService.findByDni(dni);
+        if (paciente.isPresent()) {
+            model.addAttribute("paciente", paciente.get());
+        } else {
+            model.addAttribute("mensaje", "Paciente no encontrado.");
+        }
+        return "pacientes/index";
+    }
 
 }

@@ -26,4 +26,21 @@ public class TriageObject {
         tiempoEspera = tiempoEspera;
         nivel = nivel;
     }
+
+    public int ordenarColor(String color) {
+        switch (color) {
+            case "Rojo":
+                return 1;
+            case "Naranja":
+                return 2;
+            case "Amarillo":
+                return 3;
+            case "Verde":
+                return 4;
+            case "Azul":
+                return 5;
+            default:
+                return 6;
+        }
+    }
 }

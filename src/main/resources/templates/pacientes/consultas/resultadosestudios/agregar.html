@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Formulario de resultados de estudios</title>
+
+  <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="hidden"] {
+            display: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para los campos de resultados de estudios */
+        #resultadosEstudiosContainer {
+            margin-top: 20px;
+        }
+
+        #resultadosEstudiosContainer > div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/pacientes/consultas/agregarresultadoestudios/{id}(id=${consulta.id})}" method="post" id="resultadoForm">
+  <h2>Resultados de estudios:</h2>
+
+  <div id="resultadosEstudiosContainer">
+    <!-- Campos iniciales -->
+    <div>
+      <label for="resultadosEstudios[0].tipoInforme">Tipo de Informe:</label>
+      <input type="text" id="tipoInforme0" name="tipoInforme[]" required>
+
+      <label for="resultadosEstudios[0].informeEstudio">Informe de Estudio:</label>
+      <input type="text" id="informeEstudio0" name="informeEstudio[]" required>
+    </div>
+  </div>
+
+  <button type="button" onclick="agregarCampoResultadoEstudio()">Agregar otro resultado de estudio</button>
+
+  <button type="submit">Agregar resultados de estudias a la consulta</button>
+</form>
+
+<!-- JavaScript para agregar campos de resultados de estudios dinámicamente -->
+<script th:inline="javascript">
+
+    var indiceResultadoEstudio = 1;
+
+    function agregarCampoResultadoEstudio() {
+        var container = document.getElementById('resultadosEstudiosContainer');
+
+        var nuevoCampo =
+            `<div>
+                <label for="resultadosEstudios[${indiceResultadoEstudio}].tipoInforme">Tipo de Informe:</label>
+                <input type="text" id="tipoInforme${indiceResultadoEstudio}" name="tipoInforme[]" required>
+
+                <label for="resultadosEstudios[${indiceResultadoEstudio}].informeEstudio">Informe de Estudio:</label>
+                <input type="text" id="informeEstudio${indiceResultadoEstudio}" name="informeEstudio[]" required>
+            </div>`;
+
+        // Agregar el nuevo campo al contenedor
+        container.innerHTML += nuevoCampo;
+
+        // Incrementar el índice para el próximo campo
+        indiceResultadoEstudio++;
+    }
+
+</script>
+</body>
+</html>
