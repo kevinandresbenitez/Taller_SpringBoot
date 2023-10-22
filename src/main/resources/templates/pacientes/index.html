@@ -26,12 +26,38 @@
         h2 {
             color: #007bff;
         }
-        h2 {
-            color: #007bff;
-        }
 
         .button-container {
             margin-bottom: 20px;
+
+
+        /* Agregar estilos para el botón Volver */
+        .button-container a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Agregar estilos para los datos del paciente */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+            background-color: #f2f2f2; /* Cambiar el color de fondo de los datos */
+
         }
 
 
@@ -69,6 +95,7 @@
         h3{
             color: #ff0000;
         }
+
     </style>
 </head>
 <body>
@@ -77,6 +104,7 @@
 
     <div class="button-container">
         <a href="/">Volver</a>
+
     </div>
 
     <div class="search-container">
@@ -87,6 +115,7 @@
             <button type="submit">Buscar</button>
         </form>
     </div>
+
 
     <table>
         <!-- Se muestra el paciente si se encuentra -->
