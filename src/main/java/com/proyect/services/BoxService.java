@@ -5,6 +5,7 @@
 package com.proyect.services;
 
 import com.proyect.models.Box;
+import com.proyect.models.Paciente;
 import com.proyect.repositories.BoxRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -27,6 +28,10 @@ public class BoxService {
         Box box = new Box();
         box.setNumero(numero);
         return boxRepository.save(box);
+    }
+
+    public Box findByPacienteId(Long id){
+        return boxRepository.findByPacienteId(id);
     }
 
     public List<Box> listarBoxes() {

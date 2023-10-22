@@ -1,13 +1,7 @@
 package com.proyect.controllers.paciente;
 
-import com.proyect.models.Consulta;
-import com.proyect.models.Medico;
-import com.proyect.models.Paciente;
-import com.proyect.models.ResultadoEstudio;
-import com.proyect.services.ConsultaService;
-import com.proyect.services.MedicoService;
-import com.proyect.services.PacienteService;
-import com.proyect.services.ResultadoEstudioService;
+import com.proyect.models.*;
+import com.proyect.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +24,9 @@ public class ConsultaController {
     ResultadoEstudioService resultadoEstudioService;
     @Autowired
     MedicoService medicoService;
+
+    @Autowired
+    BoxService boxService;
 
     @GetMapping("/{id}")
     public String listaConsultas(Model model, @PathVariable("id") Long id) {
@@ -58,6 +55,7 @@ public class ConsultaController {
                                  @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
                                  @PathVariable("id") Long id) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Box box = boxService.findByPacienteId(paciente.getId());
         Consulta consulta = new Consulta();
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
@@ -74,7 +72,8 @@ public class ConsultaController {
         consulta.setTriage(paciente.getTriages().get(paciente.getTriages().size()-1));
         consultaService.guardarConsulta(consulta);
         pacienteService.guardarPaciente(paciente);
-
+        box.setPaciente(null);
+        boxService.guardarBox(box);
         return "redirect:/pacientes/consultas/agregarresultadosestudios/"+consulta.getId();
     }
 
@@ -102,18 +101,19 @@ public class ConsultaController {
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
-        for(int i=0;i<tiposInformes.size()-1;i++){
+        for(int i=0;i<tiposInformes.size();i++){
             ResultadoEstudio resultadoEstudio = new ResultadoEstudio();
             resultadoEstudio.setHora(tiempohoy);
             resultadoEstudio.setFecha(fechahoy);
             resultadoEstudio.setTipoInforme(tiposInformes.get(i));
             resultadoEstudio.setInformeEstudio(informesEstudios.get(i));
-            resultadoEstudio.setConsulta(consulta);
             resultadoEstudio.setPaciente(consulta.getPaciente());
             resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
+            consulta.getResultadoEstudios().add(resultadoEstudio);
+
         }
         consultaService.guardarConsulta(consulta);
-        return "redirect:/pacientes/consultas/"+consulta.getPaciente().getId();
+        return "redirect:/pacientes/atenciones/";
     }
 
 }

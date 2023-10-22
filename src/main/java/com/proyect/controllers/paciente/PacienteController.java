@@ -46,7 +46,7 @@ public class PacienteController {
 
 
     @PostMapping("/crear")
-    public String crearPaciente(@RequestParam("nombre") String nombre,
+    public String registrarPaciente(@RequestParam("nombre") String nombre,
                                 @RequestParam("dni") int dni,
                                 @RequestParam("email") String email,
                                 @RequestParam("domicilio") String domicilio,

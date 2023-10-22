@@ -39,9 +39,6 @@ public class ResultadoEstudio implements Serializable {
     @Column(name = "informe_estudio")
     private String informeEstudio;
     @ManyToOne
-    @JoinColumn(name = "id_consulta")
-    private Consulta consulta;
-    @ManyToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
 }

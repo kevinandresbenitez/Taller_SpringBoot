@@ -21,18 +21,23 @@ public class Paciente extends Persona implements Serializable{
     private Long id;
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ToString.Exclude
     private List<contactoPaciente> contactos;
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ToString.Exclude
     private List<Consulta> consultas;
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ToString.Exclude
     private List<Triage> triages;
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ToString.Exclude
     private List<ResultadoEstudio> resultadosEstudios;
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
+    @ToString.Exclude
     private List<Ingreso> ingresos;
 
 

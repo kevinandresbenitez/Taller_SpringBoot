@@ -55,6 +55,7 @@ public class Consulta {
     @JoinTable(name = "consulta_resultados_estudios",
                 joinColumns = @JoinColumn(name = "id_consulta"),
                 inverseJoinColumns = @JoinColumn(name = "id_resultados_estudios"))
+    @ToString.Exclude
     private List<ResultadoEstudio> resultadoEstudios;
     @OneToOne
     @JoinColumn(name="id_ingreso")
