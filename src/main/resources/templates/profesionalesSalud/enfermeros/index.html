@@ -4,6 +4,160 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
 <html>
+<head>
+    <title>Enfermeros</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/FUNCIONARIOTABLA.CSS"> <!-- Enlaza tu hoja de estilos personalizada -->
+    <style>
+        /* Estilos específicos para esta página */
+        .header {
+            background-color: #2c6eb4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .header a.btn {
+            margin: 5px;
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #13253b;
+            border: 1px solid #0056b3;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .header a.btn:hover {
+            background-color: #1f4b7a;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .enfermero {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .enfermero:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .enfermero-details {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .enfermero-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .enfermero-details th, .enfermero-details td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .enfermero-details th {
+            background-color: #1f4b7a;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .enfermero-details th:first-child,
+        .enfermero-details td:first-child {
+            width: 20%;
+        }
+
+        .enfermero-details td ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .enfermero-actions {
+            clear: both;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .enfermero-actions .btn {
+            display: block;
+            margin: 5px;
+            text-align: center;
+            padding: 8px 16px;
+            background-color: #1f4b7a;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #1f4b7a;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .enfermero-actions .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .enfermero-actions .btn-danger {
+            background-color: #FF5733;
+            border: 1px solid #FF5733;
+        }
+
+        .enfermero-actions .btn-danger:hover {
+            background-color: #D23D1F;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Enfermeros</h1>
+    <a class="btn" href="/profesionalSalud/">Volver</a>
+    <a class="btn" href="/profesionalSalud/enfermeros/asignar/">Asignar Profesional de la salud como enfermero</a>
+</div>
+
+<h2>Listado de Enfermeros</h2>
+
+<div th:each="enfermero : ${enfermeros}" class="enfermero">
+    <table class="enfermero-details">
+        <tr>
+            <th>Nombre</th>
+            <td th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></td>
+        </tr>
+        <tr>
+            <th>Nro Matrícula</th>
+            <td th:text="${enfermero.getProfesionalSalud().getNroMatricula()}"></td>
+        </tr>
+        <tr>
+            <th>Nombre funcionario</th>
+            <td th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></td>
+        </tr>
+        <tr>
+            <th>ID Profesional de la Salud</th>
+            <td th:text="${enfermero.getProfesionalSalud().getId()}"></td>
+        </tr>
+        <tr>
+            <th>ID Funcionario</th>
+            <td th:text="${enfermero.getProfesionalSalud().getFuncionario.getId()}"></td>
+        </tr>
+    </table>
+    <div class="enfermero-actions">
+        <a th:href="@{/profesionalSalud/enfermeros/eliminar/{id}(id=${enfermero.getId()})}" class="btn btn-danger">Eliminar Enfermero</a>
+    </div>
+</div>
+</body>
+</html>
+
+<!--<html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
@@ -38,3 +192,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     </body>
 </html>
+-->
