@@ -1,9 +1,176 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario Alta Funcionarios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+   
+    <style>
+       
+  .formulario-header {
+    display: flex;
+    align-items: center;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.formulario-header a.btn {
+    margin-right: 10px; 
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px; 
+    padding: 10px;
+}
+
+.formulario-header h1 {
+    margin: 0;
+    flex-grow: 1; 
+    text-align: center;
+}
+
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #007BFF;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+}
+
+   
+.formulario-header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.formulario-header a.btn {
+    margin-left: 0;
+    color: #fff;
+    text-decoration: none;
+    background-color: #1e364e;
+    border: 1px solid #a6b6c7;
+    border-radius: 90px;
+}
+
+.formulario {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.btn-primary {
+    background-color: #007BFF;
+    border: 1px solid #007BFF;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="formulario-header">
+        <a class="btn" href="/funcionarios/">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <h1>Formulario Alta Funcionarios</h1>
+    </div>
+
+    <form th:action="@{/funcionarios/crear}" method="post" class="formulario">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control">
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="dni">Dni:</label>
+            <input type="text" id="dni" name="dni" class="form-control">
+            <span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="domicilio">Domicilio</label>
+            <input type="text" id="domicilio" name="domicilio" class="form-control">
+            <span th:if="${#fields.hasErrors('domicilio')}" th:errors="*{domicilio}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaNacimiento">Fecha Nacimiento</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control">
+            <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="estadoCivil">Estado Civil</label>
+            <input type="text" id="estadoCivil" name="estadoCivil" class="form-control">
+            <span th:if="${#fields.hasErrors('estadoCivil')}" th:errors="*{estadoCivil}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <div class "form-group">
+            <label for="telefonoFijo">Telefono fijo</label>
+            <input type="text" id="telefonoFijo" name="telefonoFijo" class="form-control">
+            <span th:if="${#fields.hasErrors('telefonoFijo')}" th:errors="*{telefonoFijo}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="telefonoCelular">Telefono Celular</label>
+            <input type="text" id="telefonoCelular" name="telefonoCelular" class="form-control">
+            <span th:if="${#fields.hasErrors('telefonoCelular')}" th:errors="*{telefonoCelular}"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<!--<html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
@@ -43,3 +210,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     </body>
 </html>
+-->
