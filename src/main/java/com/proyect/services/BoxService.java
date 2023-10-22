@@ -42,6 +42,13 @@ public class BoxService {
         return boxRepository.findById(id);
     }
 
+    public void eliminarBoxById(Long id){
+        Optional<Box> box = obtenerBoxPorId(id);
+        if(box.isPresent()){
+            boxRepository.delete(box.get());
+        }
+    }
+
     public void habilitarBox(Long id) {
         if (boxRepository.existsById(id)) {
             Box box = boxRepository.findById(id).get();

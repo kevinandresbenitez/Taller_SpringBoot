@@ -1,17 +1,89 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <a href="/">Volver</a>
-        <a href="/boxes/crear">Crear Box</a>
-        <div>Listar boxes aqui</div>
-    </body>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        a.button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: block;
+            width: fit-content;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+        h3 {
+            color: #420CDF;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div>
+    <a class="button" href="/">Volver</a>
+    <a th:href="@{/boxes/agregarbox}" class="button">Agregar nuevo box</a>
+</div>
+    <h3 th:text="${mensaje}"></h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NUMERO</th>
+        <th>ACCIONES</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="box : ${boxes}">
+        <td th:text="${box.getId()}"></td>
+        <td th:text="${box.getNumero()}"></td>
+        <td>
+            <a class="button" th:href="@{'/boxes/eliminar/' + ${box.getId()}}">Eliminar box</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
 </html>
+
