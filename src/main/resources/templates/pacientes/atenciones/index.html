@@ -1,65 +1,153 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Boxes Disponibles</div>
-        <p>Hasta que se implemente la session voy a agregar un medico por defecto que es el que atiende</p>
-        <p>Medico de la session</p>
-        <strong th:text="${medicoSession.getProfesionalSalud().getFuncionario().getNombre()}"></strong>
-        
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Boxes de Atención</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .box-title {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-content {
+            margin-top: 20px;
+        }
+
+        .label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .value {
+            color: #555;
+        }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 3px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 10%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .color-square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+        }
+        a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="box-title">
+        Boxes de Atención
+        <a class="button" href="/">Volver</a>
+    </h2>
+
+    <div th:each="box : ${boxes}" class="box">
         <div>
-            <h2>Boxes de atencion</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="box : ${boxes}">
-                <p>----------------------------</p><br/>
-                <strong>Numero del box</strong><br/>
-                <div th:text="${box.getNumero()}"></div><br/>
-                <strong>Estado</strong><br/>
-                
-                <!-- Si en el box esta atendiendo un medico-->
-                <div th:if="${box.estaUnMedicoAtendiendo()}">
-                    <p>En el box esta atendiendo un medico</p>
-                    <strong th:text="${box.getMedico().getProfesionalSalud().getFuncionario().getNombre()}"></strong><br/>
-                    
-                    <!-- Si hay un paciente -->
-                    <div th:if="${box.estaUnPacienteSiendoAtendido()}">
-                        <strong>Atendiendo al paciente</strong><br/>
-                        <p th:text="${box.getPaciente().getNombre()}"></p>
-                        <!-- Si estoy atendiendo -->
-                        <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
-                            <a th:href="@{/pacientes/consultas/crear/{id}(id=${box.getPaciente().getId})}">Despachar al paciente y generar consulta</a>      
-                            <a th:href="@{/pacientes/atenciones/posponer/{id}/{id_paciente}(id=${box.getId()},id_paciente=${box.getPaciente().getId()})}">Posponer consulta</a>      
+            <span class="label">Número del box:</span>
+            <span class="value" th:text="${box.getNumero()}"></span>
+        </div>
+
+        <div class="box-content">
+            <span class="label">Estado:</span>
+
+            <!-- Si en el box está atendiendo un médico-->
+            <div th:if="${box.estaUnMedicoAtendiendo()}">
+                <p>En el box está atendiendo un médico</p>
+                <span class="label">Médico:</span>
+                <span class="value" th:text="${box.getMedico().getProfesionalSalud().getFuncionario().getNombre()}"></span>
+
+                <!-- Si hay un paciente -->
+                <div th:if="${box.estaUnPacienteSiendoAtendido()}">
+                    <span class="label">Atendiendo al paciente:</span>
+                    <span class="value" th:text="${box.getPaciente().getNombre()}"></span>
+                    <span class="label">Color de triage:</span>
+                    <span class="value" id="color-${box.getPaciente().getId()}" th:text="${box.getPaciente().getTriages().get(box.getPaciente().getTriages().size()-1).getColor()}"></span>
+
+                    <!-- Si estoy atendiendo -->
+                    <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                        <div class="button-container">
+                            <a class="button" th:href="@{/pacientes/consultas/{id}(id=${box.getPaciente().getId})}">Ir a ver la historia clínica del paciente</a>
+                            <a class="button" th:href="@{/pacientes/atenciones/posponer/{id}/{id_paciente}(id=${box.getId()},id_paciente=${box.getPaciente().getId()})}">Posponer consulta</a>
                         </div>
                     </div>
-                     <!-- Si no hay un paciente -->
-                    <div th:unless="${box.estaUnPacienteSiendoAtendido()}">
-                        <strong>No se esta atendiendo un paciente</strong><br/>
-                        <!-- Si estoy atendiendo -->
-                        <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
-                            <a th:href="@{/pacientes/atenciones/trabajar/terminar/{id}(id=${box.getId})}">Dejar de trabajar en</a>
-                            <a th:href="@{/pacientes/atenciones/asignar/{id}(id=${box.getId})}">Traer a un paciente</a> 
+                </div>
+
+                <!-- Si no hay un paciente -->
+                <div th:unless="${box.estaUnPacienteSiendoAtendido()}">
+                    <span class="label">No se está atendiendo un paciente</span>
+
+                    <!-- Si estoy atendiendo -->
+                    <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                        <div class="button-container">
+                            <a class="button" th:href="@{/pacientes/atenciones/trabajar/terminar/{id}(id=${box.getId})}">Dejar de trabajar en</a>
+                            <a class="button" th:href="@{/pacientes/atenciones/asignar/{id}(id=${box.getId})}">Traer a un paciente</a>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
-                 <!-- Si en el box no esta atendiendo nadie-->
-                <div th:unless="${box.estaUnMedicoAtendiendo()}">
-                    <p>En el box no esta atendiendo un medico</p>
-                    <a th:href="@{/pacientes/atenciones/trabajar/empezar/{id}(id=${box.getId})}">Trabajar en</a>
-                </div>
-                
-                
             </div>
-            
+
+            <!-- Si en el box no está atendiendo nadie-->
+            <div th:unless="${box.estaUnMedicoAtendiendo()}">
+                <p>En el box no está atendiendo un médico</p>
+                <div class="button-container">
+                    <a class="button" th:href="@{/pacientes/atenciones/trabajar/empezar/{id}(id=${box.getId})}">Trabajar en</a>
+                </div>
+            </div>
         </div>
-        
-        
-    </body>
+    </div>
+</div>
+
+
+</body>
 </html>

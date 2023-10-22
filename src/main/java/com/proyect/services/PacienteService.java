@@ -29,7 +29,7 @@ public class PacienteService {
         return pacienteRepository.findByDni(dni);
     }
 
-    public void crearPaciente(Paciente paciente){
+    public void guardarPaciente(Paciente paciente){
         pacienteRepository.save(paciente);
     }
 

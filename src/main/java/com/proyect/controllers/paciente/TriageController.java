@@ -104,6 +104,7 @@ public class TriageController {
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
         triageAGuardar.setMedico(medico);
+        paciente.getTriages().add(triageAGuardar);
         triageService.guardarTriage(triageAGuardar);
         
 
@@ -141,7 +142,7 @@ public class TriageController {
         TriageObject compararNivelNuevo = auxiliarTriageCalculador.segunColorObtenerTriageObject(nuevoColor);
         TriageObject compararNivelViejo = auxiliarTriageCalculador.segunColorObtenerTriageObject(triage.getColor());
         if (compararNivelViejo.getNivel()+2<compararNivelNuevo.getNivel() || compararNivelViejo.getNivel()-2 > compararNivelNuevo.getNivel()) {
-            atributosMensaje.addFlashAttribute("mensaje","No es posible cambiar mas de dos niveles");
+            atributosMensaje.addFlashAttribute("mensaje","¡No es posible cambiar mas de dos niveles!");
             return "redirect:/triages/cambiarcolor/"+id;
         } else {
             TriageModificacion triageModificacion = new TriageModificacion();

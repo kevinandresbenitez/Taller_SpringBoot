@@ -3,6 +3,146 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
+
+<html>
+<head>
+    <title>Especialidades</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/FUNCIONARIOTABLA.CSS"> <!-- Enlaza tu hoja de estilos personalizada -->
+    <style>
+        /* Estilos específicos para esta página */
+        .header {
+            background-color: #2c6eb4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .header a.btn {
+            margin: 5px;
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #13253b;
+            border: 1px solid #0056b3;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .header a.btn:hover {
+            background-color: #1f4b7a;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .especialidad {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .especialidad:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .especialidad-details {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .especialidad-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .especialidad-details th, .especialidad-details td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .especialidad-details th {
+            background-color: #1f4b7a;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .especialidad-details th:first-child,
+        .especialidad-details td:first-child {
+            width: 20%;
+        }
+
+        .especialidad-details td ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .especialidad-actions {
+            clear: both;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .especialidad-actions .btn {
+            display: block;
+            margin: 5px;
+            text-align: center;
+            padding: 8px 16px;
+            background-color: #1f4b7a;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #1f4b7a;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .especialidad-actions .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .especialidad-actions .btn-danger {
+            background-color: #FF5733;
+            border: 1px solid #FF5733;
+        }
+
+        .especialidad-actions .btn-danger:hover {
+            background-color: #D23D1F;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Especialidades</h1>
+    <a class="btn" href="/profesionalSalud/medicos/">Volver</a>
+    <a class="btn" th:href="@{/profesionalSalud/medicos/especialidades/crear/}">Agregar Especialidad</a>
+</div>
+
+<h2>Listado de Especialidades</h2>
+
+<div th:each="especialidad : ${especialidades}" class="especialidad">
+    <table class="especialidad-details">
+        <tr>
+            <th>Nombre de la Especialidad</th>
+            <td th:text="${especialidad.getNombre()}"></td>
+        </tr>
+    </table>
+    <div class="especialidad-actions">
+        <a th:href="@{/profesionalSalud/medicos/especialidades/eliminar/{id}(id=${especialidad.getId()})}" class="btn btn-danger">Eliminar Especialidad</a>
+    </div>
+</div>
+</body>
+</html>
+
+<!--
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -29,3 +169,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     </body>
 </html>
+-->

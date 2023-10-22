@@ -1,23 +1,81 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Lista de pacientes esperando a ser atendidos en un box</div>
-        
-        <div th:each="paciente : ${pacientes}">
-            <strong>-----------------</strong>
-            <p th:text="${paciente.getNombre}"></p>
-            <p th:text="${paciente.getTriages().get(paciente.getTriages().size()-1).getColor()}"></p>
-            <a th:href="@{/pacientes/atenciones/asignar/{id}/{id_paciente}(id=${id_box},id_paciente=${paciente.getId()})}">Agregar paciente al box</a>
-        </div>
-        
-    </body>
-</html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Lista de Pacientes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            max-width: 600px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .assign-link {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .assign-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="title">Lista de pacientes esperando a ser atendidos en un box</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>DNI</th>
+        <th>Motivo</th>
+        <th>Color Triage</th>
+        <th>Hora Evaluación</th>
+        <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="paciente : ${pacientes}">
+        <td th:text="${paciente.getNombre()}"></td>
+        <td th:text="${paciente.getDni()}"></td>
+        <td th:text="${paciente.getIngresos().get(paciente.getTriages().size()-1).getMotivo()}"></td>
+        <td th:text="${paciente.getTriages().get(paciente.getTriages().size()-1).getColor()}"></td>
+        <td th:text="${paciente.getTriages().get(paciente.getTriages().size()-1).getHoraEvaluacion()}"></td>
+        <td><a class="assign-link" th:href="@{/pacientes/atenciones/asignar/{id}/{id_paciente}(id=${id_box},id_paciente=${paciente.getId()})}">Agregar paciente al box</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
