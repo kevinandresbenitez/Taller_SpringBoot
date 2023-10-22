@@ -4,6 +4,179 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
 <html>
+<head>
+    <title>Médicos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/FUNCIONARIOTABLA.CSS"> <!-- Enlaza tu hoja de estilos personalizada -->
+    <style>
+        /* Estilos específicos para esta página */
+        .header {
+            background-color: #2c6eb4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .header a.btn {
+            margin: 5px;
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #13253b;
+            border: 1px solid #0056b3;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .header a.btn:hover {
+            background-color: #1f4b7a;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .medico {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .medico:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .medico-details {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .medico-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .medico-details th, .medico-details td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .medico-details th {
+            background-color: #1f4b7a;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .medico-details th:first-child,
+        .medico-details td:first-child {
+            width: 20%;
+        }
+
+        .medico-details td ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .medico-actions {
+            clear: both;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .medico-actions .btn {
+            display: block;
+            margin: 5px;
+            text-align: center;
+            padding: 8px 16px;
+            background-color: #1f4b7a;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #1f4b7a;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .medico-actions .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .medico-actions .btn-danger {
+            background-color: #FF5733;
+            border: 1px solid #FF5733;
+        }
+
+        .medico-actions .btn-danger:hover {
+            background-color: #D23D1F;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Médicos</h1>
+    <a class="btn" href="/profesionalSalud/">Volver</a>
+    <a class="btn" href="/profesionalSalud/medicos/asignar/">Asignar Profesional de la salud como Médico</a>
+    <a class="btn" href="/profesionalSalud/medicos/especialidades/">Especialidades</a>
+</div>
+
+<h2>Listado de Médicos</h2>
+
+<div th:each="medico : ${medicos}" class="medico">
+    <table class="medico-details">
+        <tr>
+            <th>Nombre</th>
+            <td th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></td>
+        </tr>
+        <tr>
+            <th>Nro Matrícula</th>
+            <td th:text="${medico.getProfesionalSalud().getNroMatricula()}"></td>
+        </tr>
+        <tr>
+            <th>Nombre funcionario</th>
+            <td th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></td>
+        </tr>
+        <tr>
+            <th>ID Profesional de la Salud</th>
+            <td th:text="${medico.getProfesionalSalud().getId()}"></td>
+        </tr>
+        <tr>
+            <th>ID Funcionario</th>
+            <td th:text="${medico.getProfesionalSalud().getFuncionario.getId()}"></td>
+        </tr>
+        <tr>
+            <th>Titulaciones</th>
+            <td>
+                <ul>
+                    <li th:each="titulo: ${medico.getTitulos()}">
+                        <strong>Nombre Universidad</strong><br>
+                        <p th:text="${titulo.getUniversidad()}"></p>
+                        <strong>Fecha Titulación</strong><br>
+                        <p th:text="${titulo.getFechaGraduacion()}"></p>
+                        <strong>Nombre Especialidad</strong><br>
+                        <p th:text="${titulo.getEspecialidad().getNombre()}"></p>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <div class="medico-actions">
+        <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}" class="btn btn-danger">Eliminar Médico</a>
+        <a th:href="@{/profesionalSalud/medicos/titulaciones/{id}(id=${medico.getId()})}" class="btn">Configurar Titulaciones</a>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+<!--<html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
@@ -48,3 +221,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     </body>
 </html>
+-->
