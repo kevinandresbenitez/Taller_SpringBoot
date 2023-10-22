@@ -148,23 +148,6 @@
     </div>
 </div>
 
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var boxes = /* Obtén los datos de los boxes, probablemente desde Thymeleaf */;
 
-        boxes.forEach(function (box) {
-            var color = box.getPaciente().getTriages().get(box.getPaciente().getTriages().size()-1).getColor(); // Ajusta esto según cómo estén estructurados tus datos
-
-            if (color) {
-                var colorSquare = document.createElement('div');
-                colorSquare.className = 'color-square';
-                colorSquare.style.backgroundColor = color;
-
-                var triageText = document.getElementById('color-' + box.getPaciente().getId());
-                triageText.parentNode.insertBefore(colorSquare, triageText);
-            }
-        });
-    });
-</script>
 </body>
 </html>
