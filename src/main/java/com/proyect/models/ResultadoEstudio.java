@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -37,6 +38,9 @@ public class ResultadoEstudio implements Serializable {
     private String tipoInforme;
     @Column(name = "informe_estudio")
     private String informeEstudio;
+    @ManyToOne
+    @JoinColumn(name = "id_consulta")
+    private Consulta consulta;
     @ManyToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;

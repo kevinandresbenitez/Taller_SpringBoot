@@ -72,7 +72,7 @@ public class PacienteController {
         }
         
         
-        pacienteService.crearPaciente(paciente);
+        pacienteService.guardarPaciente(paciente);
         return "redirect:/pacientes/ingresos/agregar/"+paciente.getId();
     }
 

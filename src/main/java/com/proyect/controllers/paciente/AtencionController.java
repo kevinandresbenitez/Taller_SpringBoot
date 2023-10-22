@@ -116,7 +116,6 @@ public class AtencionController {
             return "redirect:/pacientes/atenciones/";
         }
 
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
         List<Medico> medicos = medicoService.listarMedicos();
         Medico medico = medicos.get(medicos.size() -1 );
         

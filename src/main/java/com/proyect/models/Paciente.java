@@ -34,8 +34,7 @@ public class Paciente extends Persona implements Serializable{
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
     private List<Ingreso> ingresos;
-    public void agregarConsultas(Consulta consulta){
-        this.consultas.add(consulta);
-    }
+
+
 
 }

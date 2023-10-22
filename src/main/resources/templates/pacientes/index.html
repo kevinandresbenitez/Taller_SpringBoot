@@ -26,6 +26,9 @@
         h2 {
             color: #007bff;
         }
+        h2 {
+            color: #007bff;
+        }
 
         .button-container {
             margin-bottom: 20px;
@@ -63,6 +66,9 @@
             background-color: #007bff;
             color: #fff;
         }
+        h3{
+            color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +80,7 @@
     </div>
 
     <div class="search-container">
+        <h3 th:text="${mensaje}"></h3>
         <form th:action="@{/pacientes/buscar}" method="get">
             <label for="dni">Buscar por DNI:</label>
             <input type="text" id="dni" name="dni" placeholder="Ingrese el DNI">

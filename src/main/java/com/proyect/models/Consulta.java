@@ -51,7 +51,11 @@ public class Consulta {
     @ManyToOne
     @JoinColumn(name="id_medico")
     private Medico medico;
-    
+    @ManyToMany
+    @JoinTable(name = "consulta_resultados_estudios",
+                joinColumns = @JoinColumn(name = "id_consulta"),
+                inverseJoinColumns = @JoinColumn(name = "id_resultados_estudios"))
+    private List<ResultadoEstudio> resultadoEstudios;
     @OneToOne
     @JoinColumn(name="id_ingreso")
     private Ingreso ingreso;

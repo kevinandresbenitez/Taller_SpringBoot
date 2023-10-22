@@ -91,53 +91,10 @@
     <label for="diagnosticosClinicos">Diagnósticos Clínicos:</label>
     <input type="text" id="diagnosticosClinicos" name="diagnosticosClinicos" required>
 
-    <div>
 
-        <label for="resultadosEstudios">Resultados de estudios:</label>
-        <div>
-            <label for="resultadosEstudios[${indiceResultadoEstudio}].tipoInforme">Tipo de Informe:</label>
-            <input type="text" id="tipoInforme${indiceResultadoEstudio}" name="tipoInforme[]" required>
-
-            <label for="resultadosEstudios[${indiceResultadoEstudio}].informeEstudio">Informe de Estudio:</label>
-            <input type="text" id="informeEstudio${indiceResultadoEstudio}" name="informeEstudio[]" required>
-
-            <br>
-        </div>
-        <div id="resultadosEstudiosContainer"></div>
-    </div>
-    <!-- Contenedor para resultados de estudios -->
-
-    <!-- Botón para agregar más campos de resultados de estudios -->
-    <button type="button" onclick="agregarCampoResultadoEstudio()">Agregar otro resultado de estudio</button>
-
-    <button type="submit">Crear Consulta</button>
+    <button type="submit">Ir a agregar resultados de estudios</button>
 </form>
 
-<!-- JavaScript para agregar campos de resultados de estudios dinámicamente -->
-<script th:inline="javascript">
-    var indiceResultadoEstudio = 1;
-
-    function agregarCampoResultadoEstudio() {
-        var container = document.getElementById('resultadosEstudiosContainer');
-
-        var nuevoCampo =
-            `<div>
-                <label for="resultadosEstudios[${indiceResultadoEstudio}].tipoInforme">Tipo de Informe:</label>
-                <input type="text" id="tipoInforme${indiceResultadoEstudio}" name="tipoInforme[]" required>
-
-                <label for="resultadosEstudios[${indiceResultadoEstudio}].informeEstudio">Informe de Estudio:</label>
-                <input type="text" id="informeEstudio${indiceResultadoEstudio}" name="informeEstudio[]" required>
-
-                <br>
-            </div>`;
-
-        container.innerHTML += nuevoCampo;
-
-
-        indiceResultadoEstudio++;
-    }
-
-</script>
 </body>
 </html>
 

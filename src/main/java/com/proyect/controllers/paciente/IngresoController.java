@@ -64,7 +64,7 @@ public class IngresoController {
         ingreso.setMotivo(motivoConsulta);
         paciente.getIngresos().add(ingreso);
         ingresoService.guardarIngreso(ingreso);
-        pacienteService.crearPaciente(paciente);
+        pacienteService.guardarPaciente(paciente);
         return "redirect:/";
     }
 
