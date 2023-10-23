@@ -12,6 +12,7 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/pacientes/consultas")
@@ -53,7 +54,7 @@ public class ConsultaController {
     public String crearConsultas(@RequestParam("diagnostico") String diagnostico,
                                  @RequestParam("tipoAtencion") String tipoAtencion,
                                  @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
-                                 @PathVariable("id") Long id) {
+                                 @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Box box = boxService.findByPacienteId(paciente.getId());
         Consulta consulta = new Consulta();
@@ -74,6 +75,10 @@ public class ConsultaController {
         pacienteService.guardarPaciente(paciente);
         box.setPaciente(null);
         boxService.guardarBox(box);
+        
+        // Agregando flash para solo agregar resultados de estudios 1 vez
+        String permitirCreacionResEst = "si";
+        redirectAttributes.addFlashAttribute("PermitirCreacionResEst", permitirCreacionResEst);
         return "redirect:/pacientes/consultas/agregarresultadosestudios/"+consulta.getId();
     }
 
@@ -81,16 +86,24 @@ public class ConsultaController {
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         if (consulta == null) {
-            return "redirect:/pacientes/consultas/";
+            return "redirect:/";
         }
         model.addAttribute("consulta", consulta);
         return "pacientes/consultas/resultadosestudios/index";
     }
 
     @GetMapping("/agregarresultadosestudios/{id}")
-    public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id){
+    public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id,@ModelAttribute("PermitirCreacionResEst") String PermitirCreacionResEst,RedirectAttributes redirectAttributes){
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         model.addAttribute("consulta",consulta);
+        
+        // Si la consulta no existe o si la consulta es vieja( no se modifica )
+        if (!(PermitirCreacionResEst == "si") || consulta == null) {
+            return "redirect:/";
+        }
+        
+        // Agregando flash para solo agregar resultados de estudios 1 vez
+        redirectAttributes.addFlashAttribute("PermitirCreacionResEst", "si");
         return "pacientes/consultas/resultadosestudios/agregar";
     }
 
@@ -99,6 +112,11 @@ public class ConsultaController {
                                                @RequestParam(value = "informeEstudio[]", required = false) List<String> informesEstudios,
                                                @PathVariable("id")Long id){
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
+        
+        // Si no existe la consulta
+        if(consulta == null){
+            return "redirect:/";
+        }
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         for(int i=0;i<tiposInformes.size();i++){
