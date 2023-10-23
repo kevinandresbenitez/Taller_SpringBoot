@@ -11,7 +11,9 @@
             </div>
 
             <div class="navbar__info__item">
-                <p>Nombre del funcionario</p>
+                <div th:if="${sessionUser.existSession()}">
+                    <strong th:text="${sessionUser.getFuncionario().getNombre()}"></strong>
+                </div>
             </div>
 
             <!--Items despegable-->
