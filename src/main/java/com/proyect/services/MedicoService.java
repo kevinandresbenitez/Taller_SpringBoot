@@ -5,6 +5,7 @@ import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
 import com.proyect.repositories.MedicoRepository;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
