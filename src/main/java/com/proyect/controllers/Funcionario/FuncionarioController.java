@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.proyect.controllers.Funcionario;
-import com.proyect.enums.TipoRol;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Rol;
 import com.proyect.services.FuncionarioService;

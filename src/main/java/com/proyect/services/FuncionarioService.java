@@ -44,4 +44,8 @@ public class FuncionarioService{
     public void eliminarFuncionarioPorId(Long id){
         this.funcionarioRepository.deleteById(id);
     }
+    
+    public Funcionario buscarFuncionarioPorCorreoYContraseña(String correo, String contraseña){
+        return this.funcionarioRepository.buscarFuncionarioPorCorreoYContraseña(correo,contraseña);    
+    }
 }

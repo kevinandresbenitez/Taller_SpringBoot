@@ -5,6 +5,8 @@
 package com.proyect.repositories;
 import com.proyect.models.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +17,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
-    
+    @Query(value = "SELECT * FROM funcionario where email = :correo and contraseña = :contraseña ",nativeQuery = true)
+    public Funcionario buscarFuncionarioPorCorreoYContraseña(@Param("correo") String correo,@Param("contraseña")  String contraseña);
 }
