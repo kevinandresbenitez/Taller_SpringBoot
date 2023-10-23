@@ -70,4 +70,8 @@ public class MedicoService {
         return obtenerMedicoPorId(medicoIdMasAtendido).orElse(null);
     }
 
+    
+    public Optional<Medico> obtenerMedicoPorIdProfSalud(Long idProfSalud){
+        return this.medicoRepository.findByProfesionalSaludId(idProfSalud);
+    }
 }
