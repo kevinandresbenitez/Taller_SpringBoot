@@ -5,9 +5,13 @@
 package com.proyect.session;
 
 import com.proyect.models.Funcionario;
+import com.proyect.models.Medico;
+import com.proyect.models.ProfesionalSalud;
+import com.proyect.services.AdministradorService;
 import com.proyect.services.EnfermeroService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.MedicoService;
+import com.proyect.services.ProfesionalSaludService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
 import lombok.Getter;
@@ -36,13 +40,29 @@ public class SessionUsuario{
     private RolService rolService;
     @Autowired
     private SectorService sectorService;
+    @Autowired
+    private AdministradorService administradorService;
+    @Autowired
+    private ProfesionalSaludService profesionalSaludService;
     
     private Funcionario funcionario;
+    private ProfesionalSalud profSalud;
+    private Medico medic;
+   
     
     
     // Metodos de sessiones estandar
     public void startSession(Funcionario funcionario){
         this.funcionario = funcionario;
+        
+        // Seteo las relaciones correspondientes
+        if(this.isProfSalud()){
+            this.profSalud = this.profesionalSaludService.obtenerProfSaludPorFuncionarioId(this.funcionario.getId()).get();
+        }
+        if(this.isMedic()){
+            this.medic = this.medicoService.obtenerMedicoPorIdProfSalud(this.profSalud.getId()).get();
+        }
+        
     }
     
     public void endSession(){
@@ -54,5 +74,37 @@ public class SessionUsuario{
     }
     // Metodos de sessiones estandar
     
+    // Metodos de clases
+    public boolean isAdmin(){
+        return this.existSession() && this.administradorService.esFuncionarioAdministrador(this.funcionario.getId());
+    }
     
+    public boolean isProfSalud(){
+        return this.existSession() && this.profesionalSaludService.esFuncionarioProfesionalSalud(this.funcionario.getId());
+    }
+    public boolean isMedic(){
+        return this.existSession() && this.isProfSalud() && this.medicoService.esProfSaludMedico(this.profSalud.getId());
+    }    
+    
+    public boolean isNurse(){ 
+    //Es enfermero en ingles (me arrepiendo de escribir en ingles XD) 
+        return  this.existSession() && this.isProfSalud() && this.enfermeroService.esProfSaludEnfermero(this.profSalud.getId());
+    }
+    // Metodos de clases
+    
+    // Metodos de funcionario
+    public boolean workIn(String sector){
+        /*
+        return funcionario.getSectores().contains(sector);
+        */
+        return true;
+    }
+    
+    public boolean hashRol(String rol){
+        /*
+        return funcionario.getRoles().contains(rol);
+        */
+        return true;
+    }
+    // Metodos de funcionario
 }

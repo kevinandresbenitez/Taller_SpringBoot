@@ -4,6 +4,7 @@
  */
 package com.proyect.repositories;
 import com.proyect.models.ProfesionalSalud;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfesionalSaludRepository extends JpaRepository<ProfesionalSalud, Long> {
     public Boolean existsByFuncionarioId(Long id);
+
+    public Optional<ProfesionalSalud> findByFuncionarioId(Long idFuncionario);
 }

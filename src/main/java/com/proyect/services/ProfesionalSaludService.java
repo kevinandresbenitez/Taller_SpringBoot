@@ -49,5 +49,9 @@ public class ProfesionalSaludService{
         return this.profesionalRepository.findById(id);
     }
 
+    public Optional<ProfesionalSalud> obtenerProfSaludPorFuncionarioId(Long idFuncionario) {
+        return this.profesionalRepository.findByFuncionarioId(idFuncionario);
+    }
+
 
     }
