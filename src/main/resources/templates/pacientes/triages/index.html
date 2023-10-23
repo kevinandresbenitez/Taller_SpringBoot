@@ -81,7 +81,7 @@
         <td th:text="${paciente.getIngresos().get(paciente.getIngresos().size()-1).getFechaRegistro()}"></td>
         <td th:text="${paciente.getIngresos().get(paciente.getIngresos().size()-1).getHoraRegistro()}"></td>
         <td>
-            <a th:href="@{/triages/agregar/{id}(id=${paciente.getId()})">Asignar triage</a>
+            <a th:href="@{/triages/agregar/{id}(id=${paciente.getId()})}">Asignar triage</a>
         </td>
     </tr>
     </tbody>
