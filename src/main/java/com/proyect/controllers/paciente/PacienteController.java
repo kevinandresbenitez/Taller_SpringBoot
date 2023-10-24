@@ -31,6 +31,11 @@ public class PacienteController {
 
     @GetMapping("/")
     public String detailsPaciente(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         List<Paciente> pacientes = pacienteService.listarPacientes();
         model.addAttribute("pacientes", pacientes);
         return "pacientes/index";
