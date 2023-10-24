@@ -84,4 +84,30 @@ public class FuncionarioController {
         atributosMensaje.addFlashAttribute("mensaje","Eliminando funcionario adecuadamente");
         return "redirect:/funcionarios/";
     }
+    
+    @GetMapping("/modificar")
+    public String modifyForm(){
+        // Verificacion de session
+        if(!sessionUser.existSession()){
+            return "redirect:/";
+        }        
+        return "funcionarios/modificar";
+    }
+    
+    @PostMapping("/modificar")
+    public String processModifyForm(@RequestParam("contraseña") String contraseña,RedirectAttributes atributosMensaje){
+        
+        // Verificacion de session
+        if(!sessionUser.existSession()){
+            return "redirect:/";
+        }
+        
+        // Cambio la contrseña del funcionario que inicio session
+        sessionUser.getFuncionario().setContraseña(contraseña);
+        this.funcionarioServices.crearFuncionario(sessionUser.getFuncionario());
+        
+        //Una vez modificado redirijo y envio un mensaje de creacion correcta        
+        atributosMensaje.addFlashAttribute("mensaje","Cambios modificados correctamente");
+        return "redirect:/";
+    }  
 }
