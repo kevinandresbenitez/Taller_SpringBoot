@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import com.proyect.repositories.IngresoRepository;
+import com.proyect.session.SessionUsuario;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -24,10 +25,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PacienteController {
     @Autowired
     PacienteService pacienteService;
+    @Autowired
+    SessionUsuario sessionUser;
 
 
     @GetMapping("/")
-    public String list(Model model) {
+    public String detailsPaciente(Model model) {
         List<Paciente> pacientes = pacienteService.listarPacientes();
         model.addAttribute("pacientes", pacientes);
         return "pacientes/index";
@@ -36,6 +39,12 @@ public class PacienteController {
 
     @GetMapping("/crear")
     public String mostrarForm(@RequestParam("dni") Optional<Integer> dni,Model modelo) {
+        
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         
         if(dni.isPresent()){
             modelo.addAttribute("dni",dni.get());
@@ -55,6 +64,11 @@ public class PacienteController {
                                 @RequestParam("telefonoFijo") int telefonoFijo,
                                 @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
                                 @RequestParam("estadoCivil") String estadoCivil) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Optional<Paciente> VerificarPaciente = pacienteService.findByDni(dni);
         Paciente paciente = new Paciente();
         paciente.setNombre(nombre);
@@ -79,6 +93,11 @@ public class PacienteController {
 
     @GetMapping("/modificar/{id}")
     public String modificarPaciente(Model model, @PathVariable("id") Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Optional<Paciente> paciente = pacienteService.findById(id);
         if (!paciente.isPresent()) {
             return "redirect:/pacientes/";
@@ -89,6 +108,10 @@ public class PacienteController {
 
     @GetMapping("/buscar")
     public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes atributos){   
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
         
         Optional<Paciente> paciente = pacienteService.findByDni(dni);
         if (paciente.isEmpty()){

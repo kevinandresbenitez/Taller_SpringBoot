@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.proyect.services;
+import com.proyect.models.Funcionario;
 import com.proyect.models.Rol;
+import com.proyect.repositories.FuncionarioRepository;
 import com.proyect.repositories.RolRepository;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,8 @@ import org.springframework.stereotype.Service;
 public class RolService{
     @Autowired
     private RolRepository rolRepository;
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
 
     
     public List<Rol> listarRoles(){
@@ -38,6 +42,10 @@ public class RolService{
     
     public Optional<Rol> obtenerPorId(long id){
         return this.rolRepository.findById(id);
+    }
+
+    public List<Rol> obtenerRolesDelFuncionario(long id){
+        return funcionarioRepository.findById(id).get().getRoles();
     }
     
 }
