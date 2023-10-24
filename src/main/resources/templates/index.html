@@ -56,12 +56,13 @@
             <div th:if="${sessionUser.existSession()}">
                 <div th:if="${sessionUser.hashRol('Administrativo')}">
                     <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>  
+                    <a href="pacientes/">Detalles de paciente</a>
                 </div>
                 
             </div>
             
  
-            <a href="pacientes/">Detalles de paciente</a>
+            
             <a href="triages/">Ir a Triages</a>       
             <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
             <a href="estadisticas/">Ir a estadisticas</a>
