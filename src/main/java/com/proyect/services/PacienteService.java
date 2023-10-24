@@ -59,18 +59,17 @@ public class PacienteService {
         return pacienteRepository.BuscarPacientesNecesitanSerAtendidosEnBox();
     }
         
-    public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, Date fechaInicio, Date fechaFin) {
+    public int cantidadPacientesPorEdadYfechaAtencion(int edadMinima, int edadMaxima, LocalDate fechaInicio, LocalDate fechaFin) {
         // Calcular las fechas de nacimiento a partir de las edades
         LocalDate fechaNacimientoMinima = LocalDate.now().minusYears(edadMaxima);
         LocalDate fechaNacimientoMaxima = LocalDate.now().minusYears(edadMinima);
 
         // Llama al método del repositorio personalizado
         List<Paciente> pacientes = pacienteRepository.findByFechaNacimientoBetweenAndConsultasFechaAtencionBetween(
-                Date.from(fechaNacimientoMinima.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                Date.from(fechaNacimientoMaxima.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                fechaInicio,
-                fechaFin
-        );
+                                                                                                                    fechaNacimientoMinima,
+                                                                                                                    fechaNacimientoMaxima,
+                                                                                                                    fechaInicio,
+                                                                                                                    fechaFin);
 
         // Realiza el conteo de pacientes
         return pacientes.size();
@@ -78,7 +77,7 @@ public class PacienteService {
 
 
 
-    public Paciente pacienteMasConsultado(Date fechaInicio, Date fechaFin) {
+    public Paciente pacienteMasConsultado(LocalDate fechaInicio, LocalDate fechaFin) {
 
         // Obtener las consultas realizadas en el rango de fechas
         List<Consulta> consultas = consultaRepository.findByFechaAtencionBetween(fechaInicio, fechaFin);

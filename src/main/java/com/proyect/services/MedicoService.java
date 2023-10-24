@@ -3,8 +3,10 @@ package com.proyect.services;
 import com.proyect.models.Consulta;
 import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
+import com.proyect.repositories.ConsultaRepository;
 import com.proyect.repositories.MedicoRepository;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
+    @Autowired
+    private ConsultaService consultaService;
 
     public List<Medico> listarMedicos(){
         return medicoRepository.findAll();
@@ -36,21 +40,8 @@ public class MedicoService {
         return medicoRepository.findById(id);
     }
 
-    public int cantidadPacientesAtendidosPorMedico(long idMedico, Date fechaInicio, Date fechaFin) {
 
-        // Obtener las consultas realizadas por el médico en el rango de fechas
-        List<Consulta> consultas = medicoRepository.findConsultasByIdAndConsultasFechaAtencionBetween(idMedico, fechaInicio, fechaFin);
-
-        // Contar la cantidad de pacientes atendidos por el médico
-        Set<Long> pacientesAtendidos = new HashSet<>();
-        for (Consulta consulta : consultas) {
-            pacientesAtendidos.add(consulta.getPaciente().getId());
-        }
-
-        return pacientesAtendidos.size();
-    }
-
-    public Medico medicoQueMasAtendio(Date fechaInicio, Date fechaFin) {
+    public Medico medicoQueMasAtendio(LocalDate fechaInicio, LocalDate fechaFin) {
         // Obtener todos los médicos
         List<Medico> medicos = listarMedicos();
 
@@ -59,7 +50,7 @@ public class MedicoService {
 
         // Iterar a través de los médicos y contar la cantidad de pacientes atendidos por cada uno
         for (Medico medico : medicos) {
-            int pacientesAtendidos = cantidadPacientesAtendidosPorMedico(medico.getId(), fechaInicio, fechaFin);
+            int pacientesAtendidos = consultaService.cantidadPacientesAtendidosPorMedico(medico, fechaInicio, fechaFin);
             pacientesAtendidosPorMedico.put(medico.getId(), pacientesAtendidos);
         }
 
