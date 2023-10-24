@@ -5,6 +5,7 @@ import com.proyect.models.Paciente;
 import com.proyect.models.Ingreso;
 import com.proyect.services.PacienteService;
 import com.proyect.services.IngresoService;
+import com.proyect.session.SessionUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,16 +24,27 @@ public class IngresoController {
     IngresoService ingresoService;
     @Autowired
     PacienteService pacienteService;
-
+    @Autowired
+    SessionUsuario sessionUser;
     
     @GetMapping("/verificarExistencia")
     public String formularioVerificarExistencia(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         return "pacientes/ingresos/verificar";
     }
     
     
     @PostMapping("/verificarExistencia")
     public String procesarVerificarExistencia(Model model,@RequestParam("dni")int dni, RedirectAttributes atributos) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Optional<Paciente> paciente = pacienteService.findByDni(dni);
         
         if(paciente.isEmpty()){
@@ -46,6 +58,11 @@ public class IngresoController {
     
     @GetMapping("/agregar/{id}")
     public String formulario(Model model,@PathVariable("id")Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         model.addAttribute("paciente",paciente);
         return "pacientes/ingresos/agregar";
@@ -54,6 +71,11 @@ public class IngresoController {
     @PostMapping("/agregar/{id}")
     public String formulario(@PathVariable("id")Long id,
                              @RequestParam("motivoConsulta")String motivoConsulta){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Ingreso ingreso = new Ingreso();
         LocalDate fechahoy = LocalDate.now();
