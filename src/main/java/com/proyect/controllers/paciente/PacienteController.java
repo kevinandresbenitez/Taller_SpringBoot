@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import com.proyect.repositories.IngresoRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/pacientes")
@@ -87,26 +88,15 @@ public class PacienteController {
     }
 
     @GetMapping("/buscar")
-    public String buscarPacientePorDNI(@RequestParam("dni") String dni, Model model) {
-        if (dni.isEmpty()) {
-            model.addAttribute("mensaje", "Debe ingresar un DNI.");
-        } else {
-            try {
-                int dniValue = Integer.parseInt(dni);
-                if (dniValue >= 10000000 && dniValue <= 60000000) {
-                    Optional<Paciente> paciente = pacienteService.findByDni(dniValue);
-                    if (paciente.isPresent()) {
-                        model.addAttribute("paciente", paciente.get());
-                    } else {
-                        model.addAttribute("mensaje", "Paciente no encontrado.");
-                    }
-                } else {
-                    model.addAttribute("mensaje", "El DNI ingresado está fuera del rango válido.");
-                }
-            } catch (NumberFormatException e) {
-                model.addAttribute("mensaje", "El DNI ingresado no es válido. Debe ser un número.");
-            }
+    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes atributos){   
+        
+        Optional<Paciente> paciente = pacienteService.findByDni(dni);
+        if (paciente.isEmpty()){
+            atributos.addFlashAttribute("mensaje","no se encontro al paciente");
+            return "redirect:/pacientes/";
         }
+        
+        model.addAttribute("paciente", paciente.get());
         return "pacientes/index";
     }
 }

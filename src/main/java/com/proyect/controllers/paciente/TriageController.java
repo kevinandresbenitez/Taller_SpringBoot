@@ -44,12 +44,30 @@ public class TriageController {
     public String listarTriages(Model model) {
         List<Paciente> pacientes = pacienteService.obtenerPacientesNecesitanSerTriagados();
         model.addAttribute("pacientes",pacientes);
+        return "pacientes/triages/listaPacientes";
+    }
+    
+    @GetMapping("/{id}")  // Id del paciente a mostrar sus triages
+    public String listarTriagesPaciente(@PathVariable("id") Long id,Model model){
+        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        if(paciente == null){
+            return "redirect:/pacientes/";
+        }
+        
+        model.addAttribute("triages",paciente.getTriages());
         return "pacientes/triages/index";
     }
+    
+    
     
     @GetMapping("/agregar/{id}") // Id del paciente a asignar triage
     public String mostrarFormulario(@PathVariable("id") Long id,Model model){
         Paciente paciente = pacienteService.obtenerPacienteById(id);
+        
+        if(paciente == null){
+            return "redirect:/pacientes/";
+        }
+        
         model.addAttribute("paciente",paciente);
         return "pacientes/triages/crear";
     }
@@ -75,6 +93,12 @@ public class TriageController {
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         Paciente paciente = pacienteService.obtenerPacienteById(id);
+        
+        if(paciente == null){
+            return "redirect:/pacientes/";
+        }
+        
+        
         TriageCalculador triage = new TriageCalculador();
         triage.setRespiracion(respiracion);
         triage.setPulso(pulso);
@@ -108,8 +132,6 @@ public class TriageController {
         triageService.guardarTriage(triageAGuardar);
         
 
-        
-
         return "redirect:/triages/resultadotriage/"+id;
     }
 
@@ -117,6 +139,11 @@ public class TriageController {
     @GetMapping("/resultadotriage/{id}")//id del triage
     public String resultadoTriage(Model model,@PathVariable("id")Long id) {
         Triage triage = triageService.findTriageById(id);
+        
+        if(triage == null){
+            return "redirect:/";
+        }
+        
         TriageCalculador obtenerDatosTriage = new TriageCalculador();
         TriageObject triageAMostrar = new TriageObject();
         triageAMostrar = obtenerDatosTriage.segunColorObtenerTriageObject(triage.getColor());
@@ -127,6 +154,11 @@ public class TriageController {
     @GetMapping("/cambiarcolor/{id}")//id del triage
     public String modificarTriage(Model model,@PathVariable("id")Long id) {
         Triage triage = triageService.findTriageById(id);
+        
+        if(triage == null){
+            return "redirect:/";
+        }
+        
         model.addAttribute("triage",triage);
         return "pacientes/triages/modificacion";
     }
@@ -138,6 +170,10 @@ public class TriageController {
                                RedirectAttributes atributosMensaje) {
 
         Triage triage = triageService.findTriageById(id);
+        if(triage == null){
+            return "redirect:/";
+        }
+        
         TriageCalculador auxiliarTriageCalculador = new TriageCalculador();
         TriageObject compararNivelNuevo = auxiliarTriageCalculador.segunColorObtenerTriageObject(nuevoColor);
         TriageObject compararNivelViejo = auxiliarTriageCalculador.segunColorObtenerTriageObject(triage.getColor());

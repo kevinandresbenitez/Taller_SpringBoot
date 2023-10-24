@@ -125,4 +125,15 @@ public class ConsultaController {
         return "redirect:/pacientes/atenciones/";
     }
 
+    // Resultados de esutudios que estan en la consulta
+    @GetMapping("/resultadosestudios/{id}")
+    public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+        Consulta consulta = consultaService.obtenerConsultaPorId(id);
+        if (consulta == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("consulta", consulta);
+        return "pacientes/consultas/resultadosestudios/index";
+    }
+    
 }
