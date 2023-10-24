@@ -64,8 +64,8 @@
         <tr th:each="resultadoEstudio : ${resultadosEstudios}">
             <td th:text="${resultadoEstudio.getTipoInforme()}"></td>
             <td th:text="${resultadoEstudio.getInformeEstudio()}"></td>
-            <td th:text="${#dates.format(resultadoEstudio.getFecha(), 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(resultadoEstudio.getHora(), 'HH:mm')}"></td>
+            <td th:text="${resultadoEstudio.getFecha()}"></td>
+            <td th:text="${resultadoEstudio.getHora()}"></td>
         </tr>
     </table>
 </div>

@@ -3,6 +3,92 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
+
+<html>
+<head>
+    <title>Formulario de Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('/fotos/frente_masvernat.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    body::before {
+        content: "";
+        background: inherit;
+        filter: blur(5px);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    .login-container h2 {
+        color: #007bff;
+    }
+
+    .login-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-container input {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .login-container input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .login-container input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Formulario de Login</h2>
+    <div th:text="${mensaje}"></div>
+    
+    <form action="/login/iniciarSesion" method="post">
+        <input type="email" name="correo" placeholder="Correo electrónico">
+        <input type="password" name="contraseña" placeholder="Contraseña">
+        <input type="submit" name="enviar" value="Iniciar Sesión">
+    </form>
+    
+    <p>Temporal para testear</p>
+    <p>Admin: func1@gmail.com  Contraseña: 43524424</p>
+    <p>Funcionario Administrativo: correo@gmail.com contraseña: 65344234</p>
+</div>
+</body>
+</html>
+<!--
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -25,3 +111,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         
     </body>
 </html>
+-->

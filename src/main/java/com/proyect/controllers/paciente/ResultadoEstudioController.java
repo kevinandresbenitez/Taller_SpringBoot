@@ -13,6 +13,7 @@ import com.proyect.models.Paciente;
 import com.proyect.models.ResultadoEstudio;
 import com.proyect.services.PacienteService;
 import com.proyect.services.ResultadoEstudioService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,11 +30,18 @@ public class ResultadoEstudioController {
     
     @Autowired
     PacienteService pacienteService;
-
+    
+    @Autowired
+    SessionUsuario sessionUser;
 
     // Resultados de esutudios del paciente
     @GetMapping("/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         
         if(paciente == null) {
