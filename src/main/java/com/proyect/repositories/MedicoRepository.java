@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MedicoRepository extends JpaRepository<Medico,Long> {
     public Boolean existsByProfesionalSaludId(Long idProfSalud);
 
-    List<Consulta> findConsultasByIdAndConsultasFechaAtencionBetween(long idMedico, Date fechaInicio, Date fechaFin);
+    List<Consulta> findConsultasByIdAndConsultasFechaAtencionBetween(Long idMedico, LocalDate fechaInicio, LocalDate fechaFin);
 
     public Optional<Medico> findByProfesionalSaludId(Long idProfSalud);
 }

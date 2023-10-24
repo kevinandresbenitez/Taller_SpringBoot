@@ -136,7 +136,8 @@
 
 
     <div class="search-result">
-        <p th:if="${pacientesPorMedico != null}">Este médico atendió: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
+        <p th:if="${pacientesPorMedico != null}">El medico:  <span th:text="${medico.profesionalSalud.funcionario.nombre}"></span></p>
+        <p th:if="${pacientesPorMedico != null}">Atendio a: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
     </div>
 
 
@@ -188,11 +189,11 @@
 
     <div class="search-container">
         <h3>Médico que más atendió</h3>
-        <form th:action="@{/estadisticas/medicoatendioenrango}" method="get">
+        <form th:action="@{/estadisticas/medicomasatendio}" method="get">
             <label for="fechaInicioMedico">Fecha Desde:</label>
-            <input type="date" id="fechaInicioMedico" name="fechaInicioMedico" />
+            <input type="date" id="fechaInicioMedico" name="fechaInicio" />
             <label for="fechaFinMedico">Fecha Hasta:</label>
-            <input type="date" id="fechaFinMedico" name="fechaFinMedico" />
+            <input type="date" id="fechaFinMedico" name="fechaFin" />
             <button type="submit">Consultar</button>
         </form>
     </div>

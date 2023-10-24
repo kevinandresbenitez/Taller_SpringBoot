@@ -19,9 +19,8 @@ public interface PacienteRepository extends JpaRepository<Paciente,Long> {
     List<Paciente> findByTriagesIsNull();
 
     List<Paciente> findByFechaNacimientoBetweenAndConsultasFechaAtencionBetween(
-            Date fechaNacimientoInicio, Date fechaNacimientoFin,
-            Date fechaInicio, Date fechaFin
-    );
+            LocalDate fechaNacimientoInicio, LocalDate fechaNacimientoFin,
+            LocalDate fechaInicio, LocalDate fechaFin);
 
     /*Lista de pacientes para enviar a un box*/
     @Query(value = "SELECT Paciente.* FROM paciente Paciente  LEFT JOIN triage on paciente.id = triage.id_paciente LEFT JOIN box on paciente.id = box.id_paciente WHERE (paciente.id IN (SELECT id_paciente FROM triage) and triage.id NOT IN (SELECT id_triage FROM consulta)) AND paciente.id NOT IN (SELECT box.id_paciente from box where id_paciente is not null)",nativeQuery = true)
