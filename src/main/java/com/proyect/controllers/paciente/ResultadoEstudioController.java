@@ -13,6 +13,7 @@ import com.proyect.models.Paciente;
 import com.proyect.models.ResultadoEstudio;
 import com.proyect.services.PacienteService;
 import com.proyect.services.ResultadoEstudioService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
