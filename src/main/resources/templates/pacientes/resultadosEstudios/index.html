@@ -1,20 +1,73 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Resultados de estudios del paciente</div>
-        <div th:each="resultadoEstudio : ${resultadosEstudios}">
-            <p th:text="${resultadoEstudio.getTipoInforme()}"></p>
-            
-            
-        </div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Estudios del Paciente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        .resultados {
+            font-size: 18px;
+            color: #333;
+            margin: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #3498db;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Resultados de Estudios del Paciente</h1>
+    <table>
+        <tr>
+            <th>Tipo de Informe</th>
+            <th>Informe de Estudio</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+        </tr>
+        <tr th:each="resultadoEstudio : ${resultadosEstudios}">
+            <td th:text="${resultadoEstudio.getTipoInforme()}"></td>
+            <td th:text="${resultadoEstudio.getInformeEstudio()}"></td>
+            <td th:text="${#dates.format(resultadoEstudio.getFecha(), 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(resultadoEstudio.getHora(), 'HH:mm')}"></td>
+        </tr>
+    </table>
+</div>
+</body>
 </html>
