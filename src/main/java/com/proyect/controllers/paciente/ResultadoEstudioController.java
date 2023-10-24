@@ -29,11 +29,18 @@ public class ResultadoEstudioController {
     
     @Autowired
     PacienteService pacienteService;
-
+    
+    @Autowired
+    SessionUsuario sessionUser;
 
     // Resultados de esutudios del paciente
     @GetMapping("/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         
         if(paciente == null) {
