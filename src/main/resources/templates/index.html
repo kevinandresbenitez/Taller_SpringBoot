@@ -40,7 +40,7 @@
         <div class="container"> 
             
             <!--Si la session existe y es un admin--->
-            <div th:if="${sessionUser.existSession}">
+            <div th:if="${sessionUser.existSession()}">
                 <div th:if="${sessionUser.isAdmin()}">
                     <a href="funcionarios/">Ir a funcionarios</a>
                     <a href="administradores/">Ir a administradores</a>
@@ -49,10 +49,20 @@
                 </div>
                 
             </div>
+            
+
+            
+            <!--Si la session existe y tiene rol administrativo--->
+            <div th:if="${sessionUser.existSession()}">
+                <div th:if="${sessionUser.hashRol('Administrativo')}">
+                    <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>  
+                </div>
+                
+            </div>
+            
  
             <a href="pacientes/">Detalles de paciente</a>
             <a href="triages/">Ir a Triages</a>       
-            <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>      
             <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
             <a href="estadisticas/">Ir a estadisticas</a>
             <a href="login/">Boton de login temporal</a>

@@ -7,6 +7,8 @@ package com.proyect.session;
 import com.proyect.models.Funcionario;
 import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
+import com.proyect.models.Rol;
+import com.proyect.repositories.RolRepository;
 import com.proyect.services.AdministradorService;
 import com.proyect.services.EnfermeroService;
 import com.proyect.services.FuncionarioService;
@@ -14,6 +16,7 @@ import com.proyect.services.MedicoService;
 import com.proyect.services.ProfesionalSaludService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,11 +105,16 @@ public class SessionUsuario{
         return true;
     }
     
-    public boolean hashRol(String rol){
-        /*
-        return funcionario.getRoles().contains(rol);
-        */
-        return true;
+    public boolean hashRol(String rolVerificar){
+        List<Rol> roles = rolService.obtenerRolesDelFuncionario(this.funcionario.getId());
+
+        for (Rol rol : roles) {
+            if (rol.getNombre().equals(rolVerificar)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     // Metodos de funcionario
 }
