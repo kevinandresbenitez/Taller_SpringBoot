@@ -7,96 +7,111 @@
     <title>Detalles del Paciente</title>
 
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+                margin: 0;
+                padding: 0;
+            }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
 
-        h2 {
-            color: #007bff;
-        }
+            h2 {
+                color: #007bff;
+            }
 
-        .button-container {
-            margin-bottom: 20px;
-        }
+            .button-container {
+                padding: 20px;
+            }
 
-        /* Agregar estilos para el botón Volver */
-        .button-container a {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-        }
-
-        .button-container a:hover {
-            background-color: #0056b3;
-        }
-
-        /* Agregar estilos para los datos del paciente */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 8px;
-            text-align: left;
-            background-color: #f2f2f2; /* Cambiar el color de fondo de los datos */
-
-        }
+            /* Estilos para el botón Volver */
+            .button-container a {
+                background-color: #007bff;
+                color: #fff;
+                padding: 12px 24px; /* Aumentar el padding para hacerlo más grande */
+                border: none;
+                border-radius: 4px;
+                text-decoration: none;
+            }
 
 
-        .button-container a {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-        }
+            .button-container a:hover {
+                background-color: #0056b3;
+            }
 
-        .button-container a:hover {
-            background-color: #0056b3;
-        }
+            /* Agregar estilos para los datos del paciente */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
+            th, td {
+                border: 1px solid #dee2e6;
+                padding: 8px;
+                text-align: left;
+                background-color: #f2f2f2; /* Cambiar el color de fondo de los datos */
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+            th {
+                background-color: #007bff;
+                color: #fff;
+            }
+            /* Estilos para el área de búsqueda */
+            .search-container {
+                text-align: center; /* Centra el contenido horizontalmente */
+                margin-top: 20px;
+            }
 
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 8px;
-            text-align: left;
-            background-color: #f2f2f2;
-        }
+            .search-container label {
+                color: #007bff;
+                font-size: 20px;
+            }
 
-        th {
-            background-color: #007bff;
-            color: #fff;
-        }
-        h3{
-            color: #ff0000;
-        }
+            .search-container input {
+                font-size: 16px;
+                padding: 8px; /* Aumenta el tamaño para hacerlo más grande */
+            }
 
-    </style>
+            /* Estilos para el botón Buscar */
+            .search-container button {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                font-size: 16px;
+            }
+
+            /* Estilos para el título "Detalles del Paciente" */
+            h2 {
+                color: #007bff;
+                text-align: center; /* Centra el título horizontalmente */
+                margin-top: 0; /* Elimina el margen superior predeterminado */
+                padding-top: 20px; /* Agrega espacio arriba del título */
+            }
+
+            .boton-estilo {
+                display: inline-block;
+                padding: 10px 20px; /* Ajusta el espaciado interno según tus preferencias */
+                background-color: #3498db; /* Color de fondo */
+                color: #fff; /* Color del texto */
+                border: 2px solid #2980b9; /* Reborde */
+                border-radius: 5px; /* Bordes redondeados */
+                text-decoration: none; /* Quita la decoración de subrayado */
+            }
+
+            .boton-estilo:hover {
+                background-color: #2980b9; /* Cambio de color al pasar el mouse */
+            }
+
+        </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -104,16 +119,29 @@
 
     <div class="button-container">
         <a href="/">Volver</a>
-
     </div>
 
     <div class="search-container">
-        <h3 th:text="${mensaje}"></h3>
         <form th:action="@{/pacientes/buscar}" method="get">
-            <label for="dni">Buscar por DNI:</label>
-            <input type="text" id="dni" name="dni" placeholder="Ingrese el DNI">
-            <button type="submit">Buscar</button>
+            <label for="dni" style="color: #007bff; font-size: 20px;">Buscar por DNI:</label>
+            <input type="text" id="dni" name="dni" placeholder="Ingrese el DNI" maxlength="8" style="font-size: 18px;">
+            <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 16px; border-radius: 0;">Buscar</button>
         </form>
+    </div>
+
+    <div id="resultado" style="display: none;">
+        <table>
+            <!-- Se muestra el paciente si se encuentra -->
+            <tr th:if="${paciente != null}">
+                <th>ID</th>
+                <td th:text="${paciente.id}"></td>
+            </tr>
+            <!-- Agrega aquí otras filas para mostrar los datos del paciente -->
+        </table>
+    </div>
+
+    <div th:if="${mensaje}" style="color: red;">
+        <p th:text="${mensaje}"></p>
     </div>
 
 
@@ -151,8 +179,52 @@
             <th>Fecha de Nacimiento</th>
             <td th:text="${paciente.fechaNacimiento}"></td>
         </tr>
+
+        <tr th:if="${paciente != null}">
+            <td>
+                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
+                    <a th:href="@{/pacientes/consultas/{id}(id=${paciente.id})}" class="boton-estilo">Ver historia clínica</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr th:if="${paciente != null}">
+            <td>
+                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
+                    <a th:href="@{/pacientes/consultas/resultadosestudios/{id}(id=${paciente.id})}" class="boton-estilo">Ver Resultado de estudio</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr th:if="${paciente != null}">
+            <td>
+                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
+                    <a th:href="@{/triages/{id}(id=${paciente.id})}" class="boton-estilo">Ver triage</a>
+                </div>
+            </td>
+        </tr>
+
     </table>
 </div>
+<script>
+            function buscarPacientePorDNI() {
+                var dni = document.getElementById("dni").value;
+                var resultadoDiv = document.getElementById("resultado");
+                var errorDiv = document.getElementById("error");
+
+                if (dni === "" || isNaN(dni) || dni < 10000000 || dni > 60000000) {
+                    resultadoDiv.style.display = "none";
+                    errorDiv.style.display = "block";
+                    errorDiv.textContent = "El DNI ingresado no es válido. Ingrese un DNI dentro del rango de 1000000 a 6000000.";
+                    errorDiv.style.color = "red";
+                } else {
+                    resultadoDiv.style.display = "block";
+                    errorDiv.style.display = "none";
+                }
+            }
+        </script>
+</body>
+</html>
 </body>
 </html>
 

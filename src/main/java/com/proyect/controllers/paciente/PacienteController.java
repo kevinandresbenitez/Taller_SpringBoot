@@ -87,14 +87,26 @@ public class PacienteController {
     }
 
     @GetMapping("/buscar")
-    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model) {
-        Optional<Paciente> paciente = pacienteService.findByDni(dni);
-        if (paciente.isPresent()) {
-            model.addAttribute("paciente", paciente.get());
+    public String buscarPacientePorDNI(@RequestParam("dni") String dni, Model model) {
+        if (dni.isEmpty()) {
+            model.addAttribute("mensaje", "Debe ingresar un DNI.");
         } else {
-            model.addAttribute("mensaje", "Paciente no encontrado.");
+            try {
+                int dniValue = Integer.parseInt(dni);
+                if (dniValue >= 10000000 && dniValue <= 60000000) {
+                    Optional<Paciente> paciente = pacienteService.findByDni(dniValue);
+                    if (paciente.isPresent()) {
+                        model.addAttribute("paciente", paciente.get());
+                    } else {
+                        model.addAttribute("mensaje", "Paciente no encontrado.");
+                    }
+                } else {
+                    model.addAttribute("mensaje", "El DNI ingresado está fuera del rango válido.");
+                }
+            } catch (NumberFormatException e) {
+                model.addAttribute("mensaje", "El DNI ingresado no es válido. Debe ser un número.");
+            }
         }
         return "pacientes/index";
     }
-
 }
