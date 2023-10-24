@@ -67,6 +67,8 @@ public class SessionUsuario{
     
     public void endSession(){
         this.funcionario = null;
+        this.profSalud = null;
+        this.medic = null;
     }
     
     public boolean existSession(){

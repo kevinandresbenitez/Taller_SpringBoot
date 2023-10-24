@@ -9,6 +9,7 @@ import com.proyect.models.Rol;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
+import com.proyect.session.SessionUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +33,16 @@ public class RolController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private RolService rolServices;
-        
+    @Autowired
+    SessionUsuario sessionUser;
+    
     @GetMapping("/")
     public String list(Model modelo){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Rol> roles = this.rolServices.listarRoles();
         modelo.addAttribute("roles",roles);
         return "funcionarios/roles/index";
@@ -42,6 +50,11 @@ public class RolController {
     
     @GetMapping("/asignar/{id_funcionario}")
     public String asignarRoles(@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Rol> roles = this.rolServices.listarRoles();
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id_funcionario);
                 
@@ -58,6 +71,11 @@ public class RolController {
     
     @PostMapping("/asignar/{id_funcionario}")
     public String procesarAsignacionRoles(@RequestParam("roles_id") List<Long> RolesId,@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id_funcionario);
                 
         if(funcionario.isEmpty()){
@@ -94,12 +112,22 @@ public class RolController {
     
     
     @GetMapping("/crear")
-    public String createForm(){        
+    public String createForm(){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         return "funcionarios/roles/crear";
     }
     
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Rol rol = new Rol();
         rol.setNombre(nombre);
         this.rolServices.crear(rol);
@@ -111,6 +139,11 @@ public class RolController {
       
     @GetMapping("/eliminar/{id}")
     public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.rolServices.eliminarPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Se ah eliminado el rol correctamente");
         return "redirect:/funcionarios/roles/";

@@ -9,6 +9,7 @@ import com.proyect.models.Titulo;
 import com.proyect.services.EspecialidadService;
 import com.proyect.services.TituloService;
 import com.proyect.services.MedicoService;
+import com.proyect.session.SessionUsuario;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +35,16 @@ public class TituloController {
     private MedicoService medicoService;
     @Autowired
     private TituloService tituloService;
+    @Autowired
+    SessionUsuario sessionUser;
     
     @GetMapping("/{id_medico}")
     public String listarTitulacionesDelMedico(Model model,@PathVariable("id_medico")Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<Medico> medico = this.medicoService.obtenerMedicoPorId(id);
         
         if(medico.isEmpty()){
@@ -49,6 +57,11 @@ public class TituloController {
     
     @GetMapping("/eliminar/{id_medico}/{id}")
     public String eliminarTitulacion(Model model,@PathVariable("id_medico")Long idMedico,@PathVariable("id")Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.tituloService.eliminarTituloPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","La titulacion se elimino correctamente");
         return "redirect:/profesionalSalud/medicos/titulaciones/"+ idMedico;
@@ -56,6 +69,11 @@ public class TituloController {
     
     @GetMapping("/crear/{id_medico}")
     public String formularioTitulacion(Model model,@PathVariable("id_medico")Long id){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Especialidad> especialidades = this.especialidadService.listarEspecialidades();
         
 
@@ -68,6 +86,10 @@ public class TituloController {
     public String procesarCrearTitulacion(
             @RequestParam("id_especialidad") Long idEspecialidad,@PathVariable("id_medico") Long id,RedirectAttributes atributosMensaje,
             @RequestParam("fechaTitulacion") LocalDate fechaTitulacion,@RequestParam("universidad")String universidad){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
         
         Optional<Especialidad> especialidad = this.especialidadService.obtenerEspecialidadPorId(idEspecialidad);
         Optional<Medico> medico = this.medicoService.obtenerMedicoPorId(id);

@@ -8,6 +8,7 @@ import com.proyect.models.Rol;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
+import com.proyect.session.SessionUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,21 +34,37 @@ public class FuncionarioController {
     private RolService rolServices;
     @Autowired
     private SectorService sectorService;
-        
+    @Autowired
+    SessionUsuario sessionUser;
+    
     @GetMapping("/")
     public String list(Model modelo){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
         modelo.addAttribute("funcionarios",funcionarios);
         return "funcionarios/index";
     }
     
     @GetMapping("/crear")
-    public String createForm(){        
+    public String createForm(){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }        
         return "funcionarios/crear";
     }
     
     @PostMapping("/crear")
     public String processFormCreation(@ModelAttribute Funcionario funcionario,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         funcionario.setContraseña(Integer.toString(funcionario.getDni()));
         this.funcionarioServices.crearFuncionario(funcionario);
         
@@ -58,6 +75,11 @@ public class FuncionarioController {
         
     @GetMapping("/eliminar/{id}")
     public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.funcionarioServices.eliminarFuncionarioPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Eliminando funcionario adecuadamente");
         return "redirect:/funcionarios/";
