@@ -234,36 +234,36 @@
     </div>
 
     <div class="button-container">
-        <h3>Cantidad de pacientes atendidos por un médico en un rango de fechas</h3>
-        <button onclick="toggleTable()">Modificaciones de triages</button>
+        <h3>Todas las modificaciones de triage</h3>
+        <form th:action="@{/estadisticas/modificacionestriage}" method="get">
+
+            <button type="submit" onclick="toggleTable()">Modificaciones de triages</button>
+        </form>
+
     </div>
 
     <div class="search-result">
-        <p th:if="${modificaciones != null}">Se realizaron: <span th:text="${modificaciones.size()-1}"></span> cambios</p>
-    </div>
-    <table id="cambioColorTable" style="display: none;">
-        <thead>
-        <tr>
-            <th>Color Viejo</th>
-            <th>Color Asignado por Funcionario</th>
-            <th>Funcionario que lo Cambió</th>
-        </tr>
-        </thead>
-        <tbody>
+        <p th:if="${modificaciones != null}">Se realizaron: <span th:text="${modificaciones.size()}"></span> cambios</p>
 
-        <tr th:each="modificacion : ${modificaciones}">
-            <td th:text="${modificacion.colorViejo}"></td>
-            <td th:text="${modificacion.triage.color}"></td>
-            <td th:text="${modificacion.triage.medico.profesionalsalud.funcionario.nombre}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <table id="cambioColorTable">
+            <thead>
+            <tr>
+                <th>Color Viejo</th>
+                <th>Color Asignado por Funcionario</th>
+                <th>Funcionario que lo Cambió</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="modificacion : ${modificaciones}">
+                <td th:text="${modificacion.colorViejo}"></td>
+                <td th:text="${modificacion.triage.color}"></td>
+                <td th:text="${modificacion.triage.medico.profesionalSalud.funcionario.nombre}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<script>
-        function toggleTable() {
-            var table = document.getElementById("cambioColorTable");
-            table.style.display = table.style.display === "none" ? "table" : "none";
-        }
-    </script>
+
 </body>
 </html>

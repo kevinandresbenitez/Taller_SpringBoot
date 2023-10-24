@@ -118,12 +118,11 @@ public class EstadisticaController {
         return "gestores/estadisticas";
     }
 
-    @GetMapping("/modificacionesTriage")
+    @GetMapping("/modificacionestriage")
     public String modificacionesTriage(Model model){
         List<TriageModificacion> modificaciones = triageModificacionService.listarModificacionesDeTriage();
 
         model.addAttribute("modificaciones",modificaciones);
-
         return "gestores/estadisticas";
     }
 }
