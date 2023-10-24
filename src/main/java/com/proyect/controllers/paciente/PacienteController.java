@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import com.proyect.repositories.IngresoRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/pacientes")
@@ -87,14 +88,15 @@ public class PacienteController {
     }
 
     @GetMapping("/buscar")
-    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model) {
+    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes atributos){   
+        
         Optional<Paciente> paciente = pacienteService.findByDni(dni);
-        if (paciente.isPresent()) {
-            model.addAttribute("paciente", paciente.get());
-        } else {
-            model.addAttribute("mensaje", "Paciente no encontrado.");
+        if (paciente.isEmpty()){
+            atributos.addFlashAttribute("mensaje","no se encontro al paciente");
+            return "redirect:/pacientes/";
         }
+        
+        model.addAttribute("paciente", paciente.get());
         return "pacientes/index";
     }
-
 }

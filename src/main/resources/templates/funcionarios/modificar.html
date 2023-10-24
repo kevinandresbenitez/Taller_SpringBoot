@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Modificar</div>
+        
+        <form action="/funcionarios/modificar" onsubmit="return verificarForm(this) " method="post">
+            <label>
+                <strong>Nueva Contraseña <input type="text" placeholder="Ingrese contraseña" name="contraseña" required  /></strong>
+            </label>
+            
+            <label>
+                <strong>Verificar Contraseña <input type="text" placeholder="Verificar contraseña" name="contraseñaVer" required /></strong>
+            </label>
+            
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <script>
+            function verificarForm(formulario){
+
+
+              if(quitarEspaciosDelMedio(formulario.contraseña.value).trim() !== formulario.contraseña.value){
+                alert("no pueden haber espacios");
+                return false;
+              }
+
+              if(formulario.contraseñaVer.value !== formulario.contraseña.value){
+                alert("Las contrasdñas no son iguales");
+                return false;
+              }
+
+
+            }
+
+
+            function quitarEspaciosDelMedio(string) {
+              let stringMod=string.split(" ");
+
+              let resultado =stringMod.reduce((a,b)=>{
+                return a+b;
+              })
+
+              return resultado;
+            }
+        </script>
+    </body>
+</html>

@@ -10,9 +10,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Triages Del paciente</div>
-        <div th:each="triage : ${triages}">
-            <p th:text="${triage.getColor()}"></p>
+        <div>Resultados de estudios del paciente</div>
+        <div th:each="resultadoEstudio : ${resultadosEstudios}">
+            <p th:text="${resultadoEstudio.getTipoInforme()}"></p>
             
             
         </div>

@@ -36,7 +36,7 @@
         <!---Berra De Navegacion --->
         <div th:insert="~{components/navbar :: navbar}"></div>
         <!---Berra De Navegacion --->
-        
+        <div th:text="${mensaje}"></div>
         <div class="container"> 
             
             <!--Si la session existe y es un admin--->
@@ -50,7 +50,7 @@
                 
             </div>
  
-            <a href="pacientes/">Ir a pacientes</a>
+            <a href="pacientes/">Detalles de paciente</a>
             <a href="triages/">Ir a Triages</a>       
             <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>      
             <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
