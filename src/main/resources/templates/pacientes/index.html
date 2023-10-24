@@ -206,25 +206,6 @@
 
     </table>
 </div>
-<script>
-            function buscarPacientePorDNI() {
-                var dni = document.getElementById("dni").value;
-                var resultadoDiv = document.getElementById("resultado");
-                var errorDiv = document.getElementById("error");
-
-                if (dni === "" || isNaN(dni) || dni < 10000000 || dni > 60000000) {
-                    resultadoDiv.style.display = "none";
-                    errorDiv.style.display = "block";
-                    errorDiv.textContent = "El DNI ingresado no es válido. Ingrese un DNI dentro del rango de 1000000 a 6000000.";
-                    errorDiv.style.color = "red";
-                } else {
-                    resultadoDiv.style.display = "block";
-                    errorDiv.style.display = "none";
-                }
-            }
-        </script>
-</body>
-</html>
 </body>
 </html>
 

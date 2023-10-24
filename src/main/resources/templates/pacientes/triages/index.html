@@ -1,20 +1,78 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Triages Del paciente</div>
-        <div th:each="triage : ${triages}">
-            <p th:text="${triage.getColor()}"></p>
-            
-            
-        </div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triage del paciente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        th, td {
+            border: 1px solid #3498db;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        .triage {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Triage del paciente</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Color de triage</th>
+            <th>Fecha de realizacion</th>
+            <th>Hora de realizacion</th>
+        </tr>
+        <tr th:each="triage : ${triages}">
+            <td th:style="'background-color:' + ${triage.getId()}">
+                <span class="triage" th:text="${triage.getId()}"></span>
+            </td>
+            <td th:style="'background-color:' + ${triage.getColor()}">
+                <span class="triage" th:text="${triage.getColor()}"></span>
+            </td>
+            <td th:style="'background-color:' + ${triage.getColor()}">
+                <span class="triage" th:text="${triage.getFechaEvaluacion()}"></span>
+            </td>
+            <td th:style="'background-color:' + ${triage.getColor()}">
+                <span class="triage" th:text="${triage.getHoraEvaluacion()}"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
 </html>
