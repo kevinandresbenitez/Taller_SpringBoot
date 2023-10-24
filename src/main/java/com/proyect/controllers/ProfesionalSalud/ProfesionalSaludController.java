@@ -12,6 +12,7 @@ import com.proyect.services.EnfermeroService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.MedicoService;
 import com.proyect.services.ProfesionalSaludService;
+import com.proyect.session.SessionUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +42,16 @@ public class ProfesionalSaludController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private AdministradorService administradorService;
-        
+    @Autowired
+    SessionUsuario sessionUser;
+    
     @GetMapping("/")
     public String list(Model modelo){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<ProfesionalSalud> profesionalesSalud = this.profesionalSaludService.listarProfesionalSalud();
         modelo.addAttribute("profesionalesSalud",profesionalesSalud);
         return "profesionalesSalud/index";
@@ -51,6 +59,11 @@ public class ProfesionalSaludController {
     
     @GetMapping("/asignarFuncionario")
     public String selectFuncionary(Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
         model.addAttribute("funcionarios",funcionarios);
         return "profesionalesSalud/mostrarFuncionarios";
@@ -58,6 +71,11 @@ public class ProfesionalSaludController {
     
     @GetMapping("/asignarFuncionario/{id}")
     public String showForm(@PathVariable("id") Long id, Model model,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         
         if(funcionario.isEmpty()){
@@ -70,6 +88,11 @@ public class ProfesionalSaludController {
     
     @PostMapping("/asignarFuncionario/{id}")
     public String processAssing(@PathVariable("id") Long id,@RequestParam(name = "nroMatricula") Long nroMatricula,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         Boolean esAdministrador = this.administradorService.esFuncionarioAdministrador(id);
         Boolean esProfesionalSalud = this.profesionalSaludService.esFuncionarioProfesionalSalud(id);
@@ -95,6 +118,10 @@ public class ProfesionalSaludController {
         
     @GetMapping("/eliminar/{id}")
     public String delete(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
         this.profesionalSaludService.eliminarProfesionalSaludPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como profesional de la salud");
         return "redirect:/profesionalSalud/";

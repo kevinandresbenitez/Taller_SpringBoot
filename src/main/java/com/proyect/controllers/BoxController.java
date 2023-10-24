@@ -6,6 +6,7 @@ package com.proyect.controllers;
 
 import com.proyect.models.Box;
 import com.proyect.services.BoxService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BoxController {
     @Autowired
     BoxService boxService;
+    @Autowired
+    SessionUsuario sessionUser;
     
     @GetMapping("/")
       
     public String listBox(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Box> boxes = boxService.listarBoxes();
         model.addAttribute("boxes", boxes);
         return "boxes/index";
@@ -36,6 +44,11 @@ public class BoxController {
     }
     @GetMapping("/agregarbox")
     public String agregarBox(RedirectAttributes atributoMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Box> boxes = boxService.listarBoxes();
         boxService.crearBox(boxes.size()+1,false);
         atributoMensaje.addFlashAttribute("mensaje","¡Se agregó un nuevo box!");
@@ -43,6 +56,11 @@ public class BoxController {
     }
     @GetMapping("eliminar/{id}")
     public String eliminarBox(@PathVariable("id")Long id, RedirectAttributes atributoMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         boxService.eliminarBoxById(id);
         atributoMensaje.addFlashAttribute("mensaje","¡Box eliminado con éxito!");
         return "redirect:/boxes/";

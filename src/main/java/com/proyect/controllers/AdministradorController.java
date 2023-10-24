@@ -8,6 +8,7 @@ import com.proyect.models.Funcionario;
 import com.proyect.services.AdministradorService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.ProfesionalSaludService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -32,9 +33,16 @@ public class AdministradorController {
     private AdministradorService administradorService;
     @Autowired
     private ProfesionalSaludService profesionalSaludService;
+    @Autowired
+    SessionUsuario sessionUser;
         
     @GetMapping("/")
     public String list(Model modelo){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Administrador> administradores = this.administradorService.listarAdministradores();
         modelo.addAttribute("administradores",administradores);
         return "administradores/index";
@@ -42,6 +50,11 @@ public class AdministradorController {
     
     @GetMapping("/asignarFuncionario")
     public String assing(Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Funcionario> funcionarios = this.funcionarioServices.listarFuncionarios();
         model.addAttribute("funcionarios",funcionarios);
         return "administradores/asignarFuncionario";
@@ -49,6 +62,12 @@ public class AdministradorController {
         
     @GetMapping("/asignarFuncionario/{id}")
     public String processAssing(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
+        
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id);
         Boolean esAdministrador = this.administradorService.esFuncionarioAdministrador(id);
         Boolean esProfesionalSalud = this.profesionalSaludService.esFuncionarioProfesionalSalud(id);
@@ -74,6 +93,11 @@ public class AdministradorController {
         
     @GetMapping("/eliminar/{id}")
     public String delete(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.administradorService.eliminarAdministradorPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como administrador");
         return "redirect:/administradores/";

@@ -60,9 +60,8 @@ public class LoginController {
       
       @GetMapping("/cerrarSesion")      
       public String cerrarSession(Model model){
-
-        
-        return "boxes/index";
+        sessionUser.endSession();
+        return "redirect:/";
       }
       
       

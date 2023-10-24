@@ -10,6 +10,7 @@ import com.proyect.models.Sector;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.RolService;
 import com.proyect.services.SectorService;
+import com.proyect.session.SessionUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +34,16 @@ public class SectorController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private SectorService sectorServices;
-        
+    @Autowired
+    SessionUsuario sessionUser;
+    
     @GetMapping("/")
     public String list(Model modelo){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Sector> sectores = this.sectorServices.listarSectores();
         modelo.addAttribute("sectores",sectores);
         return "funcionarios/sectores/index";
@@ -43,6 +51,11 @@ public class SectorController {
     
     @GetMapping("/asignar/{id_funcionario}")
     public String asignarRoles(@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Sector> sectores = this.sectorServices.listarSectores();
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id_funcionario);
                 
@@ -59,6 +72,11 @@ public class SectorController {
     
     @PostMapping("/asignar/{id_funcionario}")
     public String procesarAsignacionRoles(@RequestParam("sectores_id") List<Long> SectoresId,@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<Funcionario> funcionario = this.funcionarioServices.obtenerFuncionarioPorId(id_funcionario);
                 
         if(funcionario.isEmpty()){
@@ -95,12 +113,21 @@ public class SectorController {
     
     
     @GetMapping("/crear")
-    public String createForm(){        
+    public String createForm(){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }        
         return "funcionarios/sectores/crear";
     }
     
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Sector sector = new Sector();
         sector.setNombre(nombre);
         this.sectorServices.crear(sector);
@@ -112,6 +139,11 @@ public class SectorController {
       
     @GetMapping("/eliminar/{id}")
     public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.sectorServices.eliminarPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Se ah eliminado el sector correctamente");
         return "redirect:/funcionarios/sectores/";

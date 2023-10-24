@@ -7,6 +7,7 @@ import com.proyect.models.Especialidad;
 import com.proyect.models.Medico;
 import com.proyect.services.EspecialidadService;
 import com.proyect.services.MedicoService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -29,9 +30,16 @@ public class EspecialidadController {
     private EspecialidadService especialidadService;
     @Autowired
     private MedicoService medicoService;
+    @Autowired
+    SessionUsuario sessionUser;
     
     @GetMapping("/")
     public String listarEspecializaciones(Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Especialidad> Especialidades = this.especialidadService.listarEspecialidades();
         model.addAttribute("especialidades",Especialidades);
         return "profesionalesSalud/medicos/especialidades/index";
@@ -39,11 +47,21 @@ public class EspecialidadController {
     
     @GetMapping("/crear/")
     public String crearEspecialidad(){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         return "profesionalesSalud/medicos/especialidades/crear";
     }
     
     @PostMapping("/crear/")
     public String procesarCreacion(RedirectAttributes atributosMensaje,@RequestParam("nombre") String nombre){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         // Creamos La Especialidad
         Especialidad especialidad = new Especialidad();
         especialidad.setNombre(nombre);
@@ -55,6 +73,11 @@ public class EspecialidadController {
     
     @GetMapping("/eliminar/{id}")
     public String procesarCreacion(RedirectAttributes atributosMensaje,@PathVariable Long id){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.especialidadService.eliminarEspecialidadPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Se elimino la especialidad correctamente");
         return "redirect:/profesionalSalud/medicos/especialidades/";

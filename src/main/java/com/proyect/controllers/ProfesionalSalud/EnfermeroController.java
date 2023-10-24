@@ -10,6 +10,7 @@ import com.proyect.services.EnfermeroService;
 import com.proyect.services.FuncionarioService;
 import com.proyect.services.MedicoService;
 import com.proyect.services.ProfesionalSaludService;
+import com.proyect.session.SessionUsuario;
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -38,10 +39,17 @@ public class EnfermeroController {
     private FuncionarioService funcionarioServices;
     @Autowired
     private AdministradorService administradorService;
+    @Autowired
+    SessionUsuario sessionUser;
         
    
     @GetMapping("/")
     public String listEnfermereos(Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<Enfermero> enfermeros = this.enfermeroService.listarEnfermeros();
         model.addAttribute("enfermeros",enfermeros);
         return "profesionalesSalud/enfermeros/index";        
@@ -49,6 +57,11 @@ public class EnfermeroController {
     
     @GetMapping("/asignar/")
     public String asignarEnfermero(Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         List<ProfesionalSalud> profSalud = this.profesionalSaludService.listarProfesionalSalud();
         model.addAttribute("profesionalesSalud",profSalud);
         return "profesionalesSalud/enfermeros/asignar";        
@@ -56,6 +69,11 @@ public class EnfermeroController {
     
     @GetMapping("/asignar/{id}")
     public String procesarAsignacionEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         Optional<ProfesionalSalud> profesionalSalud = this.profesionalSaludService.obtenerProfSaludPorId(id);
         Boolean esEnfermero = this.enfermeroService.esProfSaludEnfermero(id);
         Boolean esMedico = this.medicoService.esProfSaludMedico(id);
@@ -78,6 +96,11 @@ public class EnfermeroController {
     
     @GetMapping("/eliminar/{id}")
     public String eliminarEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
+            return "redirect:/";
+        }
+        
         this.enfermeroService.eliminarEnfermeroPorId(id);
         atributosMensaje.addFlashAttribute("mensaje","Eliminando enfermero adecuadamente");
         return "redirect:/profesionalSalud/enfermeros/";          

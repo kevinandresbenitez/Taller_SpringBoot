@@ -38,15 +38,24 @@
         <!---Berra De Navegacion --->
         
         <div class="container"> 
-            <a href="funcionarios/">Ir a funcionarios</a>
-            <a href="administradores/">Ir a administradores</a>
-            <a href="profesionalSalud/">Ir a profesionales de la salud</a>
+            
+            <!--Si la session existe y es un admin--->
+            <div th:if="${sessionUser.existSession}">
+                <div th:if="${sessionUser.isAdmin()}">
+                    <a href="funcionarios/">Ir a funcionarios</a>
+                    <a href="administradores/">Ir a administradores</a>
+                    <a href="profesionalSalud/">Ir a profesionales de la salud</a>
+                    <a href="boxes/">Ir a Boxes</a>
+                </div>
+                
+            </div>
+ 
             <a href="pacientes/">Ir a pacientes</a>
-            <a href="boxes/">Ir a Boxes</a>
             <a href="triages/">Ir a Triages</a>       
             <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>      
             <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
             <a href="estadisticas/">Ir a estadisticas</a>
+            <a href="login/">Boton de login temporal</a>
         </div>
 
         
