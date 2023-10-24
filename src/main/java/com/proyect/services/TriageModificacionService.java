@@ -6,6 +6,8 @@ import com.proyect.repositories.TriageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TriageModificacionService {
     @Autowired
@@ -13,5 +15,9 @@ public class TriageModificacionService {
 
     public void guardarModificacion(TriageModificacion modificacion){
         triageModificacionRepository.save(modificacion);
+    }
+
+    public List<TriageModificacion> listarModificacionesDeTriage(){
+        return triageModificacionRepository.findAll();
     }
 }

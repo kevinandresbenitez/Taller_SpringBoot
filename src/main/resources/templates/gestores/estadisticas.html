@@ -32,7 +32,8 @@
             margin-bottom: 20px;
         }
 
-        .button-container a {
+        .button-container a,
+        .button-container button {
             background-color: #007bff;
             color: #fff;
             padding: 10px 20px;
@@ -40,9 +41,15 @@
             border-radius: 4px;
             text-decoration: none;
             display: inline-block;
+            cursor: pointer;
+        }
+        button{
+            background-color: #007bff;
+            color: #ffffff;
         }
 
-        .button-container a:hover {
+        .button-container a:hover,
+        .button-container button:hover {
             background-color: #0056b3;
         }
 
@@ -70,8 +77,6 @@
         }
 
         .search-container button {
-            background-color: #007bff;
-            color: #fff;
             cursor: pointer;
         }
 
@@ -100,6 +105,7 @@
             background-color: #007bff;
             color: #fff;
         }
+
     </style>
 </head>
 <body>
@@ -110,7 +116,7 @@
         <a href="/">Volver</a>
     </div>
 
-    <!-- Formulario para cantidad de pacientes por médico y rango de fechas -->
+
     <div class="search-container">
         <h3>Cantidad de pacientes atendidos por un médico en un rango de fechas</h3>
         <form th:action="@{/estadisticas/cantidadpacientespormedico}" method="get">
@@ -128,12 +134,12 @@
         </form>
     </div>
 
-    <!-- Resultado para cantidad de pacientes por médico -->
+
     <div class="search-result">
         <p th:if="${pacientesPorMedico != null}">Este médico atendió: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
     </div>
 
-    <!-- Formulario para cantidad de pacientes por rango de edades y fechas -->
+
     <div class="search-container">
         <h3>Cantidad de pacientes atendidos por rango de edad y fecha</h3>
         <form th:action="@{/estadisticas/cantidadpacientesporedadyfechaatencion}" method="get">
@@ -152,11 +158,11 @@
         <p th:if="${pacientesPorEdadYFecha != null}">En esas fechas se atendieron: <span th:text="${pacientesPorEdadYFecha}"></span> pacientes</p>
     </div>
 
-    <!-- Formulario para obtener detalles de pacientes por rango de fechas -->
+
     <div class="search-container">
         <h3>Paciente que más consultó</h3>
         <form th:action="@{/estadisticas/pacientemasconsultado}" method="get">
-            <!-- Agrega campos específicos de paciente cuando tengas la información -->
+
             <label for="fechaInicio2">Fecha Desde:</label>
             <input type="date" id="fechaInicio2" name="fechaInicio" />
             <label for="fechaFin2">Fecha Hasta:</label>
@@ -179,7 +185,7 @@
         </tr>
     </table>
 
-    <!-- Formulario para saber qué médico atendió en un rango de fechas -->
+
     <div class="search-container">
         <h3>Médico que más atendió</h3>
         <form th:action="@{/estadisticas/medicoatendioenrango}" method="get">
@@ -191,7 +197,7 @@
         </form>
     </div>
     <table class="search-result">
-        <!-- Se muestra el paciente si se encuentra -->
+
         <tr th:if="${medicoMasAtendio != null}">
             <th>Nombre</th>
             <td th:text="${medicoMasAtendio.getProfesionalSalud().getFuncionario().getNombre()}"></td>
@@ -205,6 +211,59 @@
             <td th:text="${medicoMasAtendio.getProfesionalSalud().getFuncionario().getFechaNacimiento()}"></td>
         </tr>
     </table>
+
+    <div class="search-container">
+        <h3>Estadísticas de triages por rango de fechas</h3>
+        <form th:action="@{/estadisticas/triagesrangofechas}" method="get">
+            <label for="fechaInicioTriage">Fecha Desde:</label>
+            <input type="date" id="fechaInicioTriage" name="fechaInicio" />
+            <label for="fechaFinTriage">Fecha Hasta:</label>
+            <input type="date" id="fechaFinTriage" name="fechaFin" />
+            <button type="submit">Consultar</button>
+        </form>
+    </div>
+
+
+    <div class="search-result">
+        <p th:if="${triages != null}">Total de triages: <span th:text="${triages}"></span></p>
+        <p th:if="${rojo != null}">Triages Rojos: <span th:text="${rojo}"></span></p>
+        <p th:if="${naranja != null}">Triages Naranjas: <span th:text="${naranja}"></span></p>
+        <p th:if="${amarillo != null}">Triages Amarillos: <span th:text="${amarillo}"></span></p>
+        <p th:if="${verde != null}">Triages Verdes: <span th:text="${verde}"></span></p>
+        <p th:if="${azul != null}">Triages Azules: <span th:text="${azul}"></span></p>
+    </div>
+
+    <div class="button-container">
+        <h3>Cantidad de pacientes atendidos por un médico en un rango de fechas</h3>
+        <button onclick="toggleTable()">Modificaciones de triages</button>
+    </div>
+
+    <div class="search-result">
+        <p th:if="${modificaciones != null}">Se realizaron: <span th:text="${modificaciones.size()-1}"></span> cambios</p>
+    </div>
+    <table id="cambioColorTable" style="display: none;">
+        <thead>
+        <tr>
+            <th>Color Viejo</th>
+            <th>Color Asignado por Funcionario</th>
+            <th>Funcionario que lo Cambió</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="modificacion : ${modificaciones}">
+            <td th:text="${modificacion.colorViejo}"></td>
+            <td th:text="${modificacion.triage.color}"></td>
+            <td th:text="${modificacion.triage.medico.profesionalsalud.funcionario.nombre}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<script>
+        function toggleTable() {
+            var table = document.getElementById("cambioColorTable");
+            table.style.display = table.style.display === "none" ? "table" : "none";
+        }
+    </script>
 </body>
 </html>
