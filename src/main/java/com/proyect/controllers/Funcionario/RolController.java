@@ -120,20 +120,27 @@ public class RolController {
         
         return "funcionarios/roles/crear";
     }
-    
+
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isAdmin()){
             return "redirect:/";
         }
-        
+
+        // Verificar si el rol con el mismo nombre ya existe
+        if (rolServices.existsByNombre(nombre)) {
+            atributosMensaje.addFlashAttribute("mensaje", "<span style='color: red;'>El rol ya existe!</span>");
+            return "redirect:/funcionarios/roles/crear";
+        }
+
         Rol rol = new Rol();
         rol.setNombre(nombre);
+
         this.rolServices.crear(rol);
-        
-        //Una vez creado redirijo y envio un mensaje de creacion correcta        
-        atributosMensaje.addFlashAttribute("mensaje","Se creo el rol Adecuadamente");
+
+        // Una vez creado, redirijo y envío un mensaje de creación exitosa
+        atributosMensaje.addFlashAttribute("mensaje", "Se creó el rol adecuadamente");
         return "redirect:/funcionarios/roles/";
     }
       

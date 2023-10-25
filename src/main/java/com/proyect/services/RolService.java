@@ -47,5 +47,8 @@ public class RolService{
     public List<Rol> obtenerRolesDelFuncionario(long id){
         return funcionarioRepository.findById(id).get().getRoles();
     }
-    
+
+    public boolean existsByNombre(String nombre) {
+        return rolRepository.existsByNombre(nombre);
+    }
 }
