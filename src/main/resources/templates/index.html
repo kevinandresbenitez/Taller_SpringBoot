@@ -16,119 +16,144 @@
         }
 
         .container {
+            width: 80vw;
+            margin:20px auto;
+            
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
-            align-content: center;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
         }
-
-        .box {
-            flex: 0 0 calc(5% - 5px);
-            margin: 10px;
-            text-align: center;
-            max-width: calc(20% - 20px);
-            box-sizing: border-box;
+        .box{
+            width: 200px;
+            height: 250px;         
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
         }
-
-        .box a {
-            display: block;
-            padding: 10px;
+        
+        .box:hover{
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .box a{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: column nowrap;
             text-decoration: none;
-            color: #007bff;
-            background-color: #fff;
-            border-radius: 5px;
-            border: 1px solid #007bff;
-            transition: background-color 0.3s ease;
         }
-
-        .box a:hover {
-            background-color: #007bff;
-            color: #fff;
+        
+        .box a img{
+            height: 80%;
+            width: auto;
         }
-
-        .box img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
+        .box a p{
+          width: 100%;
+          margin: 0;
+          text-align: center;
+          padding: 10% 0px;
+          background: #007bff;
+          color:#fff;
+          font-weight: 500;
+          font-size: 16px;
         }
+        
+      
     </style>
 </head>
 <body>
 <div th:insert="~{components/navbar :: navbar}"></div>
 <div th:text="${mensaje}"></div>
 <div class="container">
-    <!-- Botones para usuarios no autenticados -->
-    <div th:if="${not sessionUser.existSession()}" class="box">
-        <div>
-            <a href="estadisticas/">
-                <img src="fotos/estadistica.PNG" alt="Estadísticas">
-                Ir a Estadísticas
-            </a>
-        </div>
-        <div>
-            <a href="login/">
-                <img src="fotos/login.PNG" alt="Login">
-                Botón de Login Temporal
-            </a>
-        </div>
+    
+    
+    <!--- Botones a mostrar hasta que implemente la sessiones -->
+    <div class="box">
+        <a href="estadisticas/">
+            <img th:src="@{fotos/estadistica.png}" alt="Estadísticas">
+            <p>Ir a Estadísticas</p>
+        </a>
+    </div>
+    
+    <div class="box">
+        <a href="login/">
+            <img th:src="@{fotos/login.png}" alt="Login">
+            <p>Botón de Login Temporal</p>
+        </a>
+    </div>
+    
+    <div class="box">
+        <a href="pacientes/atenciones/">
+            <img th:src="@{/fotos/box.png}" alt="Atenciones en Boxes">
+            <p>Ir a Atenciones en Boxes</p>
+        </a>
     </div>
 
     <!-- Botones adicionales para usuarios autenticados -->
-    <div th:if="${sessionUser.existSession()}" class="box">
-        <div th:if="${sessionUser.isAdmin()}">
-            <a href="funcionarios/">
-                <img src="fotos/funcionario.PNG" alt="Funcionarios">
-                Ir a Funcionarios
-            </a>
-        </div>
-        <div th:if="${sessionUser.isAdmin()}">
-            <a href="administradores/">
-                <img src="fotos/admin.PNG" alt="Administradores">
-                Ir a Administradores
-            </a>
-        </div>
-        <div th:if="${sessionUser.isAdmin()}">
-            <a href="profesionalSalud/">
-                <img src="fotos/profesional.PNG" alt="Profesionales de la Salud">
-                Ir a Profesionales de la Salud
-            </a>
-        </div>
-        <div th:if="${sessionUser.isAdmin()}">
-            <a href="boxes/">
-                <img src="fotos/box.PNG" alt="Boxes">
-                Ir a Boxes
-            </a>
-        </div>
+    <th:block th:if="${sessionUser.existSession()}" class="box">
+        
+        <!-- Botones Del admin -->
+        <th:block th:if="${sessionUser.isAdmin()}">
+            <div class="box">
+                <a href="funcionarios/">
+                    <img th:src="@{fotos/funcionario.png}" alt="Funcionarios">
+                    <p>Ir a Funcionarios</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="administradores/">
+                    <img th:src="@{fotos/admin.png}" alt="Administradores">
+                    <p>Ir a Administradores</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="profesionalSalud/">
+                    <img th:src="@{fotos/profesional.png}" alt="Profesionales de la Salud">
+                    <p>Ir a Profesionales de la Salud</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="boxes/">
+                    <img th:src="@{fotos/box.png}" alt="Boxes">
+                    <p>Ir a Boxes</p>
+                </a>
+            </div>
+            
+        </th:block>
 
-        <div th:if="${sessionUser.hashRol('Administrativo')}">
-            <a href="pacientes/ingresos/verificarExistencia">
-                <img src="fotos/ingreso.PNG" alt="Ingreso de Paciente">
-                Agregar ingreso de paciente
-            </a>
-        </div>
-        <div th:if="${sessionUser.hashRol('Administrativo')}">
-            <a href="pacientes/">
-                <img src="fotos/paciente.PNG" alt="Detalles de Paciente">
-                Detalles de paciente
-            </a>
-        </div>
-
-        <div th:if="${sessionUser.isProfSalud()}">
-            <a href="triages/">
-                <img src="fotos/triages.PNG" alt="Triages">
-                Ir a Triages
-            </a>
-        </div>
-
-        <div>
-            <a href="pacientes/atenciones/">
-                <img src="/fotos/box.PNG" alt="Atenciones en Boxes">
-                Ir a Atenciones en Boxes
-            </a>
-        </div>
-    </div>
+        <!-- Botones De funcionarios con rol administrativo -->
+        <th:block th:if="${sessionUser.hashRol('Administrativo')}">
+            <div class="box">
+                <a href="pacientes/ingresos/verificarExistencia">
+                    <img th:src="@{fotos/ingreso.png}" alt="Ingreso de Paciente">
+                    <p>Agregar ingreso de paciente</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="pacientes/">
+                    <img th:src="@{fotos/paciente.png}" alt="Detalles de Paciente">
+                    <p>Detalles de paciente</p>
+                </a>
+            </div>
+            
+        </th:block>
+        
+        <!-- Botones De Profesionales de la salud-->
+        <th:block th:if="${sessionUser.isProfSalud()}">
+            <div class="box">
+                <a href="triages/">
+                    <img th:src="@{fotos/triages.png}" alt="Triages">
+                    <p>Ir a Triages</p>
+                </a>
+            </div>
+        </th:block>
+        
+    </th:block>
 </div>
 
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
