@@ -21,8 +21,8 @@ public class Triage implements Serializable{
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
     @ManyToOne
-    @JoinColumn(name = "id_medico")
-    private Medico medico;
+    @JoinColumn(name = "id_prof_salud")
+    private ProfesionalSalud profesionalSalud;
     @OneToMany(mappedBy = "triage")
     List<TriageModificacion> modificacionesDeTriage;
     private String color;

@@ -61,9 +61,17 @@
                 
             </div>
             
+                        <!--Si la session existe y tiene rol administrativo--->
+            <div th:if="${sessionUser.existSession()}">
+                <div th:if="${sessionUser.isProfSalud()}">
+                    <a href="triages/">Ir a Triages</a>   
+                </div>
+                
+            </div>
+            
  
             
-            <a href="triages/">Ir a Triages</a>       
+    
             <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
             <a href="estadisticas/">Ir a estadisticas</a>
             <a href="login/">Boton de login temporal</a>
