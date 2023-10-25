@@ -1,31 +1,104 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Pagina Principal de Sectores de Trabajo</div>
-        
-        <a href="/funcionarios/">Volver</a>
-        <a href="/funcionarios/sectores/crear">Agregar Sector de trabajo</a>
-        <div>
-            
-            <h2>Sectores de trabajo</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="sector : ${sectores}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del Sector</strong><br>
-                <span th:text="${sector.getNombre()}"></span><br>  
-                <a th:href="@{/funcionarios/sectores/eliminar/{id}(id=${sector.getId()})}">Eliminar Sector</a>
-            </div>
-  
-        </div>  
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sectores de Trabajo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
-    </body>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .sector {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/funcionarios/">Volver</a>
+    <form th:action="@{/funcionarios/sectores/crear}" method="post">
+        <h3>Agregar Nuevo Sector de Trabajo</h3>
+        <label for="nombre">Nombre del Sector:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <div>
+        <h2>Sectores de Trabajo</h2>
+        <h3 th:text="${mensaje}"></h3>
+        <div th:each="sector : ${sectores}" class="sector">
+            <strong>Nombre Del Sector</strong><br>
+            <span th:text="${sector.getNombre()}"></span><br>
+            <a th:href="@{/funcionarios/sectores/eliminar/{id}(id=${sector.getId()})}">Eliminar Sector</a>
+        </div>
+    </div>
+
+</div>
+</body>
 </html>

@@ -112,14 +112,7 @@ public class SectorController {
     }
     
     
-    @GetMapping("/crear")
-    public String createForm(){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }        
-        return "funcionarios/sectores/crear";
-    }
+
     
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
