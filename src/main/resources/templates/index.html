@@ -1,92 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Página Principal</title>
-        <link rel="stylesheet" th:href="@{/css/normalice.css}"/> <!--- Acomoda css por defecto (margenes y padding)--->
-        <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/> <!--- Conjunto de iconos--->
-        <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/> <!--- Css Barra de navegacion--->
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: #f8f9fa;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
-            .container a {
-                display: block;
-                padding: 10px;
-                margin: 10px;
-                text-align: center;
-                text-decoration: none;
-                color: #007bff;
-                background-color: #fff;
-                border-radius: 5px;
-                border: 1px solid #007bff;
-                transition: background-color 0.3s ease;
-            }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            align-content: center;
+        }
 
-            .container a:hover {
-                background-color: #007bff;
-                color: #fff;
-            }
-        </style>
-    </head>
-    <body>
-        <!---Berra De Navegacion --->
-        <div th:insert="~{components/navbar :: navbar}"></div>
-        <!---Berra De Navegacion --->
-        <div th:text="${mensaje}"></div>
-        <div class="container"> 
-            
-            <!--Si la session existe y es un admin--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.isAdmin()}">
-                    <a href="funcionarios/">Ir a funcionarios</a>
-                    <a href="administradores/">Ir a administradores</a>
-                    <a href="profesionalSalud/">Ir a profesionales de la salud</a>
-                    <a href="boxes/">Ir a Boxes</a>
-                </div>
-                
-            </div>
-            
+        .box {
+            flex: 0 0 calc(5% - 5px);
+            margin: 10px;
+            text-align: center;
+            max-width: calc(20% - 20px);
+            box-sizing: border-box;
+        }
 
-            
-            <!--Si la session existe y tiene rol administrativo--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.hashRol('Administrativo')}">
-                    <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>  
-                    <a href="pacientes/">Detalles de paciente</a>
-                </div>
-                
-            </div>
-            
-                        <!--Si la session existe y tiene rol administrativo--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.isProfSalud()}">
-                    <a href="triages/">Ir a Triages</a>   
-                </div>
-                
-            </div>
-            
- 
-            
-    
-            <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
-            <a href="estadisticas/">Ir a estadisticas</a>
-            <a href="login/">Boton de login temporal</a>
+        .box a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #007bff;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .box a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .box img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:text="${mensaje}"></div>
+<div class="container">
+    <!-- Botones para usuarios no autenticados -->
+    <div th:if="${not sessionUser.existSession()}" class="box">
+        <div>
+            <a href="estadisticas/">
+                <img src="fotos/estadistica.PNG" alt="Estadísticas">
+                Ir a Estadísticas
+            </a>
+        </div>
+        <div>
+            <a href="login/">
+                <img src="fotos/login.PNG" alt="Login">
+                Botón de Login Temporal
+            </a>
+        </div>
+    </div>
+
+    <!-- Botones adicionales para usuarios autenticados -->
+    <div th:if="${sessionUser.existSession()}" class="box">
+        <div th:if="${sessionUser.isAdmin()}">
+            <a href="funcionarios/">
+                <img src="fotos/funcionario.PNG" alt="Funcionarios">
+                Ir a Funcionarios
+            </a>
+        </div>
+        <div th:if="${sessionUser.isAdmin()}">
+            <a href="administradores/">
+                <img src="fotos/admin.PNG" alt="Administradores">
+                Ir a Administradores
+            </a>
+        </div>
+        <div th:if="${sessionUser.isAdmin()}">
+            <a href="profesionalSalud/">
+                <img src="fotos/profesional.PNG" alt="Profesionales de la Salud">
+                Ir a Profesionales de la Salud
+            </a>
+        </div>
+        <div th:if="${sessionUser.isAdmin()}">
+            <a href="boxes/">
+                <img src="fotos/box.PNG" alt="Boxes">
+                Ir a Boxes
+            </a>
         </div>
 
-        
-        <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script><!--- Js Barra de navegacion--->
-    </body>
+        <div th:if="${sessionUser.hashRol('Administrativo')}">
+            <a href="pacientes/ingresos/verificarExistencia">
+                <img src="fotos/ingreso.PNG" alt="Ingreso de Paciente">
+                Agregar ingreso de paciente
+            </a>
+        </div>
+        <div th:if="${sessionUser.hashRol('Administrativo')}">
+            <a href="pacientes/">
+                <img src="fotos/paciente.PNG" alt="Detalles de Paciente">
+                Detalles de paciente
+            </a>
+        </div>
+
+        <div th:if="${sessionUser.isProfSalud()}">
+            <a href="triages/">
+                <img src="fotos/triages.PNG" alt="Triages">
+                Ir a Triages
+            </a>
+        </div>
+
+        <div>
+            <a href="pacientes/atenciones/">
+                <img src="/fotos/box.PNG" alt="Atenciones en Boxes">
+                Ir a Atenciones en Boxes
+            </a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
