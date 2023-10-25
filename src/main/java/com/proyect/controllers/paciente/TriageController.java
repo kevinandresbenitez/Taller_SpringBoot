@@ -10,6 +10,7 @@ import com.proyect.services.MedicoService;
 import com.proyect.services.PacienteService;
 import com.proyect.services.TriageModificacionService;
 import com.proyect.services.TriageService;
+import com.proyect.session.SessionUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +40,16 @@ public class TriageController {
     MedicoService medicoService;
     @Autowired
     TriageModificacionService triageModificacionService;
+    @Autowired
+    SessionUsuario sessionUser;
     
     @GetMapping("/")//pacientes a espera de ser triagiados
     public String listarTriages(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         List<Paciente> pacientes = pacienteService.obtenerPacientesNecesitanSerTriagados();
         model.addAttribute("pacientes",pacientes);
         return "pacientes/triages/listaPacientes";
@@ -49,6 +57,11 @@ public class TriageController {
     
     @GetMapping("/{id}")  // Id del paciente a mostrar sus triages
     public String listarTriagesPaciente(@PathVariable("id") Long id,Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         if(paciente == null){
             return "redirect:/pacientes/";
@@ -62,6 +75,11 @@ public class TriageController {
     
     @GetMapping("/agregar/{id}") // Id del paciente a asignar triage
     public String mostrarFormulario(@PathVariable("id") Long id,Model model){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         
         if(paciente == null){
@@ -88,7 +106,11 @@ public class TriageController {
             @RequestParam("lesionesLeves") int lesionesLeves,
             @RequestParam("sangrado") int sangrado,
             Model model) {
-
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         // Calculando triage
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
@@ -114,11 +136,7 @@ public class TriageController {
         triage.setSangrado(sangrado);
         triage.setEdad(ChronoUnit.YEARS.between(paciente.getFechaNacimiento(),fechahoy));
         // Obteniendo punuacion y respectivo color, tiempo de espera ...
-        TriageObject triageResultante =
-                triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
-        // Guardamos un medico por defecto hasta implementar la session
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size()-1);
+        TriageObject triageResultante = triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
         
         
         // Creando el triage
@@ -127,7 +145,7 @@ public class TriageController {
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
-        triageAGuardar.setMedico(medico);
+        triageAGuardar.setProfesionalSalud(sessionUser.getProfSalud());
         paciente.getTriages().add(triageAGuardar);
         triageService.guardarTriage(triageAGuardar);
         
@@ -138,6 +156,11 @@ public class TriageController {
 
     @GetMapping("/resultadotriage/{id}")//id del triage
     public String resultadoTriage(Model model,@PathVariable("id")Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         Triage triage = triageService.findTriageById(id);
         
         if(triage == null){
@@ -153,6 +176,11 @@ public class TriageController {
     }
     @GetMapping("/cambiarcolor/{id}")//id del triage
     public String modificarTriage(Model model,@PathVariable("id")Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         Triage triage = triageService.findTriageById(id);
         
         if(triage == null){
@@ -168,7 +196,11 @@ public class TriageController {
                                @RequestParam("nuevoColor") String nuevoColor,
                                @RequestParam("motivoDeCambio") String motivoDeCambio,
                                RedirectAttributes atributosMensaje) {
-
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isProfSalud()){
+            return "redirect:/";
+        }
+        
         Triage triage = triageService.findTriageById(id);
         if(triage == null){
             return "redirect:/";
