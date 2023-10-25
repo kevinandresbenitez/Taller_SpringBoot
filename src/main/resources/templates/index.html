@@ -1,92 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Página Principal</title>
-        <link rel="stylesheet" th:href="@{/css/normalice.css}"/> <!--- Acomoda css por defecto (margenes y padding)--->
-        <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/> <!--- Conjunto de iconos--->
-        <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/> <!--- Css Barra de navegacion--->
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: #f8f9fa;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
-            .container a {
-                display: block;
-                padding: 10px;
-                margin: 10px;
-                text-align: center;
-                text-decoration: none;
-                color: #007bff;
-                background-color: #fff;
-                border-radius: 5px;
-                border: 1px solid #007bff;
-                transition: background-color 0.3s ease;
-            }
-
-            .container a:hover {
-                background-color: #007bff;
-                color: #fff;
-            }
-        </style>
-    </head>
-    <body>
-        <!---Berra De Navegacion --->
-        <div th:insert="~{components/navbar :: navbar}"></div>
-        <!---Berra De Navegacion --->
-        <div th:text="${mensaje}"></div>
-        <div class="container"> 
+        .container {
+            width: 80vw;
+            margin:20px auto;
             
-            <!--Si la session existe y es un admin--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.isAdmin()}">
-                    <a href="funcionarios/">Ir a funcionarios</a>
-                    <a href="administradores/">Ir a administradores</a>
-                    <a href="profesionalSalud/">Ir a profesionales de la salud</a>
-                    <a href="boxes/">Ir a Boxes</a>
-                </div>
-                
-            </div>
-            
-
-            
-            <!--Si la session existe y tiene rol administrativo--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.hashRol('Administrativo')}">
-                    <a href="pacientes/ingresos/verificarExistencia">Agregar ingreso de paciente</a>  
-                    <a href="pacientes/">Detalles de paciente</a>
-                </div>
-                
-            </div>
-            
-                        <!--Si la session existe y tiene rol administrativo--->
-            <div th:if="${sessionUser.existSession()}">
-                <div th:if="${sessionUser.isProfSalud()}">
-                    <a href="triages/">Ir a Triages</a>   
-                </div>
-                
-            </div>
-            
- 
-            
-    
-            <a href="pacientes/atenciones/">Ir a atenciones en boxes</a>
-            <a href="estadisticas/">Ir a estadisticas</a>
-            <a href="login/">Boton de login temporal</a>
-        </div>
-
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+        }
+        .box{
+            width: 200px;
+            height: 250px;         
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
         
-        <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script><!--- Js Barra de navegacion--->
-    </body>
+        .box:hover{
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .box a{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            text-decoration: none;
+        }
+        
+        .box a img{
+            height: 80%;
+            width: auto;
+        }
+        .box a p{
+          width: 100%;
+          margin: 0;
+          text-align: center;
+          padding: 10% 0px;
+          background: #007bff;
+          color:#fff;
+          font-weight: 500;
+          font-size: 16px;
+        }
+        
+      
+    </style>
+</head>
+<body>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:text="${mensaje}"></div>
+<div class="container">
+    
+    
+    <!--- Botones a mostrar hasta que implemente la sessiones -->
+    <div class="box">
+        <a href="estadisticas/">
+            <img th:src="@{fotos/estadistica.png}" alt="Estadísticas">
+            <p>Ir a Estadísticas</p>
+        </a>
+    </div>
+    
+    <div class="box">
+        <a href="login/">
+            <img th:src="@{fotos/login.png}" alt="Login">
+            <p>Botón de Login Temporal</p>
+        </a>
+    </div>
+    
+    <div class="box">
+        <a href="pacientes/atenciones/">
+            <img th:src="@{/fotos/box.png}" alt="Atenciones en Boxes">
+            <p>Ir a Atenciones en Boxes</p>
+        </a>
+    </div>
+
+    <!-- Botones adicionales para usuarios autenticados -->
+    <th:block th:if="${sessionUser.existSession()}" class="box">
+        
+        <!-- Botones Del admin -->
+        <th:block th:if="${sessionUser.isAdmin()}">
+            <div class="box">
+                <a href="funcionarios/">
+                    <img th:src="@{fotos/funcionario.png}" alt="Funcionarios">
+                    <p>Ir a Funcionarios</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="administradores/">
+                    <img th:src="@{fotos/admin.png}" alt="Administradores">
+                    <p>Ir a Administradores</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="profesionalSalud/">
+                    <img th:src="@{fotos/profesional.png}" alt="Profesionales de la Salud">
+                    <p>Ir a Profesionales de la Salud</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="boxes/">
+                    <img th:src="@{fotos/box.png}" alt="Boxes">
+                    <p>Ir a Boxes</p>
+                </a>
+            </div>
+            
+        </th:block>
+
+        <!-- Botones De funcionarios con rol administrativo -->
+        <th:block th:if="${sessionUser.hashRol('Administrativo')}">
+            <div class="box">
+                <a href="pacientes/ingresos/verificarExistencia">
+                    <img th:src="@{fotos/ingreso.png}" alt="Ingreso de Paciente">
+                    <p>Agregar ingreso de paciente</p>
+                </a>
+            </div>
+            
+            <div class="box">
+                <a href="pacientes/">
+                    <img th:src="@{fotos/paciente.png}" alt="Detalles de Paciente">
+                    <p>Detalles de paciente</p>
+                </a>
+            </div>
+            
+        </th:block>
+        
+        <!-- Botones De Profesionales de la salud-->
+        <th:block th:if="${sessionUser.isProfSalud()}">
+            <div class="box">
+                <a href="triages/">
+                    <img th:src="@{fotos/triages.png}" alt="Triages">
+                    <p>Ir a Triages</p>
+                </a>
+            </div>
+        </th:block>
+        
+    </th:block>
+</div>
+
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-

@@ -1,24 +1,108 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Formulario para crear Roles</div>
-        <a href="/funcionarios/roles/">Volver</a>
-        <h3 th:text="${mensaje}"></h3>
-        
-        <form action="/funcionarios/roles/crear" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"><br>
-            <input type="submit" value="Enviar">
-        </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario para crear Roles</title>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
 
-    </body>
+            .container {
+                background-color: #f9f9f9; /* Cambiado el color de fondo */
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 400px;
+            }
+
+            h2 {
+                text-align: center; /* Centra el texto */
+                background-color: #007BFF;
+                color: #fff;
+                padding: 15px; /* Aumentado el padding */
+                border-radius: 5px;
+            }
+
+            a {
+                text-decoration: none;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                margin-right: 10px;
+            }
+
+            a:hover {
+                background-color: #0056b3;
+            }
+
+            h3 {
+                margin: 30px 0; /* Aumentado el margen superior */
+                font-weight: bold; /* Añadida negrita */
+            }
+
+            form {
+                margin-top: 30px; /* Aumentado el margen superior */
+            }
+
+            label {
+                display: block;
+                margin-top: 15px; /* Aumentado el margen superior */
+            }
+
+            input[type="text"] {
+                padding: 10px;
+                border: 1px solid #007BFF;
+                border-radius: 5px;
+                margin: 15px 0; /* Aumentado el margen superior e inferior */
+                width: 100%;
+            }
+
+            input[type="submit"] {
+                background-color: #007BFF;
+                color: #fff;
+                text-decoration: none;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 20px 0; /* Aumentado el margen superior e inferior */
+                padding: 10px 20px; /* Añadido el padding */
+                width: 100%;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+            .mensaje-error {
+                color: red;
+                margin: 10px 0; /* Ajusta el margen según tus necesidades */
+                /* Otros estilos según tus preferencias */
+            }
+
+        </style>
+</head>
+<body>
+<div class="container">
+    <h2>Formulario para crear Roles</h2>
+    <a href="/funcionarios/roles/" class="return-button">Volver</a>
+    <div class="mensaje-error" th:if="${mensaje}" th:utext="${mensaje}"></div>
+
+    <form action="/funcionarios/roles/crear" method="post">
+        <label for="nombre">Nombre de rol:</label>
+        <input type="text" id="nombre" name="nombre"><br>
+        <input type="submit" value="Enviar">
+    </form>
+</div>
+</body>
 </html>

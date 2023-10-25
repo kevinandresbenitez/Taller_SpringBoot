@@ -1,31 +1,97 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Pagina Principal de Roles</div>
-        
-        <a href="/funcionarios/">Volver</a>
-        <a href="/funcionarios/roles/crear">Agregar Rol</a>
-        <div>
-            
-            <h2>Roles</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="rol : ${roles}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del rol</strong><br>
-                <span th:text="${rol.getNombre()}"></span><br>  
-                <a th:href="@{/funcionarios/roles/eliminar/{id}(id=${rol.getId()})}">Eliminar Rol</a>
-            </div>
-  
-        </div>  
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principal de Roles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
 
-    </body>
+        .container {
+            background-color: #f9f9f9; /* Cambiado el color de fondo */
+            padding: 20px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        h3 {
+            margin: 30px 0;
+            font-weight: bold; /* Añadida negrita */
+        }
+
+        .role-container {
+            padding: 20px; /* Aumentado el padding */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 30px 0;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 15px; /* Aumentado el margen inferior */
+            font-weight: bold; /* Añadida negrita */
+        }
+
+        a.delete-button {
+            text-decoration: none;
+            background-color: #FF3B30;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px; /* Aumentado el padding */
+            margin-top: 20px; /* Aumentado el margen */
+        }
+
+        a.delete-button:hover {
+            background-color: #D11A15;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Pagina Principal de Roles</h2>
+
+    <a href="/funcionarios/">Volver</a>
+    <a href="/funcionarios/roles/crear">Agregar Rol</a>
+
+    <div>
+        <h2>Roles</h2>
+        <h3 th:text="${mensaje}"></h3>
+        <div th:each="rol : ${roles}" class="role-container">
+            <strong>Nombre Del Rol</strong>
+            <span th:text="${rol.getNombre()}"></span>
+            <a th:href="@{/funcionarios/roles/eliminar/{id}(id=${rol.getId()})}" class="delete-button">Eliminar Rol</a>
+        </div>
+    </div>
+</div>
+</body>
 </html>
