@@ -42,6 +42,14 @@ public class EstadisticaController {
         return "gestores/estadisticas";
     }
 
+    /**
+     *
+     * @param idMedico id del medico para obtener un objeto medico
+     * @param fechaInicio fecha desde donde se quiere buscar
+     * @param fechaFin fecha hasta donde se quiere buscar
+     * @param model se usa para pasar variables a la vista
+     * @return retorna la vista con la consulta enviada
+     */
     @GetMapping("/cantidadpacientespormedico")
     public String cantidadPacientesAtendidosPorMedico(
             @RequestParam("idMedico") Long idMedico,
@@ -51,6 +59,7 @@ public class EstadisticaController {
         int pacientesPorMedico = consultaService.cantidadPacientesAtendidosPorMedico(medico.get(), fechaInicio, fechaFin);
         model.addAttribute("pacientesPorMedico",pacientesPorMedico);
         model.addAttribute("medico",medico.get());
+        cargarDatosComunes(model);
         return "gestores/estadisticas";
     }
 
@@ -63,6 +72,7 @@ public class EstadisticaController {
         int pacientesPorEdadYFecha = pacienteService.cantidadPacientesPorEdadYfechaAtencion(edadMinima, edadMaxima
                                                                                             , fechaInicio, fechaFin);
         model.addAttribute("pacientesPorEdadYFecha",pacientesPorEdadYFecha);
+        cargarDatosComunes(model);
         return "gestores/estadisticas";
     }
 
@@ -72,6 +82,7 @@ public class EstadisticaController {
             @RequestParam("fechaFin") LocalDate fechaFin,Model model) {
         Paciente pacienteMasConsultado = pacienteService.pacienteMasConsultado(fechaInicio, fechaFin);
         model.addAttribute("pacienteMasConsultado",pacienteMasConsultado);
+        cargarDatosComunes(model);
         return "gestores/estadisticas";
     }
 
@@ -81,6 +92,7 @@ public class EstadisticaController {
             @RequestParam("fechaFin")LocalDate fechaFin,Model model) {
         Medico medicoMasAtendio = medicoService.medicoQueMasAtendio(fechaInicio, fechaFin);
         model.addAttribute("medicoMasAtendio",medicoMasAtendio);
+        cargarDatosComunes(model);
         return "gestores/estadisticas";
     }
     @GetMapping("/triagesrangofechas")
@@ -114,15 +126,21 @@ public class EstadisticaController {
         model.addAttribute("amarillo",amarillo);
         model.addAttribute("verde",verde);
         model.addAttribute("azul",azul);
-
+        cargarDatosComunes(model);
         return "gestores/estadisticas";
     }
 
     @GetMapping("/modificacionestriage")
     public String modificacionesTriage(Model model){
         List<TriageModificacion> modificaciones = triageModificacionService.listarModificacionesDeTriage();
-
+        cargarDatosComunes(model);
         model.addAttribute("modificaciones",modificaciones);
         return "gestores/estadisticas";
+    }
+
+    //esta fucion carga de nuevo los medicos del primer formulario
+    private void cargarDatosComunes(Model model) {
+        List<Medico> medicos = medicoService.listarMedicos();
+        model.addAttribute("medicos", medicos);
     }
 }

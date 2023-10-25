@@ -117,7 +117,7 @@
     </div>
 
 
-    <div class="search-container">
+    <div id="formMedico" class="search-container">
         <h3>Cantidad de pacientes atendidos por un médico en un rango de fechas</h3>
         <form th:action="@{/estadisticas/cantidadpacientespormedico}" method="get">
             <label for="idMedico">Selecciona un médico:</label>
@@ -127,51 +127,51 @@
                         th:text="${medico.getProfesionalSalud().getFuncionario().getNombre()}"></option>
             </select>
             <label for="fechaInicio">Fecha Desde:</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" />
+            <input type="date" id="fechaInicio" name="fechaInicio" required/>
             <label for="fechaFin">Fecha Hasta:</label>
-            <input type="date" id="fechaFin" name="fechaFin" />
+            <input type="date" id="fechaFin" name="fechaFin" required/>
             <button type="submit">Consultar</button>
         </form>
     </div>
 
 
-    <div class="search-result">
+    <div id="resultMedicoCantPacientes" class="search-result">
         <p th:if="${pacientesPorMedico != null}">El medico:  <span th:text="${medico.profesionalSalud.funcionario.nombre}"></span></p>
         <p th:if="${pacientesPorMedico != null}">Atendio a: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
     </div>
 
 
-    <div class="search-container">
+    <div id="cantidadpacientesenrango" class="search-container">
         <h3>Cantidad de pacientes atendidos por rango de edad y fecha</h3>
         <form th:action="@{/estadisticas/cantidadpacientesporedadyfechaatencion}" method="get">
             <label for="edadMinima">Edad Mínima:</label>
-            <input type="number" id="edadMinima" name="edadMinima" />
+            <input type="number" id="edadMinima" name="edadMinima" required/>
             <label for="edadMaxima">Edad Máxima:</label>
-            <input type="number" id="edadMaxima" name="edadMaxima" />
+            <input type="number" id="edadMaxima" name="edadMaxima" required/>
             <label for="fechaInicio1">Fecha Desde:</label>
-            <input type="date" id="fechaInicio1" name="fechaInicio" />
+            <input type="date" id="fechaInicio1" name="fechaInicio" required/>
             <label for="fechaFin1">Fecha Hasta:</label>
-            <input type="date" id="fechaFin1" name="fechaFin" />
+            <input type="date" id="fechaFin1" name="fechaFin" required/>
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <div class="search-result">
+    <div id="cantidadpacientes" class="search-result">
         <p th:if="${pacientesPorEdadYFecha != null}">En esas fechas se atendieron: <span th:text="${pacientesPorEdadYFecha}"></span> pacientes</p>
     </div>
 
 
-    <div class="search-container">
+    <div id="pacientemasconsulto" class="search-container">
         <h3>Paciente que más consultó</h3>
         <form th:action="@{/estadisticas/pacientemasconsultado}" method="get">
 
             <label for="fechaInicio2">Fecha Desde:</label>
-            <input type="date" id="fechaInicio2" name="fechaInicio" />
+            <input type="date" id="fechaInicio2" name="fechaInicio" required/>
             <label for="fechaFin2">Fecha Hasta:</label>
-            <input type="date" id="fechaFin2" name="fechaFin" />
+            <input type="date" id="fechaFin2" name="fechaFin" required/>
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <table class="search-result">
+    <table id= "pacientemasconsultoresult" class="search-result">
         <tr th:if="${pacienteMasConsultado != null}">
             <th>Nombre</th>
             <td th:text="${pacienteMasConsultado.nombre}"></td>
@@ -187,17 +187,17 @@
     </table>
 
 
-    <div class="search-container">
+    <div id="medicomasatendio" class="search-container">
         <h3>Médico que más atendió</h3>
         <form th:action="@{/estadisticas/medicomasatendio}" method="get">
             <label for="fechaInicioMedico">Fecha Desde:</label>
-            <input type="date" id="fechaInicioMedico" name="fechaInicio" />
+            <input type="date" id="fechaInicioMedico" name="fechaInicio" required/>
             <label for="fechaFinMedico">Fecha Hasta:</label>
-            <input type="date" id="fechaFinMedico" name="fechaFin" />
+            <input type="date" id="fechaFinMedico" name="fechaFin" required/>
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <table class="search-result">
+    <table id="datosDelMedico" class="search-result">
 
         <tr th:if="${medicoMasAtendio != null}">
             <th>Nombre</th>
@@ -213,19 +213,19 @@
         </tr>
     </table>
 
-    <div class="search-container">
+    <div id="estadisticastriages" class="search-container">
         <h3>Estadísticas de triages por rango de fechas</h3>
         <form th:action="@{/estadisticas/triagesrangofechas}" method="get">
             <label for="fechaInicioTriage">Fecha Desde:</label>
-            <input type="date" id="fechaInicioTriage" name="fechaInicio" />
+            <input type="date" id="fechaInicioTriage" name="fechaInicio" required/>
             <label for="fechaFinTriage">Fecha Hasta:</label>
-            <input type="date" id="fechaFinTriage" name="fechaFin" />
+            <input type="date" id="fechaFinTriage" name="fechaFin" required/>
             <button type="submit">Consultar</button>
         </form>
     </div>
 
 
-    <div class="search-result">
+    <div id="datosdetriages" class="search-result">
         <p th:if="${triages != null}">Total de triages: <span th:text="${triages}"></span></p>
         <p th:if="${rojo != null}">Triages Rojos: <span th:text="${rojo}"></span></p>
         <p th:if="${naranja != null}">Triages Naranjas: <span th:text="${naranja}"></span></p>
@@ -234,7 +234,7 @@
         <p th:if="${azul != null}">Triages Azules: <span th:text="${azul}"></span></p>
     </div>
 
-    <div class="button-container">
+    <div id="modificacionesdetriages" class="button-container">
         <h3>Todas las modificaciones de triage</h3>
         <form th:action="@{/estadisticas/modificacionestriage}" method="get">
 
@@ -243,7 +243,7 @@
 
     </div>
 
-    <div class="search-result">
+    <div id= "resultadosdemodificaciones" class="search-result">
         <p th:if="${modificaciones != null}">Se realizaron: <span th:text="${modificaciones.size()}"></span> cambios</p>
 
         <table id="cambioColorTable">
@@ -265,6 +265,5 @@
         </table>
     </div>
 </div>
-
 </body>
 </html>
