@@ -1,26 +1,93 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Asignar funcionario</div>
-            <div>
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del funcionario:</strong><br>
-                <span th:text="${funcionario.getNombre()}"></span><br>
-                <form th:action="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}" method="post">
-                    <input type="hidden" name="id" th:value="${funcionario.getId()}">
-                    <span>Agregar matricula</span>
-                    <input type="text" name="nroMatricula" min="3">
-                    <input type="submit" value="Asignar">
-                </form>
-            </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Funcionario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 2cm auto 0; /* Margen superior de 2 cm, centrado horizontalmente */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-container {
+            margin: 2cm 0 0; /* Margen superior de 2 cm para el espacio adicional */
+        }
+
+        .btn-volver {
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="btn-container">
+    <a class="btn-volver" href="javascript:history.go(-1)">Volver</a>
+</div>
+<div class="container">
+    <h2 class="form-title">Asignar Funcionario</h2>
+    <strong>Nombre Del Funcionario:</strong><br>
+    <span th:text="${funcionario.getNombre()}"></span><br>
+    <form th:action="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}" method="post">
+        <input type="hidden" name="id" th:value="${funcionario.getId()}">
+        <span>Agregar matrícula</span>
+        <input type="text" name="nroMatricula" min="3">
+        <input type="submit" value="Asignar">
+    </form>
+</div>
+</body>
 </html>

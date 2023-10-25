@@ -1,29 +1,69 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Asignar un funcionario como profesional de salud</div>
-        
-        <a href="/profesionalSalud/">Volver</a>
-        <div>
-            
-            <h2>Funcionarios</h2>
-            <div th:each="funcionario : ${funcionarios}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del funcionario:</strong><br>
-                <span th:text="${funcionario.getNombre()}"></span><br>               
-                <a th:href="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}">Asignar como profesionalSalud</a>
-            </div>
-  
-        </div>  
-
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignación de Funcionario como Profesional de Salud</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        div {
+            background-color: #fff;
+            padding: 18px;
+            margin: 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        hr {
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<h1>Asignación de Funcionario como Profesional de Salud</h1>
+<a href="/profesionalSalud/">Volver</a>
+<div>
+    <h2>Listado de Funcionarios</h2>
+    <ul>
+        <th:block th:each="funcionario : ${funcionarios}">
+            <li>
+                <strong>Nombre del Funcionario:</strong>
+                <span th:text="${funcionario.getNombre()}"></span>
+            </li>
+            <li>
+                <a th:href="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}">Asignar como Profesional de Salud</a>
+            </li>
+            <hr>
+        </th:block>
+    </ul>
+</div>
+</body>
 </html>
