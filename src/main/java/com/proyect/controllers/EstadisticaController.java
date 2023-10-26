@@ -7,11 +7,14 @@ import com.proyect.services.*;
 import com.proyect.session.SessionUsuario;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -74,12 +77,17 @@ public class EstadisticaController {
     public String cantidadPacientesAtendidosPorMedico(
             @RequestParam("idMedico") Long idMedico,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+            @RequestParam("fechaFin") LocalDate fechaFin, Model model
+            , RedirectAttributes atributosMensaje) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        
+        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+            atributosMensaje.addFlashAttribute("mensaje"
+                    ,"No es posible usar una fecha mayor de inicio que la fecha fin");
+            return "redirect:/estadisticas/";
+        };
         Optional<Medico> medico = medicoService.obtenerMedicoPorId(idMedico);
         int pacientesPorMedico = consultaService.cantidadPacientesAtendidosPorMedico(medico.get(), fechaInicio, fechaFin);
         model.addAttribute("pacientesPorMedico", pacientesPorMedico);
@@ -103,12 +111,23 @@ public class EstadisticaController {
             @RequestParam("edadMinima") int edadMinima,
             @RequestParam("edadMaxima") int edadMaxima,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+            @RequestParam("fechaFin") LocalDate fechaFin, Model model
+            , RedirectAttributes atributosMensaje) {
+
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        
+        if(edadMinima>edadMaxima){
+            atributosMensaje.addFlashAttribute("mensaje"
+            ,"La edad minima debe ser menor a la edad maxima");
+            return "redirect:/estadisticas/";
+        }
+        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+            atributosMensaje.addFlashAttribute("mensaje"
+                    ,"No es posible usar una fecha mayor de inicio que la fecha fin");
+            return "redirect:/estadisticas/";
+        };
         int pacientesPorEdadYFecha = pacienteService.cantidadPacientesPorEdadYfechaAtencion(edadMinima, edadMaxima
                 , fechaInicio, fechaFin);
         model.addAttribute("pacientesPorEdadYFecha", pacientesPorEdadYFecha);
@@ -127,12 +146,17 @@ public class EstadisticaController {
     @GetMapping("/pacientemasconsultado")
     public String pacienteMasConsultaron(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+            @RequestParam("fechaFin") LocalDate fechaFin, Model model
+            , RedirectAttributes atributosMensaje) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        
+        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+            atributosMensaje.addFlashAttribute("mensaje"
+                    ,"No es posible usar una fecha mayor de inicio que la fecha fin");
+            return "redirect:/estadisticas/";
+        };
         Paciente pacienteMasConsultado = pacienteService.pacienteMasConsultado(fechaInicio, fechaFin);
         model.addAttribute("pacienteMasConsultado", pacienteMasConsultado);
         cargarDatosMedicos(model);
@@ -150,12 +174,17 @@ public class EstadisticaController {
     @GetMapping("/medicomasatendio")
     public String medicoMasAtendido(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+            @RequestParam("fechaFin") LocalDate fechaFin, Model model
+            , RedirectAttributes atributosMensaje) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        
+        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+            atributosMensaje.addFlashAttribute("mensaje"
+                    ,"No es posible usar una fecha mayor de inicio que la fecha fin");
+            return "redirect:/estadisticas/";
+        };
         Medico medicoMasAtendio = medicoService.medicoQueMasAtendio(fechaInicio, fechaFin);
         model.addAttribute("medicoMasAtendio", medicoMasAtendio);
         cargarDatosMedicos(model);
@@ -173,12 +202,18 @@ public class EstadisticaController {
     @GetMapping("/triagesrangofechas")
     public String triagesRangoFechasYColorCantidad(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+            @RequestParam("fechaFin") LocalDate fechaFin, Model model
+            , RedirectAttributes atributosMensaje) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        
+        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+            atributosMensaje.addFlashAttribute("mensaje"
+                    ,"No es posible usar una fecha mayor de inicio que la fecha fin");
+            return "redirect:/estadisticas/";
+        };
+
 
         List<Triage> triagesAUsar = triageService.findTriageEnRangoDeFechas(fechaInicio, fechaFin);
         int rojo = 0;
@@ -237,5 +272,16 @@ public class EstadisticaController {
     private void cargarDatosMedicos(Model model) {
         List<Medico> medicos = medicoService.listarMedicos();
         model.addAttribute("medicos", medicos);
+    }
+
+    /**
+     *
+     * @param fechaInicio fecha desde donde se busca
+     * @param fechaFin fecha hasta donde se busca
+     *
+     * @return retorna verdadero si la fecha inicio es mayor que fecha fin
+     */
+    private boolean errorFecha(LocalDate fechaInicio,LocalDate fechaFin){
+        return(fechaInicio.isAfter(fechaFin));
     }
 }
