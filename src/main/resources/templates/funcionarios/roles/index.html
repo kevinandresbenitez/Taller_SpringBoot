@@ -89,7 +89,6 @@
         <div th:each="rol : ${roles}" class="role-container">
             <strong>Nombre Del Rol</strong>
             <span th:text="${rol.getNombre()}"></span>
-            <a th:href="@{/funcionarios/roles/eliminar/{id}(id=${rol.getId()})}" class="delete-button">Eliminar Rol</a>
         </div>
     </div>
 </div>

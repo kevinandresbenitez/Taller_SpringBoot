@@ -94,16 +94,6 @@ public class EnfermeroController {
         return "redirect:/profesionalSalud/enfermeros/";          
     }
     
-    @GetMapping("/eliminar/{id}")
-    public String eliminarEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }
-        
-        this.enfermeroService.eliminarEnfermeroPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Eliminando enfermero adecuadamente");
-        return "redirect:/profesionalSalud/enfermeros/";          
-    }
+
     
 }

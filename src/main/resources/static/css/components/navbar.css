@@ -54,7 +54,7 @@
 #navbar .navbar__info__item .navbar__info__item__menu{
     position: absolute;
     top: 100%;
-    left: 100%;
+    left: calc(100% + 5px);
     width: 200px;
     background-color: #007bff;
 

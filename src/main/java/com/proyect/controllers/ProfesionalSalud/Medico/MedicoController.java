@@ -97,15 +97,4 @@ public class MedicoController {
         return "redirect:/profesionalSalud/medicos/";        
     }
     
-    @GetMapping("/eliminar/{id}")
-    public String eliminarMedico(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }
-        
-        this.medicoService.eliminarMedicoPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Eliminando medico adecuadamente");
-        return "redirect:/profesionalSalud/medicos/";          
-    }
 }
