@@ -142,17 +142,5 @@ public class RolController {
         // Una vez creado, redirijo y envío un mensaje de creación exitosa
         atributosMensaje.addFlashAttribute("mensaje", "Se creó el rol adecuadamente");
         return "redirect:/funcionarios/roles/";
-    }
-      
-    @GetMapping("/eliminar/{id}")
-    public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }
-        
-        this.rolServices.eliminarPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Se ah eliminado el rol correctamente");
-        return "redirect:/funcionarios/roles/";
-    }
+    }     
 }
