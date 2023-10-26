@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,11 @@
     <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
     <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
     <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -71,24 +73,19 @@
     
     
     <!--- Botones a mostrar hasta que implemente la sessiones -->
-    <div class="box">
-        <a href="estadisticas/">
-            <img th:src="@{fotos/estadistica.png}" alt="Estadísticas">
-            <p>Ir a Estadísticas</p>
-        </a>
-    </div>
+
     
     <div class="box">
         <a href="login/">
-            <img th:src="@{fotos/login.png}" alt="Login">
+            <img th:src="@{fotos/login.jpeg}" alt="Login">
             <p>Botón de Login Temporal</p>
         </a>
     </div>
     
     <div class="box">
         <a href="pacientes/atenciones/">
-            <img th:src="@{/fotos/box.png}" alt="Atenciones en Boxes">
-            <p>Ir a Atenciones en Boxes</p>
+            <img th:src="@{/fotos/atencion.jpeg}" alt="Atenciones en Boxes">
+            <p>Atenciones en Boxes</p>
         </a>
     </div>
 
@@ -99,29 +96,29 @@
         <th:block th:if="${sessionUser.isAdmin()}">
             <div class="box">
                 <a href="funcionarios/">
-                    <img th:src="@{fotos/funcionario.png}" alt="Funcionarios">
-                    <p>Ir a Funcionarios</p>
+                    <img th:src="@{fotos/funcionario.jpeg}" alt="Funcionarios">
+                    <p>Funcionarios</p>
                 </a>
             </div>
             
             <div class="box">
                 <a href="administradores/">
-                    <img th:src="@{fotos/admin.png}" alt="Administradores">
-                    <p>Ir a Administradores</p>
+                    <img th:src="@{fotos/admin.jpeg}" alt="Administradores">
+                    <p>Administradores</p>
                 </a>
             </div>
             
             <div class="box">
                 <a href="profesionalSalud/">
-                    <img th:src="@{fotos/profesional.png}" alt="Profesionales de la Salud">
-                    <p>Ir a Profesionales de la Salud</p>
+                    <img th:src="@{fotos/profSalud.jpeg}" alt="Profesionales de la Salud">
+                    <p>Profesionales de la Salud</p>
                 </a>
             </div>
             
             <div class="box">
                 <a href="boxes/">
-                    <img th:src="@{fotos/box.png}" alt="Boxes">
-                    <p>Ir a Boxes</p>
+                    <img th:src="@{fotos/boxes.jpeg}" alt="Boxes">
+                    <p>Boxes</p>
                 </a>
             </div>
             
@@ -131,14 +128,14 @@
         <th:block th:if="${sessionUser.hashRol('Administrativo')}">
             <div class="box">
                 <a href="pacientes/ingresos/verificarExistencia">
-                    <img th:src="@{fotos/ingreso.png}" alt="Ingreso de Paciente">
-                    <p>Agregar ingreso de paciente</p>
+                    <img th:src="@{fotos/registro.jpeg}" alt="Ingreso de Paciente">
+                    <p>Ingresar paciente</p>
                 </a>
             </div>
             
             <div class="box">
                 <a href="pacientes/">
-                    <img th:src="@{fotos/paciente.png}" alt="Detalles de Paciente">
+                    <img th:src="@{fotos/infopaciente.jpeg}" alt="Detalles de Paciente">
                     <p>Detalles de paciente</p>
                 </a>
             </div>
@@ -150,7 +147,18 @@
             <div class="box">
                 <a href="triages/">
                     <img th:src="@{fotos/triages.png}" alt="Triages">
-                    <p>Ir a Triages</p>
+                    <p>Triages</p>
+                </a>
+            </div>
+        </th:block>
+        
+        
+        <!-- Botones De Fuincionarios gestores -->
+        <th:block th:if="${sessionUser.hashRol('Gestor')}">
+            <div class="box">
+                <a href="estadisticas/">
+                    <img th:src="@{fotos/estadisticas.jpeg}" alt="Estadísticas">
+                    <p>Estadísticas</p>
                 </a>
             </div>
         </th:block>

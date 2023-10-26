@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de registro de paciente</title>
 
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -59,7 +62,7 @@
 </head>
 <body>
 <form th:action="@{/pacientes/crear}" method="post">
-    <h2>Formulario de Creación de Paciente</h2>
+    <h2>Registro de paciente</h2>
 
     <label for="nombre">Nombre:</label>
     <input type="text" id="nombre" name="nombre" required>
@@ -71,7 +74,7 @@
     <input type="text" id="domicilio" name="domicilio" required>
 
     <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-    <input type="Date" id="fechaNacimiento" name="fechaNacimiento" required>
+    <input type="Date" id="fechaNacimiento" name="fechaNacimiento" min="1900-01-01" required>
 
     <label for="estadoCivil">Estado Civil:</label>
     <input type="text" id="estadoCivil" name="estadoCivil" required>
@@ -87,6 +90,9 @@
 
     <button type="submit">Crear Paciente</button>
 </form>
+<script>
+    document.getElementById('fechaNacimiento').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+</script>
+
 </body>
 </html>
-

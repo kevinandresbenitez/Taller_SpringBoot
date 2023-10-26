@@ -10,9 +10,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <title>Formulario de Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+
     <style>
-    body {
-        font-family: Arial, sans-serif;
+        body {
+            font-family: 'Roboto', sans-serif;
         background-image: url('/fotos/frente_masvernat.jpg');
         background-size: cover;
         background-position: center;
@@ -73,44 +76,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 </style>
 </head>
 <body>
-<div class="login-container">
-    <h2>Formulario de Login</h2>
-    <div th:text="${mensaje}"></div>
+    <div th:insert="~{components/mensaje :: mensaje}"></div>
     
-    <form action="/login/iniciarSesion" method="post">
-        <input type="email" name="correo" placeholder="Correo electrónico">
-        <input type="password" name="contraseña" placeholder="Contraseña">
-        <input type="submit" name="enviar" value="Iniciar Sesión">
-    </form>
-    
-    <p>Temporal para testear</p>
-    <p>Admin: func1@gmail.com  Contraseña: 43524424</p>
-    <p>Funcionario Administrativo: correo@gmail.com contraseña: 65344234</p>
-    <p>Profesional de la salud: func2@gmail.com contraseña: 43524425</p>
-</div>
+    <div class="login-container">
+        <h2>Formulario de Login</h2>
+
+        <form action="/login/iniciarSesion" method="post">
+            <input type="email" name="correo" placeholder="Correo electrónico">
+            <input type="password" name="contraseña" placeholder="Contraseña">
+            <input type="submit" name="enviar" value="Iniciar Sesión">
+        </form>
+
+        <p>Temporal para testear</p>
+        <p>Admin: func1@gmail.com  Contraseña: 43524424</p>
+        <p>Funcionario Administrativo: correo@gmail.com contraseña: 65344234</p>
+        <p>Profesional de la salud: func2@gmail.com contraseña: 43524425</p>
+        <p>Funcionario con rol gestor correo@gmail.com contraseña: 34596423</p>
+    </div>
 </body>
 </html>
-<!--
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Formulario de login</div>
-        <div th:text="${mensaje}"></div>
-        
-        <form action="/login/iniciarSesion" method="post">
-            <input type="email" name="correo" placeholder="gmail">
-            <input type="text" name="contraseña" placeholder="contraseña">
-            <input type="submit" name="enviar">
-        </form>
-        
-        Temporal para testear
-        Admin : func1@gmail.com contraseña : 43524424 <br/>
-        Funcionario Administrativo: correo@gmail.com contraseña: 65344234
-        
-    </body>
-</html>
--->
