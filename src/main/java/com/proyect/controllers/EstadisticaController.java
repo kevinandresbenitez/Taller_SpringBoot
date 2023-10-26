@@ -4,6 +4,7 @@ import com.proyect.models.Paciente;
 import com.proyect.models.Triage;
 import com.proyect.models.TriageModificacion;
 import com.proyect.services.*;
+import com.proyect.session.SessionUsuario;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,7 +39,9 @@ public class EstadisticaController {
 
     @Autowired
     private TriageModificacionService triageModificacionService;
-
+    @Autowired
+    SessionUsuario sessionUser;
+    
     /**
      * Muestra la pagina de estadísticas con la lista de medicos
      * en el primer formulario.
@@ -48,6 +51,11 @@ public class EstadisticaController {
      */
     @GetMapping("/")
     public String mostrarAcciones(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         List<Medico> medicos = medicoService.listarMedicos();
         model.addAttribute("medicos", medicos);
         return "gestores/estadisticas";
@@ -67,6 +75,11 @@ public class EstadisticaController {
             @RequestParam("idMedico") Long idMedico,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         Optional<Medico> medico = medicoService.obtenerMedicoPorId(idMedico);
         int pacientesPorMedico = consultaService.cantidadPacientesAtendidosPorMedico(medico.get(), fechaInicio, fechaFin);
         model.addAttribute("pacientesPorMedico", pacientesPorMedico);
@@ -91,6 +104,11 @@ public class EstadisticaController {
             @RequestParam("edadMaxima") int edadMaxima,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         int pacientesPorEdadYFecha = pacienteService.cantidadPacientesPorEdadYfechaAtencion(edadMinima, edadMaxima
                 , fechaInicio, fechaFin);
         model.addAttribute("pacientesPorEdadYFecha", pacientesPorEdadYFecha);
@@ -110,6 +128,11 @@ public class EstadisticaController {
     public String pacienteMasConsultaron(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         Paciente pacienteMasConsultado = pacienteService.pacienteMasConsultado(fechaInicio, fechaFin);
         model.addAttribute("pacienteMasConsultado", pacienteMasConsultado);
         cargarDatosMedicos(model);
@@ -128,6 +151,11 @@ public class EstadisticaController {
     public String medicoMasAtendido(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         Medico medicoMasAtendio = medicoService.medicoQueMasAtendio(fechaInicio, fechaFin);
         model.addAttribute("medicoMasAtendio", medicoMasAtendio);
         cargarDatosMedicos(model);
@@ -146,6 +174,11 @@ public class EstadisticaController {
     public String triagesRangoFechasYColorCantidad(
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin, Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
 
         List<Triage> triagesAUsar = triageService.findTriageEnRangoDeFechas(fechaInicio, fechaFin);
         int rojo = 0;
@@ -185,6 +218,11 @@ public class EstadisticaController {
      */
     @GetMapping("/modificacionestriage")
     public String modificacionesTriage(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
+            return "redirect:/";
+        }
+        
         List<TriageModificacion> modificaciones = triageModificacionService.listarModificacionesDeTriage();
         cargarDatosMedicos(model);
         model.addAttribute("modificaciones", modificaciones);

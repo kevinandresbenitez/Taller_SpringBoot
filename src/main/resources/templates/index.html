@@ -73,12 +73,7 @@
     
     
     <!--- Botones a mostrar hasta que implemente la sessiones -->
-    <div class="box">
-        <a href="estadisticas/">
-            <img th:src="@{fotos/estadisticas.jpeg}" alt="Estadísticas">
-            <p>Estadísticas</p>
-        </a>
-    </div>
+
     
     <div class="box">
         <a href="login/">
@@ -153,6 +148,17 @@
                 <a href="triages/">
                     <img th:src="@{fotos/triages.png}" alt="Triages">
                     <p>Triages</p>
+                </a>
+            </div>
+        </th:block>
+        
+        
+        <!-- Botones De Fuincionarios gestores -->
+        <th:block th:if="${sessionUser.hashRol('Gestor')}">
+            <div class="box">
+                <a href="estadisticas/">
+                    <img th:src="@{fotos/estadisticas.jpeg}" alt="Estadísticas">
+                    <p>Estadísticas</p>
                 </a>
             </div>
         </th:block>
