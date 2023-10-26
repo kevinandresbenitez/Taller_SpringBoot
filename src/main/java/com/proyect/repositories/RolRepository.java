@@ -17,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Long> {
     public boolean existsByNombre(String nombre);
+
+    public List<Rol> findByFuncionariosId(long id);
 }

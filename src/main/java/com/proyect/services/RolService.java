@@ -24,8 +24,7 @@ import org.springframework.stereotype.Service;
 public class RolService{
     @Autowired
     private RolRepository rolRepository;
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
+
 
     
     public List<Rol> listarRoles(){
@@ -45,7 +44,7 @@ public class RolService{
     }
 
     public List<Rol> obtenerRolesDelFuncionario(long id){
-        return funcionarioRepository.findById(id).get().getRoles();
+        return this.rolRepository.findByFuncionariosId(id);
     }
 
     public boolean existsByNombre(String nombre) {

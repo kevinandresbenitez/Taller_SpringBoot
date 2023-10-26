@@ -115,7 +115,7 @@
                     <span class="value" id="color-${box.getPaciente().getId()}" th:text="${box.getPaciente().getTriages().get(box.getPaciente().getTriages().size()-1).getColor()}"></span>
 
                     <!-- Si estoy atendiendo -->
-                    <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                    <div th:if="${box.getMedico().getId() == sessionUser.getMedic().getId()}">
                         <div class="button-container">
                             <a class="button" th:href="@{/pacientes/consultas/{id}(id=${box.getPaciente().getId})}">Ir a ver la historia clínica del paciente</a>
                             <a class="button" th:href="@{/pacientes/atenciones/posponer/{id}/{id_paciente}(id=${box.getId()},id_paciente=${box.getPaciente().getId()})}">Posponer consulta</a>
@@ -128,7 +128,7 @@
                     <span class="label">No se está atendiendo un paciente</span>
 
                     <!-- Si estoy atendiendo -->
-                    <div th:if="${box.getMedico().getId() == medicoSession.getId()}">
+                    <div th:if="${box.getMedico().getId() == sessionUser.getMedic().getId()}">
                         <div class="button-container">
                             <a class="button" th:href="@{/pacientes/atenciones/trabajar/terminar/{id}(id=${box.getId})}">Dejar de trabajar en</a>
                             <a class="button" th:href="@{/pacientes/atenciones/asignar/{id}(id=${box.getId})}">Traer a un paciente</a>

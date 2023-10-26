@@ -65,4 +65,18 @@ public class MedicoService {
     public Optional<Medico> obtenerMedicoPorIdProfSalud(Long idProfSalud){
         return this.medicoRepository.findByProfesionalSaludId(idProfSalud);
     }
+
+    public boolean tieneEspecialidades(Long id_medico) {
+        Optional<Medico> medico = this.obtenerMedicoPorId(id_medico);
+        
+        if(medico.isEmpty()){
+            return false;
+        }
+        // Si tiene titulacion(Relacionada directamente con especialidad) es por que tiene especialidad
+        if(medico.get().getTitulos().size() > 0 ){
+            return true;
+        }
+        
+        return false;
+    }
 }

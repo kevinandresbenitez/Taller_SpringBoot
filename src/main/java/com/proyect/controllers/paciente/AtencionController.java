@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 
 import com.proyect.services.BoxService;
 import com.proyect.services.MedicoService;
+import com.proyect.session.SessionUsuario;
+import java.util.Objects;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -37,23 +39,30 @@ public class AtencionController {
     @Autowired
     MedicoService medicoService;
 
+    @Autowired
+    SessionUsuario sessionUser;
 
 
     @GetMapping("/")
     public String list(Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         List<Box> boxes = boxService.listarBoxes();
         
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
-
         model.addAttribute("boxes", boxes);
-        model.addAttribute("medicoSession", medico);
         return "pacientes/atenciones/index";
     }
     
     @GetMapping("/trabajar/empezar/{id}")
     public String work(@PathVariable("id") Long id,RedirectAttributes atributos) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         Optional<Box> box = boxService.obtenerBoxPorId(id);
         
         //Si el box no existe o si esta siendo ocupado por un medico
@@ -62,11 +71,8 @@ public class AtencionController {
             return "redirect:/pacientes/atenciones/";
         }
 
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
         // Asignamos el medico al box
-        box.get().setMedico(medico);
+        box.get().setMedico(sessionUser.getMedic());
         boxService.guardarBox(box.get());
 
         atributos.addFlashAttribute("mensaje","Ahora estas trabajando en el box");
@@ -75,6 +81,11 @@ public class AtencionController {
     
     @GetMapping("/trabajar/terminar/{id}")
     public String workEnd(@PathVariable("id") Long id,RedirectAttributes atributos) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         Optional<Box> box = boxService.obtenerBoxPorId(id);
         
         //Si el box no existe o si no hay nadie trabajando en el 
@@ -83,11 +94,7 @@ public class AtencionController {
             return "redirect:/pacientes/atenciones/";
         }
 
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
-        
-        if(medico.getId() == box.get().getMedico().getId()){
+        if(Objects.equals(sessionUser.getMedic().getId(), box.get().getMedico().getId())){
             // Dejar vacio el box
             box.get().setMedico(null);
             boxService.guardarBox(box.get());
@@ -103,6 +110,11 @@ public class AtencionController {
     
     @GetMapping("/asignar/{id}")
     public String listaDePacientesAAsignar(@PathVariable("id") Long id,RedirectAttributes atributos,Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         Optional<Box> box = boxService.obtenerBoxPorId(id);
         
         //Si el box no existe o si no hay nadie trabajando en el 
@@ -116,11 +128,8 @@ public class AtencionController {
             return "redirect:/pacientes/atenciones/";
         }
 
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
-        
         // Si el medico que va a asignar un paciente es el que esta trabajando alli
-        if(medico.getId() != box.get().getMedico().getId()){
+        if(!Objects.equals(sessionUser.getMedic().getId(), box.get().getMedico().getId())){
             atributos.addFlashAttribute("mensaje","No eres el medico que trabaja en el box este");
             return "redirect:/pacientes/atenciones/";
         }
@@ -139,6 +148,11 @@ public class AtencionController {
     
     @GetMapping("/asignar/{id}/{id_paciente}")
     public String procesarAsignacionDePaciente(@PathVariable("id") Long id_box,@PathVariable("id_paciente") Long id_paciente,RedirectAttributes atributos,Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         Optional<Box> box = boxService.obtenerBoxPorId(id_box);
         Paciente paciente = pacienteService.obtenerPacienteById(id_paciente);
         
@@ -153,13 +167,9 @@ public class AtencionController {
             atributos.addFlashAttribute("mensaje","ya hay un paciente en este box o el paciente ingresado no existe");
             return "redirect:/pacientes/atenciones/";
         }
-
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
         
         // Si el medico que va a asignar un paciente es el que esta trabajando alli
-        if(medico.getId() != box.get().getMedico().getId()){
+        if(sessionUser.getMedic().getId() != box.get().getMedico().getId()){
             atributos.addFlashAttribute("mensaje","No eres el medico que trabaja en el box este");
             return "redirect:/pacientes/atenciones/";
         }
@@ -173,6 +183,11 @@ public class AtencionController {
     
     @GetMapping("/posponer/{id}/{id_paciente}")
     public String posponerConsulta(@PathVariable("id_paciente") Long id_paciente,@PathVariable("id") Long id,RedirectAttributes atributos,Model model) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }
+        
         Optional<Box> box = boxService.obtenerBoxPorId(id);
         
         //Si el box no existe o si no hay nadie trabajando en el 
@@ -186,12 +201,9 @@ public class AtencionController {
             return "redirect:/pacientes/atenciones/";
         }
 
-        //Hasta que se implemente la session un medico cualquiera es el que esta atendiendo
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
         
         // Si el medico que va a posponer la consulta de un paciente es el que esta trabajando alli
-        if(medico.getId() != box.get().getMedico().getId()){
+        if(!Objects.equals(sessionUser.getMedic().getId(), box.get().getMedico().getId())){
             atributos.addFlashAttribute("mensaje","No eres el medico que trabaja en el box este");
             return "redirect:/pacientes/atenciones/";
         }
