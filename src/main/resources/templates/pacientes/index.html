@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE, edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Paciente</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
 
     <style>
-            body {
-                font-family: 'Arial', sans-serif;
+        body {
+            font-family: 'Roboto', sans-serif;
                 background-color: #f8f9fa;
                 margin: 0;
                 padding: 0;
@@ -114,6 +119,8 @@
         </style>
 </head>
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:insert="~{components/mensaje :: mensaje}"></div>
 <div class="container mt-5">
     <h2 class="mb-4">Detalles del Paciente</h2>
 
@@ -139,12 +146,6 @@
             <!-- Agrega aquí otras filas para mostrar los datos del paciente -->
         </table>
     </div>
-
-    <div th:if="${mensaje}" style="color: red;">
-        <p th:text="${mensaje}"></p>
-    </div>
-
-
     <table>
         <!-- Se muestra el paciente si se encuentra -->
         <tr th:if="${paciente != null}">
@@ -206,6 +207,7 @@
 
     </table>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>
 
