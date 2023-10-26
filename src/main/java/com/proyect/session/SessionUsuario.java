@@ -8,6 +8,7 @@ import com.proyect.models.Funcionario;
 import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
 import com.proyect.models.Rol;
+import com.proyect.models.Sector;
 import com.proyect.repositories.RolRepository;
 import com.proyect.services.AdministradorService;
 import com.proyect.services.EnfermeroService;
@@ -58,7 +59,7 @@ public class SessionUsuario{
     public void startSession(Funcionario funcionario){
         this.funcionario = funcionario;
         
-        // Seteo las relaciones correspondientes
+        // Seteo las relaciones correspondientes(Por el lazy load de Spring boot)
         if(this.isProfSalud()){
             this.profSalud = this.profesionalSaludService.obtenerProfSaludPorFuncionarioId(this.funcionario.getId()).get();
         }
@@ -91,18 +92,28 @@ public class SessionUsuario{
         return this.existSession() && this.isProfSalud() && this.medicoService.esProfSaludMedico(this.profSalud.getId());
     }    
     
+    public boolean isMedicalSpecialist(){
+       return this.isMedic() && this.medicoService.tieneEspecialidades(this.medic.getId());
+    }
+    
+    
     public boolean isNurse(){ 
-    //Es enfermero en ingles (me arrepiendo de escribir en ingles XD) 
+        //Es enfermero en ingles (me arrepiendo de escribir en ingles XD) 
         return  this.existSession() && this.isProfSalud() && this.enfermeroService.esProfSaludEnfermero(this.profSalud.getId());
     }
     // Metodos de clases
     
     // Metodos de funcionario
-    public boolean workIn(String sector){
-        /*
-        return funcionario.getSectores().contains(sector);
-        */
-        return true;
+    public boolean workIn(String sectorVerificar){
+        List<Sector> sectores = sectorService.obtenerSectoresDelFuncionario(this.funcionario.getId());
+
+        for (Sector sector : sectores) {
+            if (sector.getNombre().equals(sectorVerificar)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     public boolean hashRol(String rolVerificar){

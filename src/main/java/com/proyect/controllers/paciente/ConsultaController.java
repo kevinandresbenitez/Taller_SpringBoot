@@ -2,6 +2,7 @@ package com.proyect.controllers.paciente;
 
 import com.proyect.models.*;
 import com.proyect.services.*;
+import com.proyect.session.SessionUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,17 @@ public class ConsultaController {
 
     @Autowired
     BoxService boxService;
-
+    
+    @Autowired
+    SessionUsuario sessionUser;
+    
     @GetMapping("/{id}")
     public String listaConsultas(Model model, @PathVariable("id") Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !(sessionUser.isMedic() || sessionUser.hashRol("Administrativo"))){
+            return "redirect:/";
+        }
+        
         Optional<Paciente> paciente = pacienteService.findById(id);
         if (!paciente.isPresent()) {
             return "redirect:/pacientes/";
@@ -40,6 +49,10 @@ public class ConsultaController {
     }
     @GetMapping("/crear/{id}")
     public String crearConsultas(Model model,@PathVariable("id") Long id){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }        
 
         Paciente paciente = pacienteService.obtenerPacienteById(id);
 
@@ -55,6 +68,11 @@ public class ConsultaController {
                                  @RequestParam("tipoAtencion") String tipoAtencion,
                                  @RequestParam("diagnosticosClinicos") String diagnosticosClinicos,
                                  @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }        
+        
         Paciente paciente = pacienteService.obtenerPacienteById(id);
         Box box = boxService.findByPacienteId(paciente.getId());
         Consulta consulta = new Consulta();
@@ -85,6 +103,11 @@ public class ConsultaController {
 
     @GetMapping("/agregarresultadosestudios/{id}")
     public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id,@ModelAttribute("PermitirCreacionResEst") String PermitirCreacionResEst,RedirectAttributes redirectAttributes){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }        
+        
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         model.addAttribute("consulta",consulta);
         
@@ -102,6 +125,11 @@ public class ConsultaController {
     public String formularioResultadosEstudios(@RequestParam(value = "tipoInforme[]", required = false) List<String> tiposInformes,
                                                @RequestParam(value = "informeEstudio[]", required = false) List<String> informesEstudios,
                                                @PathVariable("id")Long id){
+        // Verificacion de session
+        if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
+            return "redirect:/";
+        }        
+        
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         
         // Si no existe la consulta
@@ -128,6 +156,12 @@ public class ConsultaController {
     // Resultados de esutudios que estan en la consulta
     @GetMapping("/resultadosestudios/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+        // Verificacion de session
+        if(!sessionUser.existSession() || !(sessionUser.isMedic() || sessionUser.hashRol("Administrativo"))){
+            return "redirect:/";
+        }
+        
+        
         Consulta consulta = consultaService.obtenerConsultaPorId(id);
         if (consulta == null) {
             return "redirect:/";

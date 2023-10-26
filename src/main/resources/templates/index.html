@@ -70,100 +70,88 @@
 <div th:insert="~{components/mensaje :: mensaje}"></div>
 
 <div class="container">
-    
-    
-    <!--- Botones a mostrar hasta que implemente la sessiones -->
+            
+    <!-- Botones Del admin -->
+    <th:block th:if="${sessionUser.isAdmin()}">
+        <div class="box">
+            <a href="funcionarios/">
+                <img th:src="@{fotos/funcionario.jpeg}" alt="Funcionarios">
+                <p>Funcionarios</p>
+            </a>
+        </div>
 
-    
-    <div class="box">
-        <a href="login/">
-            <img th:src="@{fotos/login.jpeg}" alt="Login">
-            <p>Botón de Login Temporal</p>
-        </a>
-    </div>
-    
-    <div class="box">
-        <a href="pacientes/atenciones/">
-            <img th:src="@{/fotos/atencion.jpeg}" alt="Atenciones en Boxes">
-            <p>Atenciones en Boxes</p>
-        </a>
-    </div>
+        <div class="box">
+            <a href="administradores/">
+                <img th:src="@{fotos/admin.jpeg}" alt="Administradores">
+                <p>Administradores</p>
+            </a>
+        </div>
 
-    <!-- Botones adicionales para usuarios autenticados -->
-    <th:block th:if="${sessionUser.existSession()}" class="box">
-        
-        <!-- Botones Del admin -->
-        <th:block th:if="${sessionUser.isAdmin()}">
-            <div class="box">
-                <a href="funcionarios/">
-                    <img th:src="@{fotos/funcionario.jpeg}" alt="Funcionarios">
-                    <p>Funcionarios</p>
-                </a>
-            </div>
-            
-            <div class="box">
-                <a href="administradores/">
-                    <img th:src="@{fotos/admin.jpeg}" alt="Administradores">
-                    <p>Administradores</p>
-                </a>
-            </div>
-            
-            <div class="box">
-                <a href="profesionalSalud/">
-                    <img th:src="@{fotos/profSalud.jpeg}" alt="Profesionales de la Salud">
-                    <p>Profesionales de la Salud</p>
-                </a>
-            </div>
-            
-            <div class="box">
-                <a href="boxes/">
-                    <img th:src="@{fotos/boxes.jpeg}" alt="Boxes">
-                    <p>Boxes</p>
-                </a>
-            </div>
-            
-        </th:block>
+        <div class="box">
+            <a href="profesionalSalud/">
+                <img th:src="@{fotos/profSalud.jpeg}" alt="Profesionales de la Salud">
+                <p>Profesionales de la Salud</p>
+            </a>
+        </div>
 
-        <!-- Botones De funcionarios con rol administrativo -->
-        <th:block th:if="${sessionUser.hashRol('Administrativo')}">
-            <div class="box">
-                <a href="pacientes/ingresos/verificarExistencia">
-                    <img th:src="@{fotos/registro.jpeg}" alt="Ingreso de Paciente">
-                    <p>Ingresar paciente</p>
-                </a>
-            </div>
-            
-            <div class="box">
-                <a href="pacientes/">
-                    <img th:src="@{fotos/infopaciente.jpeg}" alt="Detalles de Paciente">
-                    <p>Detalles de paciente</p>
-                </a>
-            </div>
-            
-        </th:block>
-        
-        <!-- Botones De Profesionales de la salud-->
-        <th:block th:if="${sessionUser.isProfSalud()}">
-            <div class="box">
-                <a href="triages/">
-                    <img th:src="@{fotos/triages.png}" alt="Triages">
-                    <p>Triages</p>
-                </a>
-            </div>
-        </th:block>
-        
-        
-        <!-- Botones De Fuincionarios gestores -->
-        <th:block th:if="${sessionUser.hashRol('Gestor')}">
-            <div class="box">
-                <a href="estadisticas/">
-                    <img th:src="@{fotos/estadisticas.jpeg}" alt="Estadísticas">
-                    <p>Estadísticas</p>
-                </a>
-            </div>
-        </th:block>
-        
+        <div class="box">
+            <a href="boxes/">
+                <img th:src="@{fotos/boxes.jpeg}" alt="Boxes">
+                <p>Boxes</p>
+            </a>
+        </div>
+
     </th:block>
+
+    <!-- Botones De funcionarios con rol administrativo -->
+    <th:block th:if="${sessionUser.hashRol('Administrativo')}">
+        <div class="box">
+            <a href="pacientes/ingresos/verificarExistencia">
+                <img th:src="@{fotos/registro.jpeg}" alt="Ingreso de Paciente">
+                <p>Ingresar paciente</p>
+            </a>
+        </div>
+
+        <div class="box">
+            <a href="pacientes/">
+                <img th:src="@{fotos/infopaciente.jpeg}" alt="Detalles de Paciente">
+                <p>Detalles de paciente</p>
+            </a>
+        </div>
+
+    </th:block>
+
+    <!-- Botones De Profesionales de la salud-->
+    <th:block th:if="${sessionUser.isProfSalud()}">
+        <div class="box">
+            <a href="triages/">
+                <img th:src="@{fotos/triages.png}" alt="Triages">
+                <p>Triages</p>
+            </a>
+        </div>
+    </th:block>
+
+
+    <!-- Botones De Fuincionarios gestores -->
+    <th:block th:if="${sessionUser.hashRol('Gestor')}">
+        <div class="box">
+            <a href="estadisticas/">
+                <img th:src="@{fotos/estadisticas.jpeg}" alt="Estadísticas">
+                <p>Estadísticas</p>
+            </a>
+        </div>
+    </th:block>
+
+    <!-- Botones Medico especialista -->        
+    <th:block th:if="${sessionUser.isMedicalSpecialist()}">
+        <div class="box">
+            <a href="pacientes/atenciones/">
+                <img th:src="@{/fotos/atencion.jpeg}" alt="Atenciones en Boxes">
+                <p>Atenciones en Boxes</p>
+            </a>
+        </div>  
+    </th:block>
+ 
 </div>
 
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>

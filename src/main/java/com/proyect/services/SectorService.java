@@ -30,4 +30,8 @@ public class SectorService {
         this.sectorRepository.deleteById(id);
     }
 
+    public List<Sector> obtenerSectoresDelFuncionario(Long id) {
+         return sectorRepository.findByFuncionariosId(id);
+    }
+
 }

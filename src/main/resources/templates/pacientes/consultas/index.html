@@ -86,7 +86,10 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Consultas para el Paciente: <span th:text="${paciente.nombre}"></span></h2>
-    <a th:href="@{/pacientes/consultas/crear/{id}(id=${paciente.getId()})}" class="button">Agregar consulta al paciente : <span th:text="${paciente.nombre}"></span></a>
+    <th:block th:if="${sessionUser.isMedicalSpecialist()}">
+        <a th:href="@{/pacientes/consultas/crear/{id}(id=${paciente.getId()})}" class="button">Agregar consulta al paciente : <span th:text="${paciente.nombre}"></span></a>        
+    </th:block>
+    
 
     <table class="table">
         <thead>
