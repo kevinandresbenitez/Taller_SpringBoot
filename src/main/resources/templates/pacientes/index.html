@@ -124,7 +124,7 @@
     <div class="search-container">
         <form th:action="@{/pacientes/buscar}" method="get">
             <label for="dni" style="color: #007bff; font-size: 20px;">Buscar por DNI:</label>
-            <input type="text" id="dni" name="dni" placeholder="Ingrese el DNI" maxlength="8" style="font-size: 18px;">
+            <input type="text" id="dni" name="dni" placeholder="Ingrese el DNI" maxlength="8" style="font-size: 18px;" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
             <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 16px; border-radius: 0;">Buscar</button>
         </form>
     </div>
