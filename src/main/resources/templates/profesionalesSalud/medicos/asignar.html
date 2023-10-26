@@ -1,40 +1,133 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Asignando profesionales de la salud como medico</div>
-        
-        <a href="/profesionalSalud/medicos/">Volver</a>
-        
-        <div>
-            
-            <h2>Profesionales de la salud</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="profesionalSalud : ${profesionalesSalud}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del Profesional de la salud</strong><br>
-                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
-                <strong>Nro Matricula del profesional de la salud</strong><br>
-                <span th:text="${profesionalSalud.getNroMatricula()}"></span><br>
-                <strong>Nombre funcionario</strong><br>
-                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span><br>
-                <strong>ID del profesional de la salud</strong><br>
-                <span th:text="${profesionalSalud.getId()}"></span><br>
-                <strong>ID del funcionario</strong><br>
-                <span th:text="${profesionalSalud.getFuncionario.getId()}"></span><br>
-                
-                <a th:href="@{/profesionalSalud/medicos/asignar/{id}(id=${profesionalSalud.getId()})}">Asignar como medico</a>
-            </div>
-  
-        </div>  
+<html lang="es">
 
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Profesionales de la Salud como Médicos</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0cm auto 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        a {
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .profesionales-salud {
+            text-align: center;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        .profesional-salud {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .detalle-profesional {
+            margin-bottom: 15px;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        a.asignar-btn {
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        a.asignar-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:insert="~{components/mensaje :: mensaje}"></div>
+<body>
+<div class="container">
+    <h1>Asignar profesionales de la salud como médicos</h1>
+    <a href="/profesionalSalud/medicos/">Volver</a>
+    <div class="profesionales-salud">
+        <h2>Profesionales de la Salud</h2>
+        <p th:text="${mensaje}"></p>
+        <div th:each="profesionalSalud : ${profesionalesSalud}" class="profesional-salud">
+            <div class="detalle-profesional">
+                <strong>Nombre del Profesional de la Salud:</strong>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span>
+            </div>
+            <div class="detalle-profesional">
+                <strong>Nro Matrícula del Profesional de la Salud:</strong>
+                <span th:text="${profesionalSalud.getNroMatricula()}"></span>
+            </div>
+            <div class="detalle-profesional">
+                <strong>Nombre del Funcionario:</strong>
+                <span th:text="${profesionalSalud.getFuncionario.getNombre()}"></span>
+            </div>
+            <div class="detalle-profesional">
+                <strong>ID del Profesional de la Salud:</strong>
+                <span th:text="${profesionalSalud.getId()}"></span>
+            </div>
+            <div class="detalle-profesional">
+                <strong>ID del Funcionario:</strong>
+                <span th:text="${profesionalSalud.getFuncionario.getId()}"></span>
+            </div>
+            <a th:href="@{/profesionalSalud/medicos/asignar/{id}(id=${profesionalSalud.getId()})}"
+               class="asignar-btn">Asignar como Médico</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
+</body>
+
 </html>

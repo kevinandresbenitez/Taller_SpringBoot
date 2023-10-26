@@ -118,7 +118,114 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         }
     </style>
 </head>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Profesionales de la Salud</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}" />
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .header a.btn {
+            margin: 5px;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 10px;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .header h1 {
+            color: #007BFF;
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        .funcionario {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Ajusta el ancho de la tabla según sea necesario */
+            box-sizing: border-box;
+        }
+
+        .funcionario-details {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .funcionario-details th,
+        .funcionario-details td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        .funcionario-details th {
+            background-color: #007BFF;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .funcionario-details td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="header">
     <h1>Profesionales de la Salud</h1>
     <a class="btn" href="/">Volver</a>
@@ -153,5 +260,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </tr>
     </table>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
+
+</html>
 </html>

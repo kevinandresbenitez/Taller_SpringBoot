@@ -1,86 +1,104 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html lang="es">
+
 <head>
-    <title>Crear Especialidad</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/FUNCIONARIOTABLA.CSS"> <!-- Enlaza tu hoja de estilos personalizada -->
+    <title>Agregar Especialidad</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}" />
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
     <style>
-        /* Estilos específicos para esta página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
         .header {
-            background-color: #2c6eb4;
-            color: #fff;
-            padding: 10px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
             text-align: center;
         }
 
-        .header a.btn {
-            margin: 5px;
+        .header h1 {
+            color: #007BFF;
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #007BFF;
             color: #fff;
             text-decoration: none;
-            padding: 5px 10px;
-            background-color: #13253b;
-            border: 1px solid #0056b3;
-            border-radius: 4px;
-            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            display: inline-block;
         }
 
-        .header a.btn:hover {
-            background-color: #1f4b7a;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        ul {
-            list-style: none;
+        .btn:hover {
+            background-color: #0056b3;
         }
 
         .crear-especialidad {
-            border: 1px solid #ccc;
-            margin: 10px;
-            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Ajusta el ancho del formulario según sea necesario */
+            box-sizing: border-box;
         }
 
-        .crear-especialidad-details {
-            width: 80%;
-            margin: 0 auto;
+        form {
+            text-align: center;
         }
 
-        .crear-especialidad-details table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .crear-especialidad-details th, .crear-especialidad-details td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .crear-especialidad-details th {
-            background-color: #1f4b7a;
-            color: #fff;
+        label {
+            display: block;
+            margin: 10px 0;
             font-weight: bold;
         }
 
-        .crear-especialidad-details th:first-child,
-        .crear-especialidad-details td:first-child {
-            width: 20%;
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            margin: 5px;
         }
 
-        .crear-especialidad-details td ul {
-            margin: 0;
-            padding: 0;
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="header">
     <h1>Crear Especialidad</h1>
     <a class="btn" href="/profesionalSalud/medicos/especialidades/">Volver</a>
@@ -93,7 +111,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <input type="submit" value="Enviar">
     </form>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
+
 </html>
 <!--
 <html>
