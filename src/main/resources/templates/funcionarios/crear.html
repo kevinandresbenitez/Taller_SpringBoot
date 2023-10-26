@@ -4,23 +4,27 @@
     <title>Formulario Alta Funcionarios</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
    
     <style>
-       
+        .container{
+            margin-top: 20px;
+        }       
   .formulario-header {
     display: flex;
-    align-items: center;
-    background-color: #007BFF;
+    align-items: center;    
     color: #fff;
     padding: 10px;
     text-align: center;
 }
 
 .formulario-header a.btn {
-    margin-right: 10px; 
-    color: #fff;
+    margin-right: 10px;     
+    color:#007bff;
     text-decoration: none;
     font-size: 20px; 
     padding: 10px;
@@ -52,8 +56,7 @@
 
    
 .formulario-header {
-    background-color: #007BFF;
-    color: #fff;
+    color: #007bff;
     padding: 10px;
     text-align: center;
 }
@@ -62,10 +65,14 @@
     margin-left: 0;
     color: #fff;
     text-decoration: none;
-    background-color: #1e364e;
+    background-color: #007bff;
     border: 1px solid #a6b6c7;
-    border-radius: 90px;
+    
 }
+.formulario-header a.btn:hover {
+    background-color: #0056b3;
+}
+
 
 .formulario {
     width: 50%;
@@ -103,9 +110,15 @@
     </style>
 </head>
 <body>
+    <div th:insert="~{components/navbar :: navbar}"></div>
+    <div th:insert="~{components/mensaje :: mensaje}"></div>
+
+    <div class="container">
+
     <div class="formulario-header">
         <a class="btn" href="/funcionarios/">
             <i class="fas fa-arrow-left"></i>
+            Volver
         </a>
         <h1>Formulario Alta Funcionarios</h1>
     </div>
@@ -161,53 +174,8 @@
 
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+        
+    </div>        
+    <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<!--<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Formulario para crear funcionarios</div>
-        <a href="/funcionarios/">Volver</a>
-        <form action="/funcionarios/crear" method="post">
-            
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"><br>
-            
-            <label for="dni">Dni:</label>
-            <input type="text" id="dni" name="dni"><br>
-            
-            <label for="domicilio">Domicilio</label>
-            <input type="text" id="dni" name="domicilio"><br>
-            
-            <label for="fechaNacimiento">Fecha Nacimiento</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento"><br>
-            
-            <label for="estadoCivil">Estado Civil</label>
-            <input type="text" id="estadoCivil" name="estadoCivil"><br>
-            
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email"><br>
-            
-            <label for="telefonoFijo">Telefono fijo</label>
-            <input type="text" id="telefonoFijo" name="telefonoFijo"><br>
-            
-            <label for="telefonoCelular">Telefono Celular</label>
-            <input type="text" id="telefonoCelular" name="telefonoCelular" ><br>
-            
-            <input type="submit" value="Enviar">
-        </form>
-
-    </body>
-</html>
--->

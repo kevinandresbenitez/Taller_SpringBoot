@@ -64,6 +64,12 @@ public class FuncionarioController {
         if(!sessionUser.existSession() || !sessionUser.isAdmin()){
             return "redirect:/";
         }
+        Optional<Funcionario> funcionarioPrevio = this.funcionarioServices.obtenerFuncionarioPorDni(funcionario.getDni());
+        if(funcionarioPrevio.isPresent()){
+            atributosMensaje.addFlashAttribute("mensaje","No se puede crear el funcionario por que ya existe");
+            return "redirect:/funcionarios/crear";
+        }
+        
         
         funcionario.setContraseña(Integer.toString(funcionario.getDni()));
         this.funcionarioServices.crearFuncionario(funcionario);
@@ -73,17 +79,6 @@ public class FuncionarioController {
         return "redirect:/funcionarios/";
     }    
         
-    @GetMapping("/eliminar/{id}")
-    public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }
-        
-        this.funcionarioServices.eliminarFuncionarioPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Eliminando funcionario adecuadamente");
-        return "redirect:/funcionarios/";
-    }
     
     @GetMapping("/modificar")
     public String modifyForm(){

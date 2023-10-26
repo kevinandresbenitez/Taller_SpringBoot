@@ -48,4 +48,9 @@ public class FuncionarioService{
     public Funcionario buscarFuncionarioPorCorreoYContraseña(String correo, String contraseña){
         return this.funcionarioRepository.buscarFuncionarioPorCorreoYContraseña(correo,contraseña);    
     }
+
+    public Optional<Funcionario> obtenerFuncionarioPorDni(int dni) {
+        return this.funcionarioRepository.findByDni(dni);
+    }
+    
 }

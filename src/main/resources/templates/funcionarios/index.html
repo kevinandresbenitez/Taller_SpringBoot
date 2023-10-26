@@ -141,6 +141,10 @@ ul{
                 <td th:text="${funcionario.getDomicilio()}"></td>
             </tr>
             <tr>
+                <th>Correo</th>
+                <td th:text="${funcionario.getEmail()}"></td>
+            </tr>            
+            <tr>
                 <th>ROL</th>
                 <td>
                     <ul>
@@ -160,7 +164,6 @@ ul{
         <div class="funcionario-actions">
             <a th:href="@{/funcionarios/roles/asignar/{id}(id=${funcionario.getId()})}" class="btn">Roles</a>
             <a th:href="@{/funcionarios/sectores/asignar/{id}(id=${funcionario.getId()})}" class="btn">Sectores</a>
-            <a th:href="@{/funcionarios/eliminar/{id}(id=${funcionario.getId()})}" class="btn btn-danger">Eliminar</a>
         </div>
      </div>
     

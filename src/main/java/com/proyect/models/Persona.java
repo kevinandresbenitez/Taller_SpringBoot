@@ -34,7 +34,7 @@ public abstract class Persona{
     @Column(name = "dni")
     private int dni;
     @Column(name = "telefono_fijo")
-    private int telefonoFijo;
+    private long telefonoFijo;
     @Column(name = "telefono_celular")
-    private int telefonoCelular;
+    private long telefonoCelular;
 }
