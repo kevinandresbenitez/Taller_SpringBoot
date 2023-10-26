@@ -150,46 +150,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <td th:text="${enfermero.getProfesionalSalud().getFuncionario.getId()}"></td>
         </tr>
     </table>
-    <div class="enfermero-actions">
-        <a th:href="@{/profesionalSalud/enfermeros/eliminar/{id}(id=${enfermero.getId()})}" class="btn btn-danger">Eliminar Enfermero</a>
-    </div>
 </div>
 </body>
 </html>
-
-<!--<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Pagina Principal de Enfermeros</div>
-        
-        <a href="/profesionalSalud/">Volver</a>
-        <a href="/profesionalSalud/enfermeros/asignar/">Asignar Profesional de la salud como enfermero</a>
-        <div>
-            
-            <h2>Enfermeros</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="enfermero : ${enfermeros}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del Profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
-                <strong>Nro Matricula del profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getNroMatricula()}"></span><br>
-                <strong>Nombre funcionario</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
-                <strong>ID del profesional de la salud</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getId()}"></span><br>
-                <strong>ID del funcionario</strong><br>
-                <span th:text="${enfermero.getProfesionalSalud().getFuncionario.getId()}"></span><br>
-                
-                <a th:href="@{/profesionalSalud/enfermeros/eliminar/{id}(id=${enfermero.getId()})}">Eliminar Enfermero</a>
-            </div>
-  
-        </div>  
-
-    </body>
-</html>
--->
