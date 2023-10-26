@@ -1,29 +1,81 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Asignar un funcionario como administrador</div>
-        
-        <a href="/administradores/">Volver</a>
-        <div>
-            
-            <h2>Funcionarios</h2>
-            <div th:each="funcionario : ${funcionarios}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del funcionario:</strong><br>
-                <span th:text="${funcionario.getNombre()}"></span><br>               
-                <a th:href="@{/administradores/asignarFuncionario/{id}(id=${funcionario.getId()})}">Asignar como administrador</a>
-            </div>
-  
-        </div>  
+<html lang="es">
 
-    </body>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+
+        strong {
+            color: #dc3545;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Asignar un funcionario como administrador</h1>
+
+    <a href="/administradores/">Volver</a>
+
+    <div>
+        <h2>Funcionarios</h2>
+
+        <div th:each="funcionario : ${funcionarios}">
+
+            <strong>Nombre Del funcionario:</strong><br>
+            <span th:text="${funcionario.getNombre()}"></span><br>
+            <a th:href="@{/administradores/asignarFuncionario/{id}(id=${funcionario.getId()})}">Asignar como administrador</a>
+        </div>
+    </div>
+</div>
+</body>
+
 </html>
+

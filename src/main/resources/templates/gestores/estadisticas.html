@@ -265,5 +265,21 @@
         </table>
     </div>
 </div>
+<script>
+    // Obtén todos los elementos de fecha en el formulario
+    var fechas = document.querySelectorAll('input[type="date"]');
+
+    // Itera sobre los elementos y configura las propiedades min y max
+    fechas.forEach(function (fecha) {
+        // Establece la fecha mínima como el 1 de enero de 1900
+        fecha.setAttribute('min', '1900-01-01');
+
+        // Obtén la fecha actual en formato ISO
+        var fechaActual = new Date().toISOString().split("T")[0];
+
+        // Establece la fecha máxima como la fecha actual
+        fecha.setAttribute('max', fechaActual);
+    });
+</script>
 </body>
 </html>
