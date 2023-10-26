@@ -53,5 +53,8 @@ public class ProfesionalSaludService{
         return this.profesionalRepository.findByFuncionarioId(idFuncionario);
     }
 
-
+    public Optional<ProfesionalSalud> findByNroMatricula(Long nroMatricula) {
+        return this.profesionalRepository.findByNroMatricula(nroMatricula);
     }
+
+}

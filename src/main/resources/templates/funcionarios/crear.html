@@ -42,6 +42,7 @@
     margin: 0;
     flex-grow: 1; 
     text-align: center;
+    width: 100%;
 }
 
 
@@ -60,6 +61,7 @@
     border-radius: 4px;
     text-align: center;
     font-size: 16px;
+    cursor: pointer;
 }
 
    
@@ -67,6 +69,8 @@
     color: #007bff;
     padding: 10px;
     text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .formulario-header a.btn {
@@ -75,6 +79,7 @@
     text-decoration: none;
     background-color: #007bff;
     border: 1px solid #a6b6c7;
+    align-self: start;
     
 }
 .formulario-header a.btn:hover {
@@ -84,7 +89,7 @@
 
 .formulario {
     width: 50%;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -92,6 +97,7 @@
 
 .form-group {
     margin: 10px 0;
+    margin-bottom: 15px
 }
 
 .form-group label {
@@ -99,8 +105,8 @@
 }
 
 .form-control {
-    width: 100%;
-    padding: 10px;
+    width: calc(100% - 5px);    
+    padding: 10px 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -131,59 +137,97 @@
         <h1>Formulario Alta Funcionarios</h1>
     </div>
 
-    <form th:action="@{/funcionarios/crear}" method="post" class="formulario">
+    <form th:action="@{/funcionarios/crear}" onsubmit="return verificarForm(this)" method="post" class="formulario">
+  
         <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" class="form-control">
-         <!--  <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span> -->
+            <label for="nombre">Nombre y Apellido:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre Segundo Nombre...  Apellido" minlength="5" required  />
         </div>
 
         <div class="form-group">
             <label for="dni">Dni:</label>
-            <input type="text" id="dni" name="dni" class="form-control">
-          <!--  <span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span> -->
+            <input type="number" id="dni" name="dni" class="form-control" minlength="8" maxlength="minlength" placeholder="Ej : 53457456" min="30000000" max="60000000" required />
         </div>
 
         <div class="form-group">
             <label for="domicilio">Domicilio</label>
-            <input type="text" id="domicilio" name="domicilio" class="form-control">
-           <!-- <span th:if="${#fields.hasErrors('domicilio')}" th:errors="*{domicilio}"></span> -->
+            <input type="text" id="domicilio" name="domicilio" class="form-control" placeholder="Ej : Calle X" minlength="8" required />           
         </div>
 
         <div class="form-group">
             <label for="fechaNacimiento">Fecha Nacimiento</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control">
-            <!--<span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></span> -->
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" min="1900-01-01" required >
+            
         </div>
 
         <div class="form-group">
             <label for="estadoCivil">Estado Civil</label>
-            <input type="text" id="estadoCivil" name="estadoCivil" class="form-control">
-            <!--<span th:if="${#fields.hasErrors('estadoCivil')}" th:errors="*{estadoCivil}"></span> -->
+            <input type="text" id="estadoCivil" name="estadoCivil" class="form-control" minlength="5" placeholder="Ej : Casado" required />
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control">
-          <!--  <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>  -->
+            <input type="email" id="email" name="email" class="form-control" minlength="15" placeholder="Ej : correoFalso@gmail.com" required />
         </div>
 
         <div class= "form-group">
             <label for="telefonoFijo">Telefono fijo</label>
-            <input type="text" id="telefonoFijo" name="telefonoFijo" class="form-control">
-           <!-- <span th:if="${#fields.hasErrors('telefonoFijo')}" th:errors="*{telefonoFijo}"></span> -->
+            <input type="number" id="telefonoFijo" name="telefonoFijo" class="form-control"  placeholder="Ej : 4212121" minlength="7" maxlength="7" required />
         </div>
 
         <div class="form-group">
             <label for="telefonoCelular">Telefono Celular</label>
-            <input type="text" id="telefonoCelular" name="telefonoCelular" class="form-control">
-          <!--  <span th:if="${#fields.hasErrors('telefonoCelular')}" th:errors="*{telefonoCelular}"></span> -->
+            <input type="number" id="telefonoCelular" name="telefonoCelular" class="form-control" placeholder="Ej : 3456115865" minlength="10" maxlength="10" required />
         </div>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>      
     </form>
         
     </div>        
+    
+    <script>
+        function verificarForm(formulario){
+            const expreccionNombre = /^[A-Za-z\s]+$/;
+            const ElementosNombres = formulario.nombre.value.trim().split(" ");
+
+            // Verificando nombre string
+            if(formulario.nombre.value.length < 5){
+                alert("Tiene que tener un nombre Minimo 5 letras")
+                return false;
+        }
+  
+        // Verificando nombre string
+          if(!expreccionNombre.test(formulario.nombre.value)){
+              alert("Los elementos del nombre deben ser palabras")
+              return false;
+          }
+          // Verificando el largo de cada nombre
+          ElementosNombres.forEach((elemento)=>{
+            if(elemento.length < 4 || elemento.length >10){
+              alert("Los elementos del nombre tienen que ser entre 4 y 10")
+              return false;
+            }
+          })
+
+          // Verificando el dni
+          if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
+            alert("Dni incorrecto")
+            return false;    
+          }
+          // Verificando email
+          if(formulario.email.value.split("@")[1] != "gmail.com"){
+            alert("correo electronico mal")
+            return false;
+          }
+          return true
+        }
+
+        const fecha = document.getElementById("fechaNacimiento");
+        const date = new Date();
+        date.setDate(date.getDate() - 1);
+        fecha.max = date.toISOString().split("T")[0];
+
+    </script>
     <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>
