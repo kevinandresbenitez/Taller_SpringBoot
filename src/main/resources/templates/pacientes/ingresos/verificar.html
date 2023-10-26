@@ -59,13 +59,22 @@
 </head>
 <body>
     
-    <form action="/pacientes/ingresos/verificarExistencia" method="post">
+    <form action="/pacientes/ingresos/verificarExistencia" onsubmit="return verificarForm(this)" method="post">
         <h2>Verificar existencia del paciente</h2>
-      <input type="number" name="dni" placeholder="Ingrese el dni">
+      <input type="number" id="dni" name="dni" class="form-control" minlength="8" maxlength="8" placeholder="Ej : 53457456" min="30000000" max="60000000" required />
       <button type="submit">Verificar</button>
     </form>
   
-
+<script>
+        function verificarForm(formulario){
+          // Verificando el dni
+          if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
+            alert("Dni incorrecto")
+            return false;    
+          }
+          return true
+        }
+    </script>
 </body>
 </html>
 
