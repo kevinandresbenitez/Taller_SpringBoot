@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.proyect.controllers.ProfesionalSalud;
-import com.proyect.models.Enfermero;
 import com.proyect.models.Funcionario;
-import com.proyect.models.Medico;
 import com.proyect.models.ProfesionalSalud;
 import com.proyect.services.AdministradorService;
 import com.proyect.services.EnfermeroService;
@@ -13,7 +11,6 @@ import com.proyect.services.FuncionarioService;
 import com.proyect.services.MedicoService;
 import com.proyect.services.ProfesionalSaludService;
 import com.proyect.session.SessionUsuario;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.*;
@@ -121,18 +118,7 @@ public class ProfesionalSaludController {
         atributosMensaje.addFlashAttribute("mensaje","Se a asignado adecuadamente al funcionario como profesional de la salud");
         this.profesionalSaludService.asignarFuncionarioComoProfesionalSalud(funcionario.get(),nroMatricula);  
         return "redirect:/profesionalSalud/";
-    }
-        
-    @GetMapping("/eliminar/{id}")
-    public String delete(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.isAdmin()){
-            return "redirect:/";
-        }
-        this.profesionalSaludService.eliminarProfesionalSaludPorId(id);
-        atributosMensaje.addFlashAttribute("mensaje","Se revoco al funcionario como profesional de la salud");
-        return "redirect:/profesionalSalud/";
-    }
+    }        
     
     
 }
