@@ -208,7 +208,7 @@ public class EstadisticaController {
         if(!sessionUser.existSession() || !sessionUser.hashRol("Gestor")){
             return "redirect:/";
         }
-        if(errorFecha(fechaInicio,fechaFin,atributosMensaje)){
+        if(errorFecha(fechaInicio,fechaFin)){
             atributosMensaje.addFlashAttribute("mensaje"
                     ,"No es posible usar una fecha mayor de inicio que la fecha fin");
             return "redirect:/estadisticas/";
