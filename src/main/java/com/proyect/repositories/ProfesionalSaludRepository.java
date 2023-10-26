@@ -19,4 +19,6 @@ public interface ProfesionalSaludRepository extends JpaRepository<ProfesionalSal
     public Boolean existsByFuncionarioId(Long id);
 
     public Optional<ProfesionalSalud> findByFuncionarioId(Long idFuncionario);
+
+    public Optional<ProfesionalSalud> findByNroMatricula(Long nroMatricula);
 }

@@ -110,7 +110,14 @@ public class ProfesionalSaludController {
             atributosMensaje.addFlashAttribute("mensaje","No se puede agregar como profesional de salud, ya que el funcionario ya fue asignado como profesional de la salud");
             return "redirect:/profesionalSalud/";
         }
-        
+
+        // Verificar si ya existe una matrícula igual
+        Optional<ProfesionalSalud> profesionalSaludExistente = profesionalSaludService.findByNroMatricula(nroMatricula);
+        if (profesionalSaludExistente.isPresent()) {
+            atributosMensaje.addFlashAttribute("mensaje", "No se puede agregar como profesional de salud, ya que la matrícula " + nroMatricula + " ya está asignada.");
+            return "redirect:/profesionalSalud/";
+        }
+
         atributosMensaje.addFlashAttribute("mensaje","Se a asignado adecuadamente al funcionario como profesional de la salud");
         this.profesionalSaludService.asignarFuncionarioComoProfesionalSalud(funcionario.get(),nroMatricula);  
         return "redirect:/profesionalSalud/";
