@@ -61,7 +61,7 @@
     
     <form action="/pacientes/ingresos/verificarExistencia" onsubmit="return verificarForm(this)" method="post">
         <h2>Verificar existencia del paciente</h2>
-      <input type="number" id="dni" name="dni" class="form-control" minlength="8" maxlength="8" placeholder="Ej : 53457456" min="30000000" max="60000000" required />
+      <input type="text" id="dni" name="dni" class="form-control" minlength="8" maxlength="8" placeholder="Ej : 53457456" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required />
       <button type="submit">Verificar</button>
     </form>
   
