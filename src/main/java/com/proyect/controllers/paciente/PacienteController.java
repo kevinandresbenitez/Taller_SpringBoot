@@ -28,6 +28,11 @@ public class PacienteController {
     @Autowired
     SessionUsuario sessionUser;
 
+    /**
+     *
+     * @param model se usa para pasar el listado de pacientes a la vista
+     * @return vista de los pacientes
+     */
 
     @GetMapping("/")
     public String detailsPaciente(Model model) {
@@ -41,7 +46,12 @@ public class PacienteController {
         return "pacientes/index";
     }
 
-
+    /**
+     *
+     * @param dni se lo pasa a la vista para rellenar el campo dni si no existe el paciente
+     * @param modelo se usa para usar variables en las vistas
+     * @return vista del formulario de registro de paciente
+     */
     @GetMapping("/crear")
     public String mostrarForm(@RequestParam("dni") Optional<Integer> dni,Model modelo) {
         
@@ -58,7 +68,18 @@ public class PacienteController {
         return "/pacientes/crear";
     }
 
-
+    /**
+     *
+     * @param nombre nombre y apellido del paciente
+     * @param dni dni del paciente
+     * @param email email del paciente
+     * @param domicilio domicilio del paciente
+     * @param telefonoCelular telefono del paciente
+     * @param telefonoFijo telefono fijo del paciente
+     * @param fechaNacimiento fecha de nacimiento del paciente
+     * @param estadoCivil estado civil del paciente
+     * @return vista para agregar un motivo de consulta
+     */
 
     @PostMapping("/crear")
     public String registrarPaciente(@RequestParam("nombre") String nombre,
@@ -96,23 +117,15 @@ public class PacienteController {
         return "redirect:/pacientes/ingresos/agregar/"+paciente.getId();
     }
 
-    @GetMapping("/modificar/{id}")
-    public String modificarPaciente(Model model, @PathVariable("id") Long id) {
-        // Verificacion de session
-        if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
-            return "redirect:/";
-        }
-        
-        Optional<Paciente> paciente = pacienteService.findById(id);
-        if (!paciente.isPresent()) {
-            return "redirect:/pacientes/";
-        }
-        model.addAttribute("paciente", paciente.get());
-        return "pacientes/modificar";
-    }
-
+    /**
+     *
+     * @param dni buscamos un paciente usando su dni
+     * @param model se utilza para pasar variables a la vista
+     * @param mensaje se utiliza para poder mandar un mensaje a la vista en caso de no encontrar al paciente
+     * @return
+     */
     @GetMapping("/buscar")
-    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes atributos){   
+    public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes mensaje){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
@@ -120,7 +133,7 @@ public class PacienteController {
         
         Optional<Paciente> paciente = pacienteService.findByDni(dni);
         if (paciente.isEmpty()){
-            atributos.addFlashAttribute("mensaje","no se encontro al paciente");
+            mensaje.addFlashAttribute("mensaje","no se encontro al paciente");
             return "redirect:/pacientes/";
         }
         
