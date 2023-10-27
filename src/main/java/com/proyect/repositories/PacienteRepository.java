@@ -32,6 +32,6 @@ public interface PacienteRepository extends JpaRepository<Paciente,Long> {
     List<Paciente> BuscarPacientesNecesitanSerTriagados();
     
     /*EL paciente tiene ingresos previos*/
-    @Query(value="SELECT * FROM paciente WHERE id = :id and (paciente.id in (SELECT id_paciente FROM ingreso WHERE ingreso.id not in(SELECT id_ingreso from consulta)));",nativeQuery = true)
+    @Query(value="select paciente.* from paciente left join ingreso on ingreso.id_paciente = paciente.id where paciente.id = :id and  ingreso.id not in (select id_ingreso from consulta)",nativeQuery = true)
     Optional<Paciente> estaElPacienteEnIngreso(@Param("id") Long id);
 }

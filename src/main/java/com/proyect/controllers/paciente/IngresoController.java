@@ -77,6 +77,7 @@ public class IngresoController {
         }
         
         boolean tieneIngresoPrevio = this.pacienteService.estaElPacienteEnEspera(id);
+        System.out.println(tieneIngresoPrevio);
         if(tieneIngresoPrevio){
             atribut.addFlashAttribute("mensaje","Este paciente ya esta esperando");
             return "redirect:/pacientes/ingresos/verificarExistencia";
