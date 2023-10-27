@@ -1,5 +1,15 @@
 # Taller_SpringBoot
 
+### Pasos Para Iniciar El Proyecto <br>
+![imagen](https://github.com/kevinandresbenitez/Taller_SpringBoot/assets/73619016/cdf2ef0a-00cc-4d16-b65c-45b1d0b5f1f3)<br> 
+O
+![imagen](https://github.com/kevinandresbenitez/Taller_SpringBoot/assets/73619016/432234c1-8d4f-40d6-9ac7-ce6d34da887f)<br>
+En netbeans<br>
+
+### Aclaracion<br>
+Proyecto Realizado con Java 20, Gradle 8.3
+
+
 ## Git
 
 ### Pasos para organizarse <br>
