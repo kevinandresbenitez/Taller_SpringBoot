@@ -86,8 +86,8 @@ public class PacienteController {
                                 @RequestParam("dni") int dni,
                                 @RequestParam("email") String email,
                                 @RequestParam("domicilio") String domicilio,
-                                @RequestParam("telefonoCelular") int telefonoCelular,
-                                @RequestParam("telefonoFijo") int telefonoFijo,
+                                @RequestParam("telefonoCelular") long telefonoCelular,
+                                @RequestParam("telefonoFijo") long telefonoFijo,
                                 @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
                                 @RequestParam("estadoCivil") String estadoCivil) {
         // Verificacion de session
