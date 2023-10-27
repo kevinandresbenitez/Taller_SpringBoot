@@ -28,7 +28,10 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
-
+/** 
+ * Controlador para gestinar Triages
+ 
+ */
 @Controller
 @RequestMapping("/triages")
 public class TriageController {
@@ -43,6 +46,13 @@ public class TriageController {
     @Autowired
     SessionUsuario sessionUser;
     
+    /**
+ * Controlador para mostrar la lista de pacientes que están a la espera de ser triagiados.
+ *
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @return La vista que muestra la lista de pacientes a la espera de ser triagiados o redirige a la página de inicio,
+ * si el usuario no tiene acceso.
+ */
     @GetMapping("/")//pacientes a espera de ser triagiados
     public String listarTriages(Model model) {
         // Verificacion de session
@@ -55,6 +65,15 @@ public class TriageController {
         return "pacientes/triages/listaPacientes";
     }
     
+    
+    /**
+ * MControlador  para mostrar los triages de un paciente específico por su ID.
+ *
+ * @param id  Id del paciente cuyos triages se deben mostrar.
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @return La vista que muestra los triages del paciente o redirige a la página de inicio si el paciente no se encuentra,
+ * o si el usuario no tiene acceso.
+ */
     @GetMapping("/{id}")  // Id del paciente a mostrar sus triages
     public String listarTriagesPaciente(@PathVariable("id") Long id,Model model){
         // Verificacion de session
@@ -72,7 +91,14 @@ public class TriageController {
     }
     
     
-    
+    /**
+ * Controlador para mostrar el formulario de asignación de triage a un paciente específico por su Id.
+ *
+ * @param id  Id del paciente al que se asignará un triage.
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @return La vista que muestra el formulario de asignación de triage o redirige a la página de inicio si el paciente no se encuentra
+ * o si el usuario no tiene acceso.
+ */
     @GetMapping("/agregar/{id}") // Id del paciente a asignar triage
     public String mostrarFormulario(@PathVariable("id") Long id,Model model){
         // Verificacion de session
@@ -90,6 +116,27 @@ public class TriageController {
         return "pacientes/triages/crear";
     }
     
+    
+    /**
+ * Metodo para procesar la evaluación de triage y guardarla en la base de datos.
+ *
+ * @param id El Id del paciente al que se le asignará un triage.
+ * @param respiracion Puntuación de evaluación de la respiración.
+ * @param pulso Puntuación de evaluación del pulso.
+ * @param estadoMental Puntuación de evaluación del estado mental.
+ * @param conciencia Puntuación de evaluación de la conciencia.
+ * @param dolorPechoRespirar Puntuación de evaluación del dolor en el pecho al respirar.
+ * @param lesionesGraves Puntuación de evaluación de lesiones graves.
+ * @param fiebre Puntuación de evaluación de fiebre.
+ * @param vomitos Puntuación de evaluación de vómitos.
+ * @param dolorAbdominal Puntuación de evaluación de dolor abdominal.
+ * @param signosShock Puntuación de evaluación de signos de shock.
+ * @param lesionesLeves Puntuación de evaluación de lesiones leves.
+ * @param sangrado Puntuación de evaluación de sangrado.
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @return La redirección a la vista que muestra el resultado de la evaluación de triage o redirige a la página de inicio
+ * si el paciente no se encuentra o si el usuario no tiene acceso.
+ */
     @PostMapping("/agregar/{id}") // Procesamos el triage y lo guardamos
     public String calcularPuntuacionTotal(
             @PathVariable("id") Long id,
@@ -153,7 +200,14 @@ public class TriageController {
         return "redirect:/triages/resultadotriage/"+triageAGuardar.getId();
     }
 
-
+    /**
+ * Metodo para mostrar el resultado de la evaluación de triage según su Id.
+ *
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @param id El Id del triage que se mostrará.
+ * @return La vista que muestra el resultado de la evaluación de triage o redirige a la página de inicio si el triage no se encuentra
+ * o si el usuario no tiene acceso.
+ */
     @GetMapping("/resultadotriage/{id}")//id del triage
     public String resultadoTriage(Model model,@PathVariable("id")Long id) {
         // Verificacion de session
@@ -174,6 +228,15 @@ public class TriageController {
         model.addAttribute("triage1",triage);
         return "pacientes/triages/resultadotriage";
     }
+    
+    /**
+ * Metodo para mostrar el formulario de modificación de color de triage.
+ *
+ * @param model  para agregar datos que se mostrarán en la vista.
+ * @param id Id del triage que se modificará.
+ * @return La vista del formulario de modificación de color de triage o redirige a la página de inicio si el triage no se encuentra
+ * o si el usuario no tiene acceso.
+ */
     @GetMapping("/cambiarcolor/{id}")//id del triage
     public String modificarTriage(Model model,@PathVariable("id")Long id) {
         // Verificacion de session
@@ -190,7 +253,17 @@ public class TriageController {
         model.addAttribute("triage",triage);
         return "pacientes/triages/modificacion";
     }
-
+    
+    
+    /**
+ * Metodo para cambiar el color de triage de un paciente.
+ *
+ * @param id Id del triage que se modificará.
+ * @param nuevoColor  nuevo color de triage seleccionado.
+ * @param motivoDeCambio  motivo o justificación para el cambio de color.
+ * @param atributosMensaje  para agregar mensajes flash que se mostrarán después de redirigir.
+ * @return Redirige al resultado del triage modificado o al formulario de modificación en caso de error.
+ */
     @PostMapping("/cambiarcolor/{id}")
     public String cambiarColor(@PathVariable("id")Long id,
                                @RequestParam("nuevoColor") String nuevoColor,
