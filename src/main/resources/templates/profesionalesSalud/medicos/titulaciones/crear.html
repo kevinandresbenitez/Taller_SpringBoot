@@ -120,6 +120,9 @@
 </div>
 
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
+<script>
+    document.getElementById('fechaTitulacion').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+</script>
 </body>
 
 </html>
