@@ -111,7 +111,11 @@
         <label th:each="especialidad: ${especialidades}">
             <p>Especialidades Disponibles:</p>
             <p th:text="${especialidad.getNombre()}"></p>
-            <input type="radio" th:value="${especialidad.getId()}" name="id_especialidad" />
+            
+            <th:block th:id>
+                <input type="radio" th:value="${especialidad.getId()}" name="id_especialidad" />
+            </th:block>
+            
         </label>
         <input type="text" name="universidad" placeholder="Universidad" />
         <input type="date" name="fechaTitulacion" />
@@ -126,27 +130,3 @@
 </body>
 
 </html>
-<!--
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-        <a href="/profesionalSalud/medicos/titulaciones/">Volver</a>
-        
-        <form th:action="@{/profesionalSalud/medicos/titulaciones/crear/{id}(id=${id_medico})}" method="post" >
-            <label  th:each="especialidad:${especialidades}" >
-                <p>Especialidades Disponibles:</p>
-                <p th:text="${especialidad.getNombre()}"></p>
-                <input type="radio" th:value="${especialidad.getId()}" name="id_especialidad" />
-            </label>
-            <input type="text" name="universidad" placeholder="Universidad" />
-            <input type="date" name="fechaTitulacion" />
-            <input type="submit" value="Crear Titulacion"></input>
-        </form>
-    </body>
-</html>
--->
