@@ -95,4 +95,12 @@ public class PacienteService {
         return pacienteMasConsultado;
     }
 
+    public boolean estaElPacienteEnEspera(Long id){
+        Optional<Paciente> paciente = this.pacienteRepository.estaElPacienteEnIngreso(id);
+        if(paciente.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

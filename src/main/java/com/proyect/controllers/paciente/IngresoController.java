@@ -70,10 +70,16 @@ public class IngresoController {
 
     @PostMapping("/agregar/{id}")
     public String formulario(@PathVariable("id")Long id,
-                             @RequestParam("motivoConsulta")String motivoConsulta){
+                             @RequestParam("motivoConsulta")String motivoConsulta,RedirectAttributes atribut){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
+        }
+        
+        boolean tieneIngresoPrevio = this.pacienteService.estaElPacienteEnEspera(id);
+        if(tieneIngresoPrevio){
+            atribut.addFlashAttribute("mensaje","Este paciente ya esta esperando");
+            return "redirect:/pacientes/ingresos/verificarExistencia";
         }
         
         Paciente paciente = pacienteService.obtenerPacienteById(id);
@@ -87,6 +93,7 @@ public class IngresoController {
         paciente.getIngresos().add(ingreso);
         ingresoService.guardarIngreso(ingreso);
         pacienteService.guardarPaciente(paciente);
+        atribut.addFlashAttribute("mensaje","Paciente agregado correctamente");
         return "redirect:/";
     }
 
