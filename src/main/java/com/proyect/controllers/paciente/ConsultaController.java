@@ -32,7 +32,13 @@ public class ConsultaController {
     
     @Autowired
     SessionUsuario sessionUser;
-    
+
+    /**
+     *
+     * @param model se utiliza para poder pasarle variables a los modelos de vistas
+     * @param id el id del paciente es usado para poder encontrarlo en el sistema
+     * @return vista con la lista de consultas del paciente
+     */
     @GetMapping("/{id}")
     public String listaConsultas(Model model, @PathVariable("id") Long id) {
         // Verificacion de session
@@ -47,6 +53,13 @@ public class ConsultaController {
         model.addAttribute("paciente", paciente.get());
         return "pacientes/consultas/index";
     }
+
+    /**
+     *
+     * @param model se utiliza para poder pasarle variables a los modelos de vistas
+     * @param id el id del paciente es usado para poder ubicar en el sistema
+     * @return la vista del formulario para poder agregar una consulta
+     */
     @GetMapping("/crear/{id}")
     public String crearConsultas(Model model,@PathVariable("id") Long id){
         // Verificacion de session
@@ -63,6 +76,16 @@ public class ConsultaController {
         return "/pacientes/consultas/crear";
     }
 
+    /**
+     *
+     * @param diagnostico diagnostico de un paciente
+     * @param tipoAtencion el tipo de atencion
+     * @param diagnosticosClinicos diagnostico clinico
+     * @param id id de un paciente para ubicarlo en el sistema
+     * @param redirectAttributes se utiliza para manejar que solo podamos agregar resultados de estudios una sola vez
+     * @return se redirije a la vista de agregar resultados de estudios
+     *          con el id de su respectiva consulta
+     */
     @PostMapping("/crear/{id}")
     public String crearConsultas(@RequestParam("diagnostico") String diagnostico,
                                  @RequestParam("tipoAtencion") String tipoAtencion,
@@ -100,9 +123,20 @@ public class ConsultaController {
         return "redirect:/pacientes/consultas/agregarresultadosestudios/"+consulta.getId();
     }
 
-
+    /**
+     *
+     * @param model se utiliza para poder pasarle variables a los modelos de vistas
+     * @param id id para poder ubicar a que consulta se le agregaran los resultados de estudios
+     * @param PermitirCreacionResEst es la bandera que nos verifica si ya pasó el momento de agregar
+     *                               los resultados de estudios
+     * @param redirectAttributes es un atributo flash, puede utilizarse una vez y en este momento
+     *                           es usado para verificar que se pueda agregar resultados de estudios
+     * @return vista del formulario para agregar resultados estudios
+     */
     @GetMapping("/agregarresultadosestudios/{id}")
-    public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id,@ModelAttribute("PermitirCreacionResEst") String PermitirCreacionResEst,RedirectAttributes redirectAttributes){
+    public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id
+            ,@ModelAttribute("PermitirCreacionResEst") String PermitirCreacionResEst
+            ,RedirectAttributes redirectAttributes){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";
@@ -113,18 +147,27 @@ public class ConsultaController {
         
         // Si la consulta no existe o si la consulta es vieja( no se modifica )
         if (!(PermitirCreacionResEst == "si") || consulta == null) {
+
             return "redirect:/";
         }
-        
+
         // Agregando flash para solo agregar resultados de estudios 1 vez
         redirectAttributes.addFlashAttribute("PermitirCreacionResEst", "si");
         return "pacientes/consultas/resultadosestudios/agregar";
     }
 
+
+    /**
+     *
+     * @param tiposInformes lista de tipos de informes realizados a un paciente en su respectiva consulta
+     * @param informesEstudios lista de informes de estudios realizados a un paciente en su respectiva consulta
+     * @param id id para poder ubicar a que consulta se le agregaran los resultados de estudios
+     * @return vista de los boxes de atencion
+     */
     @PostMapping("/agregarresultadoestudios/{id}")
     public String formularioResultadosEstudios(@RequestParam(value = "tipoInforme[]", required = false) List<String> tiposInformes,
                                                @RequestParam(value = "informeEstudio[]", required = false) List<String> informesEstudios,
-                                               @PathVariable("id")Long id){
+                                               @PathVariable("id")Long id,RedirectAttributes atributosMensaje){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";
@@ -149,11 +192,19 @@ public class ConsultaController {
             consulta.getResultadoEstudios().add(resultadoEstudio);
 
         }
+        atributosMensaje.addFlashAttribute("mensaje","consulta realizada");
         consultaService.guardarConsulta(consulta);
         return "redirect:/pacientes/atenciones/";
     }
 
     // Resultados de esutudios que estan en la consulta
+
+    /**
+     *
+     * @param model se utiliza para pasar variables a la vista
+     * @param id id para ubicar la consulta en el sistema
+     * @return vista para mostrar listado de resultado de estudios
+     */
     @GetMapping("/resultadosestudios/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
         // Verificacion de session

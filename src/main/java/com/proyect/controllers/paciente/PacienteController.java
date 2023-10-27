@@ -122,7 +122,7 @@ public class PacienteController {
      * @param dni buscamos un paciente usando su dni
      * @param model se utilza para pasar variables a la vista
      * @param mensaje se utiliza para poder mandar un mensaje a la vista en caso de no encontrar al paciente
-     * @return
+     * @return vista para ver datos de un paciente
      */
     @GetMapping("/buscar")
     public String buscarPacientePorDNI(@RequestParam("dni") int dni, Model model,RedirectAttributes mensaje){
