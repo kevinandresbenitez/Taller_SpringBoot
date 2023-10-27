@@ -27,6 +27,11 @@ import com.proyect.session.SessionUsuario;
 import java.util.Objects;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * en esta clase se encuntran las operaciones correspondientes a todo el proceso de atencion
+ * de un medico con respecto a los pacientes en emergencia
+ */
+
 @Controller
 @RequestMapping("/pacientes/atenciones")
 public class AtencionController {
@@ -42,7 +47,12 @@ public class AtencionController {
     @Autowired
     SessionUsuario sessionUser;
 
-
+    /**
+     *
+     * @param model se utiliza para tener la posibilidad de mandar variables a la vista,
+     *              en este caso pasamos un listado de boxes
+     * @return vista del lugar donde estan siendo atendidos los pacientes
+     */
     @GetMapping("/")
     public String list(Model model) {
         // Verificacion de session
@@ -55,7 +65,14 @@ public class AtencionController {
         model.addAttribute("boxes", boxes);
         return "pacientes/atenciones/index";
     }
-    
+
+    /**
+     *
+     * @param id id para ubicar un box en el sistema y verificar su estado
+     * @param atributos nos permite enviar mensajes a la vista segun el estado de un box,
+     *                  en este caso es para verificar si un box esta ocupado
+     * @return vista de la seccion de atencion con los boxes y sus estados
+     */
     @GetMapping("/trabajar/empezar/{id}")
     public String work(@PathVariable("id") Long id,RedirectAttributes atributos) {
         // Verificacion de session
@@ -78,7 +95,14 @@ public class AtencionController {
         atributos.addFlashAttribute("mensaje","Ahora estas trabajando en el box");
         return "redirect:/pacientes/atenciones/";
     }
-    
+
+    /**
+     *
+     * @param id id para ubicar un box en el sistema y verificar su estado
+     * @param atributos nos permite enviar mensajes a la vista segun el estado de un box,
+     *                  en este caso es para dejar libre un box
+     * @return vista de la seccion de atencion con los boxes y sus estados
+     */
     @GetMapping("/trabajar/terminar/{id}")
     public String workEnd(@PathVariable("id") Long id,RedirectAttributes atributos) {
         // Verificacion de session
@@ -107,7 +131,15 @@ public class AtencionController {
     }
 
 
-    
+    /**
+     *
+     * @param id id para ubicar un box en el sistema y verificar su estado
+     * @param atributos nos permite enviar mensajes a la vista segun el estado de un box,
+     *                  en este caso es por si ocurren algunos inconvenientes al asignar o atender un paciente
+     * @param model se utiliza para tener la posibilidad de mandar variables a la vista,
+     *              en este caso pasamos un listado de pacientes y el id de un box
+     * @return vista donde se encuentran pacientes triagiados esperando atencion medica
+     */
     @GetMapping("/asignar/{id}")
     public String listaDePacientesAAsignar(@PathVariable("id") Long id,RedirectAttributes atributos,Model model) {
         // Verificacion de session
@@ -145,9 +177,18 @@ public class AtencionController {
         model.addAttribute("id_box",id);
         return "/pacientes/atenciones/asignar";
     }
-    
+
+    /**
+     *
+     * @param id_box id de un box para ubicarlo en el sistema
+     * @param id_paciente id de un paciente para ubicarlo en el sistema
+     * @param atributos nos permite enviar mensajes a la vista segun el estado de un box,
+     *                en este caso es por si ocurren algunos inconvenientes al asignar o
+     *                  atender un paciente
+     * @return vista de la seccion de atencion con los boxes y sus estados
+     */
     @GetMapping("/asignar/{id}/{id_paciente}")
-    public String procesarAsignacionDePaciente(@PathVariable("id") Long id_box,@PathVariable("id_paciente") Long id_paciente,RedirectAttributes atributos,Model model) {
+    public String procesarAsignacionDePaciente(@PathVariable("id") Long id_box,@PathVariable("id_paciente") Long id_paciente,RedirectAttributes atributos) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";
@@ -180,9 +221,18 @@ public class AtencionController {
         atributos.addFlashAttribute("mensaje","Se agrego el paciente correctamente");
         return "redirect:/pacientes/atenciones/";
     }
-    
+
+
+    /**
+     *
+     * @param id_paciente id de un paciente para ubicarlo en el sistema
+     * @param id id del box al cual le cambiaremos el estado
+     * @param atributos manera de comunicarnos desde el controlador con la vista,
+     *                  dependiendo el evento mandamos un mensaje
+     * @return vista de la seccion de atencion con los boxes y sus estados
+     */
     @GetMapping("/posponer/{id}/{id_paciente}")
-    public String posponerConsulta(@PathVariable("id_paciente") Long id_paciente,@PathVariable("id") Long id,RedirectAttributes atributos,Model model) {
+    public String posponerConsulta(@PathVariable("id_paciente") Long id_paciente,@PathVariable("id") Long id,RedirectAttributes atributos) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";

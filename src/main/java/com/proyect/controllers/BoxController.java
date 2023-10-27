@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- *
+ * esta clase maneja las operaciones relacionadas a la entidad de box
  * @author eduardo
+ *
  */
 @Controller
 @RequestMapping("/boxes")
