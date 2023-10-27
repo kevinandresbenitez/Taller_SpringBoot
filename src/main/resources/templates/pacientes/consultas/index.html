@@ -93,10 +93,10 @@
 <div class="container mt-5">
     <h2 class="mb-4">Consultas para el Paciente: <span th:text="${paciente.nombre}"></span></h2>
     <th:block th:if="${sessionUser.isMedicalSpecialist()}">
-        <a th:href="@{/pacientes/consultas/crear/{id}(id=${paciente.getId()})}" class="button">Agregar consulta al paciente : <span th:text="${paciente.nombre}"></span></a>        
+        <a th:href="@{/pacientes/consultas/crear/{id}(id=${paciente.getId()})}" class="button">Agregar consulta al paciente: <span th:text="${paciente.nombre}"></span></a>
     </th:block>
-    
 
+    <!-- Tabla de Consultas -->
     <table class="table">
         <thead>
         <tr>
@@ -106,22 +106,49 @@
             <th>Diagnóstico</th>
             <th>Tipo de atención</th>
             <th>Diagnósticos clínicos</th>
+            <th>Motivo de consulta</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="consulta : ${paciente.getConsultas()}">
-            <td th:text="${consulta.getId()}"></td>
-            <td th:text="${consulta.getFechaAtencion()}"></td>
-            <td th:text="${consulta.getHoraAtencion()}"></td>
-            <td th:text="${consulta.getDiagnostico()}"></td>
-            <td th:text="${consulta.getTipoAtencion()}"></td>
-            <td th:text="${consulta.getDiagnosticosClinicos()}"></td>
+        <tr th:each="consulta : ${paciente.consultas}">
+            <td th:text="${consulta.id}"></td>
+            <td th:text="${consulta.fechaAtencion}"></td>
+            <td th:text="${consulta.horaAtencion}"></td>
+            <td th:text="${consulta.diagnostico}"></td>
+            <td th:text="${consulta.tipoAtencion}"></td>
+            <td th:text="${consulta.diagnosticosClinicos}"></td>
+            <td th:text="${paciente.getIngresos().get(paciente.getTriages().size()-1).getMotivo()}"></td>
             <td>
-                <a th:href="@{/pacientes/consultas/resultadosestudios/{id}(id=${consulta.getId()})}" class="button">Ir a resultados de estudios</a>
+                <a th:href="@{/pacientes/consultas/resultadosestudios/{id}(id=${consulta.id})}" class="button">Ir a resultados de estudios</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <!-- Tabla de Triage -->
+    <table class="table">
+        <h2 class="mb-4">Triage del Paciente: <span th:text="${paciente.nombre}"></span></h2>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Color de triage</th>
+            <th>Fecha de realización</th>
+            <th>Hora de realización</th>
+            <th>Medico que atendió</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <tr th:each="consulta : ${paciente.consultas}">
+            <td th:text="${consulta.getTriage().getId()}"></td>
+            <td th:text="${consulta.getTriage().getColor()}"></td>
+            <td th:text="${consulta.getTriage().getFechaEvaluacion()}"></td>
+            <td th:text="${consulta.getTriage().getHoraEvaluacion()}"></td>
+            <td th:text="${consulta.getTriage().getProfesionalSalud().getFuncionario().getNombre()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
