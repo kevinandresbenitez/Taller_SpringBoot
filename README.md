@@ -6,7 +6,7 @@ O<br>
 ![imagen](https://github.com/kevinandresbenitez/Taller_SpringBoot/assets/73619016/432234c1-8d4f-40d6-9ac7-ce6d34da887f)<br>
 En netbeans<br>
 
-## Aclaracion<br>
+## Aclaracion
 Proyecto Realizado con Java 20, Gradle 8.3<br>
 
 
