@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author kevin
+ * Controller para gestionar los sectores de trabajo
  */
 @Controller
 @Setter
@@ -37,6 +37,17 @@ public class SectorController {
     @Autowired
     SessionUsuario sessionUser;
     
+    
+    /**
+ * Controlador para listar los funcionarios.
+ *
+ * 
+ * Se verifica si el usuario ha iniciado sesión y si tiene permisos de administrador antes de mostrar la lista de funcionarios.
+ *
+ * @param modelo  Model para agregar datos que se mostrarán en la vista.
+ * @return Muestra la lista de funcionarios en la vista "funcionarios/index" si el usuario ha iniciado sesión.
+ *  Si el usuario no ha iniciado sesión, se redirige a la página de inicio.
+ */
     @GetMapping("/")
     public String list(Model modelo){
         // Verificacion de session
@@ -49,6 +60,19 @@ public class SectorController {
         return "funcionarios/sectores/index";
     }
     
+    /**
+ * Controlador para asignar roles a un funcionario por su ID.
+ *
+ * Esta ruta permite a un administrador asignar roles a un funcionario específico identificado por su ID.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador antes de permitir la asignación de roles.
+ *
+ * @param id_funcionario  Id del funcionario al que se desean asignar roles, obtenido desde la URL.
+ * @param modelo  Model para agregar datos que se mostrarán en la vista.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Muestra la página de asignación de roles si el usuario ha iniciado sesión y es un administrador.
+ *         Si el usuario no ha iniciado sesión o no es un administrador, se redirige a la página de inicio.
+ *         Si el funcionario identificado por su Id no existe, se redirige a la página de funcionarios con un mensaje de error.
+ */
     @GetMapping("/asignar/{id_funcionario}")
     public String asignarRoles(@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -69,7 +93,21 @@ public class SectorController {
         return "funcionarios/sectores/asignar";
     }
     
-    
+    /**
+ * Controlador para procesar la asignación de roles a un funcionario por su ID.
+ *
+ * Esta ruta permite a un administrador asignar sectores (roles) a un funcionario específico identificado por su Id.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador antes de permitir la asignación de sectores.
+ *
+ * @param SectoresId Una lista de Ids de sectores (roles) que se desean asignar al funcionario.
+ * @param id_funcionario id funcionario al que se desean asignar sectores, obtenido desde la URL.
+ * @param modelo Model para agregar datos que se mostrarán en la vista.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Redirige a la página de funcionarios con un mensaje de asignación exitosa si se asignan los sectores correctamente.
+ *         Si el usuario no ha iniciado sesión o no es un administrador, se redirige a la página de inicio.
+ *         Si el funcionario identificado por su Id no existe, se redirige a la página de funcionarios con un mensaje de error.
+ *         Si no se selecciona al menos un sector, se redirige a la página de funcionarios con un mensaje de advertencia.
+ */
     @PostMapping("/asignar/{id_funcionario}")
     public String procesarAsignacionRoles(@RequestParam("sectores_id") List<Long> SectoresId,@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -113,7 +151,17 @@ public class SectorController {
     
     
 
-    
+    /**
+ * Controlador para crear un nuevo sector.
+ *
+ * Esta ruta permite a un administrador crear un nuevo sector mediante un formulario.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador antes de permitir la creación del sector.
+ *
+ * @param nombre nombre del sector a crear, obtenido desde el formulario.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Redirige a la página de sectores de funcionarios con un mensaje de creación exitosa si se crea el sector correctamente.
+ *         Si el usuario no ha iniciado sesión o no es un administrador, se redirige a la página de inicio.
+ */
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -130,6 +178,17 @@ public class SectorController {
         return "redirect:/funcionarios/sectores/";
     }
       
+    /**
+ * Controlador para eliminar un sector por su ID.
+ *
+ * Esta ruta permite a un administrador eliminar un sector específico identificado por su ID.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador antes de permitir la eliminación del sector.
+ *
+ * @param id Id del sector que se desea eliminar.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Redirige a la página de sectores de funcionarios con un mensaje de eliminación exitosa si el sector se elimina correctamente.
+ *         Si el usuario no ha iniciado sesión o no es un administrador, se redirige a la página de inicio.
+ */
     @GetMapping("/eliminar/{id}")
     public String deleteFuncionary(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){
         // Verificacion de session
