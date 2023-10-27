@@ -20,7 +20,6 @@
         }
 
         .container {
-            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #ffffff;
@@ -106,7 +105,9 @@
             <th>Diagnóstico</th>
             <th>Tipo de atención</th>
             <th>Diagnósticos clínicos</th>
+            <th>Color Triage</th>
             <th>Motivo de consulta</th>
+            <th>Medico que atendió</th>
         </tr>
         </thead>
         <tbody>
@@ -117,7 +118,9 @@
             <td th:text="${consulta.diagnostico}"></td>
             <td th:text="${consulta.tipoAtencion}"></td>
             <td th:text="${consulta.diagnosticosClinicos}"></td>
-            <td th:text="${paciente.getIngresos().get(paciente.getTriages().size()-1).getMotivo()}"></td>
+            <td th:text="${consulta.getTriage().getColor()}"></td>
+            <td th:text="${consulta.getIngreso().getMotivo()}"></td>
+            <td th:text="${consulta.getMedico().getProfesionalSalud().getFuncionario().getNombre()}"></td>
             <td>
                 <a th:href="@{/pacientes/consultas/resultadosestudios/{id}(id=${consulta.id})}" class="button">Ir a resultados de estudios</a>
             </td>
@@ -125,29 +128,6 @@
         </tbody>
     </table>
 
-    <!-- Tabla de Triage -->
-    <table class="table">
-        <h2 class="mb-4">Triage del Paciente: <span th:text="${paciente.nombre}"></span></h2>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Color de triage</th>
-            <th>Fecha de realización</th>
-            <th>Hora de realización</th>
-            <th>Medico que atendió</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <tr th:each="consulta : ${paciente.consultas}">
-            <td th:text="${consulta.getTriage().getId()}"></td>
-            <td th:text="${consulta.getTriage().getColor()}"></td>
-            <td th:text="${consulta.getTriage().getFechaEvaluacion()}"></td>
-            <td th:text="${consulta.getTriage().getHoraEvaluacion()}"></td>
-            <td th:text="${consulta.getTriage().getProfesionalSalud().getFuncionario().getNombre()}"></td>
-        </tr>
-        </tbody>
-    </table>
 
 </div>
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>

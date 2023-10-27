@@ -14,108 +14,113 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-                background-color: #f8f9fa;
-                margin: 0;
-                padding: 0;
-            }
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
-            .container {
-                max-width: 800px;
-                margin: 30vh auto;
-                padding: 20px;
-                background-color: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
+        .container {
+            max-width: 800px;
+            margin: auto; /* Agregado para centrar horizontalmente */
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-            h2 {
-                color: #007bff;
-            }
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 20px;
+        }
 
-            .button-container {
-                padding: 20px;
-            }
+        .button-container {
+            text-align: center; /* Modificado para centrar horizontalmente */
+            padding: 20px;
+        }
 
+        .button-container a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px; /* Añadido espacio entre botones */
+        }
 
-            .button-container a {
-                background-color: #007bff;
-                color: #fff;
-                padding: 12px 24px;
-                border: none;
-                border-radius: 4px;
-                text-decoration: none;
-            }
+        .button-container a:last-child {
+            margin-right: 0; /* Elimina el espacio derecho en el último botón */
+        }
 
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
 
-            .button-container a:hover {
-                background-color: #0056b3;
-            }
+        .search-container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
+        .search-container label {
+            color: #007bff;
+            font-size: 20px;
+        }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
+        .search-container form {
+            display: flex;
+            flex-direction: column; /* Cambiado para alinear elementos verticalmente */
+            align-items: center; /* Cambiado para centrar elementos horizontalmente */
+        }
 
-            th, td {
-                border: 1px solid #dee2e6;
-                padding: 8px;
-                text-align: left;
-                background-color: #f2f2f2;
-            }
+        .search-container input {
+            font-size: 16px;
+            padding: 8px;
+        }
 
-            th {
-                background-color: #007bff;
-                color: #fff;
-            }
+        .search-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px; /* Añadido espacio arriba */
+        }
 
-            .search-container {
-                text-align: center;
-                margin-top: 20px;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-            .search-container label {
-                color: #007bff;
-                font-size: 20px;
-            }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
 
-            .search-container input {
-                font-size: 16px;
-                padding: 8px;
-            }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
 
+        .boton-estilo {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: 2px
+            border-radius: 5px;
+            text-decoration: none;
+            justify-content: space-around
+        }
 
-            .search-container button {
-                background-color: #007bff;
-                color: #fff;
-                padding: 10px 20px;
-                border: none;
-                font-size: 16px;
-            }
-
-
-            h2 {
-                color: #007bff;
-                text-align: center;
-                margin-top: 0;
-                padding-top: 20px;
-            }
-
-            .boton-estilo {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #3498db;
-                color: #fff;
-                border: 2px solid #2980b9;
-                border-radius: 5px;
-                text-decoration: none;
-            }
-
-            .boton-estilo:hover {
-                background-color: #2980b9;
-            }
-
+        .boton-estilo:hover {
+            background-color: #2980b9;
+        }
         </style>
 </head>
 <body>
@@ -181,31 +186,16 @@
             <td th:text="${paciente.fechaNacimiento}"></td>
         </tr>
 
-        <tr th:if="${paciente != null}">
-            <td>
-                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
-                    <a th:href="@{/pacientes/consultas/{id}(id=${paciente.id})}" class="boton-estilo">Ver historia clínica</a>
-                </div>
-            </td>
-        </tr>
-
-        <tr th:if="${paciente != null}">
-            <td>
-                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
-                    <a th:href="@{/pacientes/resultadosestudios/{id}(id=${paciente.id})}" class="boton-estilo">Ver Resultado de estudio</a>
-                </div>
-            </td>
-        </tr>
-
-        <tr th:if="${paciente != null}">
-            <td>
-                <div style="margin-top: 20px;"> <!-- Agrega margen arriba para más espacio -->
-                    <a th:href="@{/triages/{id}(id=${paciente.id})}" class="boton-estilo">Ver triage</a>
-                </div>
-            </td>
-        </tr>
-
     </table>
+    <tr th:if="${paciente != null}">
+        <td>
+            <div style="margin-top: 20px; display: flex; justify-content: space-around;">
+                <a th:href="@{/pacientes/consultas/{id}(id=${paciente.id})}" class="boton-estilo">Ver historia clínica</a>
+                <a th:href="@{/pacientes/resultadosestudios/{id}(id=${paciente.id})}" class="boton-estilo">Ver Resultado de estudio</a>
+                <a th:href="@{/triages/{id}(id=${paciente.id})}" class="boton-estilo">Ver triage</a>
+            </div>
+        </td>
+    </tr>
 </div>
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
