@@ -107,7 +107,7 @@
 <div class="crear-especialidad">
     <form action="/profesionalSalud/medicos/especialidades/crear/" method="post">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"><br>
+        <input type="text" id="nombre" minlength="5" required name="nombre"><br>
         <input type="submit" value="Enviar">
     </form>
 </div>
@@ -115,23 +115,3 @@
 </body>
 
 </html>
-<!--
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Formulario para crear Especialidades</div>
-        <a href="/profesionalSalud/medicos/">Volver</a>
-        <h3 th:text="${mensaje}"></h3>
-        <form action="/profesionalSalud/medicos/especialidades/crear/" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"><br>
-            <input type="submit" value="Enviar">
-        </form>
-
-    </body>
-</html>
--->

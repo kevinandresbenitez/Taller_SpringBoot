@@ -103,21 +103,18 @@
 <div th:insert="~{components/navbar :: navbar}"></div>
 <div class="header">
     <h1>Crear Titulación</h1>
-    <a class="btn" href="/profesionalSalud/medicos/titulaciones/">Volver</a>
+    <a class="btn" href="/profesionalSalud/medicos/">Volver</a>
 </div>
 
 <div class="crear-titulacion">
     <form th:action="@{/profesionalSalud/medicos/titulaciones/crear/{id}(id=${id_medico})}" method="post">
-        <label th:each="especialidad: ${especialidades}">
+        <label th:each="especialidad,iterStat: ${especialidades}">
             <p>Especialidades Disponibles:</p>
             <p th:text="${especialidad.getNombre()}"></p>
-            
-            <th:block th:id>
-                <input type="radio" th:value="${especialidad.getId()}" name="id_especialidad" />
-            </th:block>
+            <input type="radio" th:value="${especialidad.getId()}" name="id_especialidad" th:checked="${iterStat.index == 0}"  />
             
         </label>
-        <input type="text" name="universidad" placeholder="Universidad" />
+        <input type="text" name="universidad" required minlength="8"  placeholder="Universidad" />
         <input type="date" name="fechaTitulacion" />
         <input type="submit" value="Crear Titulación" />
     </form>
