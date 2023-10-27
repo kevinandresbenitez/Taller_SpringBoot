@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
     <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
     <link rel="stylesheet" th:href="@{/css/components/mensaje.css}" />
-    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}" />
+    <link rel="stylesheet" th:href="@{/css/fuentes.css}"/>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
         }
 
@@ -118,6 +117,7 @@
 
 <body>
 <div th:insert="~{components/navbar :: navbar}"></div>
+<div th:insert="~{components/mensaje :: mensaje}"></div>
 <div class="header">
     <h1>Médicos</h1>
     <a class="btn" href="/profesionalSalud/">Volver</a>
@@ -173,52 +173,3 @@
 </body>
 
 </html>
-
-
-
-<!--<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Pagina Principal de Medicos</div>
-        
-        <a href="/profesionalSalud/">Volver</a>
-        <a href="/profesionalSalud/medicos/asignar/">Asignar Profesional de la salud como Medico</a>
-        <a href="/profesionalSalud/medicos/especialidades/">Especialidades</a>
-        <div>
-            
-            <h2>Medicos</h2>
-            <h3 th:text="${mensaje}"></h3>
-            <div th:each="medico : ${medicos}">
-                <strong>-----------------------------------------------</strong><br>
-                <strong>Nombre Del Profesional de la salud</strong><br>
-                <span th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
-                <strong>Nro Matricula del profesional de la salud</strong><br>
-                <span th:text="${medico.getProfesionalSalud().getNroMatricula()}"></span><br>
-                <strong>Nombre funcionario</strong><br>
-                <span th:text="${medico.getProfesionalSalud().getFuncionario.getNombre()}"></span><br>
-                <strong>ID del profesional de la salud</strong><br>
-                <span th:text="${medico.getProfesionalSalud().getId()}"></span><br>
-                <strong>ID del funcionario</strong><br>
-                <span th:text="${medico.getProfesionalSalud().getFuncionario.getId()}"></span><br>
-                <strong>Titulaciones</strong>
-                <div th:each="titulo: ${medico.getTitulos()}">
-                    <strong>Nombre Universidad</strong><br>
-                    <p th:text="${titulo.getUniversidad()}"></p>
-                    <strong>Fecha Titulacion</strong><br>
-                    <p th:text="${titulo.getFechaGraduacion()}"></p>
-                    <strong>Nombre Especialidad</strong><br>
-                    <p th:text="${titulo.getEspecialidad().getNombre()}"></p>
-                </div> 
-                <a th:href="@{/profesionalSalud/medicos/eliminar/{id}(id=${medico.getId()})}">Eliminar Medico</a>
-                <a th:href="@{/profesionalSalud/medicos/titulaciones/{id}(id=${medico.getId()})}">Configurar Titulaciones</a>
-            </div>
-  
-        </div>  
-
-    </body>
-</html>
--->

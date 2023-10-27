@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author kevin
+ * Controlador para gestionar profesionales de la salud
  */
 @Controller
 @Setter
@@ -42,6 +42,17 @@ public class ProfesionalSaludController {
     @Autowired
     SessionUsuario sessionUser;
     
+    
+   /**
+ * Controlador para listar profesionales de la salud.
+ *
+ *
+ * Se verifica si el usuario ha iniciado sesión.
+ *
+ * @param modelo  para agregar atributos a la vista.
+ * @return Si el usuario ha iniciado sesión, muestra la vista que lista a los profesionales de la salud.
+ *  Si no, redirige al usuario a la página de inicio.
+ */
     @GetMapping("/")
     public String list(Model modelo){
         // Verificacion de session
@@ -54,6 +65,17 @@ public class ProfesionalSaludController {
         return "profesionalesSalud/index";
     }
     
+    
+    /**
+ * Controlador para seleccionar un funcionario para su asignación como profesional de la salud.
+ *
+ * Esta ruta permite a un administrador seleccionar un funcionario para asignarlo como profesional de la salud en el sistema.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador.
+ *
+ * @param model  para agregar atributos a la vista.
+ * @return Si el usuario ha iniciado sesión, muestra la vista que lista a los funcionarios disponibles.
+ *         Si no, redirige al usuario a la página de inicio.
+ */
     @GetMapping("/asignarFuncionario")
     public String selectFuncionary(Model model){
         // Verificacion de session
@@ -66,6 +88,18 @@ public class ProfesionalSaludController {
         return "profesionalesSalud/mostrarFuncionarios";
     }
     
+    
+    /**
+ * Controlador para mostrar el formulario de asignación de un funcionario como profesional de la salud.
+ *
+ *
+ * @param id  Id del funcionario que se desea asignar como profesional de la salud.
+ * @param model  para agregar atributos a la vista.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Si el usuario ha iniciado sesión, muestra el formulario para asignar un funcionario como profesional de la salud.
+ *         Si el funcionario no existe, se agrega un mensaje de error y se redirige al usuario a la página de profesionales de la salud.
+ *         Si el usuario no ha iniciado sesión, se redirige al usuario a la página de inicio.
+ */
     @GetMapping("/asignarFuncionario/{id}")
     public String showForm(@PathVariable("id") Long id, Model model,RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -82,6 +116,20 @@ public class ProfesionalSaludController {
         model.addAttribute("funcionario",funcionario.get());
         return "profesionalesSalud/asignarFuncionario";
     }
+    
+    /**
+ * Controlador para  asignar de un funcionario como profesional de la salud.
+ *
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador.
+ *
+ * @param id El ID del funcionario que se desea asignar como profesional de la salud.
+ * @param nroMatricula El número de matrícula a asignar al funcionario como profesional de la salud.
+ * @param atributosMensaje  para agregar mensajes que se mostrarán después de la redirección.
+ * @return Si el usuario ha iniciado sesión y es un administrador, procesa la asignación del funcionario como profesional de la salud.
+ *         Realiza verificaciones para asegurarse de que el funcionario exista, no sea un administrador y no haya sido asignado como profesional de la salud previamente.
+ *         También verifica si el número de matrícula ya existe.
+ *         Si el usuario no ha iniciado sesión o no es un administrador, se redirige al usuario a la página de inicio.
+ */
     
     @PostMapping("/asignarFuncionario/{id}")
     public String processAssing(@PathVariable("id") Long id,@RequestParam(name = "nroMatricula") Long nroMatricula,RedirectAttributes atributosMensaje){

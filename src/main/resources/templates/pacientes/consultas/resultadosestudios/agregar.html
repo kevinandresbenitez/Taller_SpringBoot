@@ -2,10 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Formulario de resultados de estudios</title>
+  <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+  <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+  <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+  <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+  <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
 
   <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -99,6 +104,8 @@
         }
     </style>
 </head>
+
+
 <body>
 <form th:action="@{/pacientes/consultas/agregarresultadoestudios/{id}(id=${consulta.id})}" method="post" id="resultadoForm">
   <h2>Resultados de estudios:</h2>
@@ -107,10 +114,10 @@
     <!-- Campos iniciales -->
     <div>
       <label for="resultadosEstudios[0].tipoInforme">Tipo de Informe:</label>
-      <input type="text" id="tipoInforme0" name="tipoInforme[]" required>
+      <input type="text" id="tipoInforme0" name="tipoInforme[]" minlength="5" required>
 
       <label for="resultadosEstudios[0].informeEstudio">Informe de Estudio:</label>
-      <input type="text" id="informeEstudio0" name="informeEstudio[]" required>
+      <input type="text" id="informeEstudio0" name="informeEstudio[]" minlength="5" required>
     </div>
   </div>
 
@@ -148,5 +155,6 @@
     }
 
 </script>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>

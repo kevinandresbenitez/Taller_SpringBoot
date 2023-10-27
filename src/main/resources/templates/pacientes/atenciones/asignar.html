@@ -4,6 +4,12 @@
     <title>Lista de Pacientes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/normalice.css}" />
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}" />
+    <link rel="stylesheet" th:href="@{/css/fuentes.css}"/>
+    
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -54,6 +60,7 @@
     </style>
 </head>
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="title">Lista de pacientes esperando a ser atendidos en un box</div>
 
 <table>
@@ -78,4 +85,5 @@
     </tr>
     </tbody>
 </table>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>

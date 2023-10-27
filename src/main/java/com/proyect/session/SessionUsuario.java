@@ -26,6 +26,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 /**
+ * Clase de session
+ * 
  *
  * @author kevin
  */
@@ -56,6 +58,11 @@ public class SessionUsuario{
     
     
     // Metodos de sessiones estandar
+    /**
+     * asigna un funcionario como profesional de la salud con un número de matricula
+     *
+     * @param funcionario  Se guarda un funcionario, que es el de la session activa
+     */
     public void startSession(Funcionario funcionario){
         this.funcionario = funcionario;
         
@@ -69,34 +76,62 @@ public class SessionUsuario{
         
     }
     
+    /**
+     * Se elimina la session del funcionario
+     * 
+     */
     public void endSession(){
         this.funcionario = null;
         this.profSalud = null;
         this.medic = null;
     }
     
+    /**
+     * Verifica si la session existe     
+     * @return `true` si el funcionario inicio session, de lo contrario `false`
+     */
     public boolean existSession(){
         return this.funcionario != null;
     }
     // Metodos de sessiones estandar
     
     // Metodos de clases
+     /**
+     * Verifica si es un funcionario administrador    
+     * @return `true` si el funcionario es un administrador, en caso contrario `false`
+     */
     public boolean isAdmin(){
         return this.existSession() && this.administradorService.esFuncionarioAdministrador(this.funcionario.getId());
     }
     
+     /**
+     * Verifica si es un funcionario profesional de la salud
+     * @return `true` si el funcionario es un profesional de la salud, en caso contrario `false`
+     */
     public boolean isProfSalud(){
         return this.existSession() && this.profesionalSaludService.esFuncionarioProfesionalSalud(this.funcionario.getId());
     }
+    
+     /**
+     * Verifica si es un funcionario medico
+     * @return `true` si el funcionario es medico, en caso contrario `false`
+     */
     public boolean isMedic(){
         return this.existSession() && this.isProfSalud() && this.medicoService.esProfSaludMedico(this.profSalud.getId());
     }    
     
+    /**
+     * Verifica si es un funcionario medico con especialidades
+     * @return `true` si el funcionario es medico con especialidades, en caso contrario `false`
+     */
     public boolean isMedicalSpecialist(){
        return this.isMedic() && this.medicoService.tieneEspecialidades(this.medic.getId());
     }
     
-    
+    /**
+     * Verifica si es un funcionario enfermero
+     * @return `true` si el funcionario es enfermero, en caso contrario `false`
+     */
     public boolean isNurse(){ 
         //Es enfermero en ingles (me arrepiendo de escribir en ingles XD) 
         return  this.existSession() && this.isProfSalud() && this.enfermeroService.esProfSaludEnfermero(this.profSalud.getId());
@@ -104,6 +139,11 @@ public class SessionUsuario{
     // Metodos de clases
     
     // Metodos de funcionario
+    /**
+     * Verifica si es un funcionario trabaja en un sector
+     * * @param sectorVerificar  String
+     * @return `true` si el funcionario trabaja en, en caso contrario `false`
+     */
     public boolean workIn(String sectorVerificar){
         List<Sector> sectores = sectorService.obtenerSectoresDelFuncionario(this.funcionario.getId());
 
@@ -116,6 +156,11 @@ public class SessionUsuario{
         return false;
     }
     
+     /**
+     * Verifica si es un funcionario tiene un rol
+     * * @param rolVerificar  String
+     * @return `true` si el funcionario tiene un rol en, en caso contrario `false`
+     */
     public boolean hashRol(String rolVerificar){
         List<Rol> roles = rolService.obtenerRolesDelFuncionario(this.funcionario.getId());
 

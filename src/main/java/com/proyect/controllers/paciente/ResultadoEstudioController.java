@@ -6,7 +6,7 @@ package com.proyect.controllers.paciente;
 
 /**
  *
- * @author alvez
+ * controlador para gestionar los resulltados de estudios
  */
 import com.proyect.models.Consulta;
 import com.proyect.models.Paciente;
@@ -33,7 +33,14 @@ public class ResultadoEstudioController {
     
     @Autowired
     SessionUsuario sessionUser;
-
+    
+    /**
+ * Controlador para mostrar los resultados de estudios de un paciente específico.
+ *
+ * @param model  se utilizará para agregar datos que se mostrarán en la vista.
+ * @param id  id del paciente cuyos resultados de estudios se deben mostrar.
+ * @return  muestra los resultados de estudios o redirige a la página de inicio si no se encuentra el paciente o si el usuario no tiene acceso.
+ */
     // Resultados de esutudios del paciente
     @GetMapping("/{id}")
     public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {

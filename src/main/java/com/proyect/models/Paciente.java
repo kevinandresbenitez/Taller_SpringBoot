@@ -2,6 +2,7 @@ package com.proyect.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -22,7 +23,7 @@ public class Paciente extends Persona implements Serializable{
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
     @ToString.Exclude
-    private List<contactoPaciente> contactos;
+    private List<ContactoPaciente> contactos = new ArrayList<>();
     @OneToMany(mappedBy = "paciente")
     @Cascade(CascadeType.DELETE_ORPHAN)
     @ToString.Exclude
@@ -40,6 +41,8 @@ public class Paciente extends Persona implements Serializable{
     @ToString.Exclude
     private List<Ingreso> ingresos;
 
-
+    public void agregarContacto(ContactoPaciente contacto){
+        this.contactos.add(contacto);
+    }
 
 }

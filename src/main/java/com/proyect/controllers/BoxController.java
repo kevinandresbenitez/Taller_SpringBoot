@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- *
+ * esta clase maneja las operaciones relacionadas a la entidad de box
  * @author eduardo
+ *
  */
 @Controller
 @RequestMapping("/boxes")
@@ -28,7 +29,12 @@ public class BoxController {
     BoxService boxService;
     @Autowired
     SessionUsuario sessionUser;
-    
+
+    /**
+     *
+     * @param model se utiliza para tener la posibilidad de mandar variables a la vista
+     * @return vista donde se ve el listado de boxes
+     */
     @GetMapping("/")
       
     public String listBox(Model model) {
@@ -42,6 +48,13 @@ public class BoxController {
         return "boxes/index";
    
     }
+
+    /**
+     *
+     * @param atributoMensaje si un box se agrego correctamente, a traves de este atributo mandamos
+     *                        un mensaje a la vista avisando que fue agregado con exito
+     * @return la vista con la lista de boxes
+     */
     @GetMapping("/agregarbox")
     public String agregarBox(RedirectAttributes atributoMensaje){
         // Verificacion de session
@@ -54,6 +67,14 @@ public class BoxController {
         atributoMensaje.addFlashAttribute("mensaje","¡Se agregó un nuevo box!");
         return "redirect:/boxes/";
     }
+
+    /**
+     *
+     * @param id id necesario para poder ubicar el box en el sistema y poder eliminarlo sin problemas
+     * @param atributoMensaje si un box se elimino correctamente, a traves de este atributo mandamos
+     *                        un mensaje a la vista avisando que fue eliminado con exito
+     * @return vista con la lista de boxes
+     */
     @GetMapping("eliminar/{id}")
     public String eliminarBox(@PathVariable("id")Long id, RedirectAttributes atributoMensaje){
         // Verificacion de session

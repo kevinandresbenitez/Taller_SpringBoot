@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author kevin
+ * Coontrolador para gestionar Enfermeros
  */
 @Controller
 @Setter
@@ -42,7 +42,16 @@ public class EnfermeroController {
     @Autowired
     SessionUsuario sessionUser;
         
-   
+   /**
+ * Controlador para listar enfermeros.
+ *
+ * Esta ruta permite a un administrador listar enfermeros en el sistema.
+ * Se verifica si el usuario ha iniciado sesión y tiene permisos de administrador.
+ *
+ * @param model  para agregar atributos a la vista.
+ * @return Si el usuario ha iniciado sesión, muestra la vista de lista de enfermeros.
+ *         Si no, redirige al usuario a la página de inicio.
+ */
     @GetMapping("/")
     public String listEnfermereos(Model model){
         // Verificacion de session
@@ -55,6 +64,15 @@ public class EnfermeroController {
         return "profesionalesSalud/enfermeros/index";        
     }
     
+    /**
+ * Controlador para asignar enfermeros.
+ *
+ * Se verifica si el usuario ha iniciado sesión.
+ *
+ * @param model  para agregar atributos a la vista.
+ * @return Si el usuario ha iniciado sesión, muestra la vista de asignación de enfermeros.
+ *         Si no, redirige al usuario a la página de inicio.
+ */
     @GetMapping("/asignar/")
     public String asignarEnfermero(Model model){
         // Verificacion de session
@@ -66,6 +84,18 @@ public class EnfermeroController {
         model.addAttribute("profesionalesSalud",profSalud);
         return "profesionalesSalud/enfermeros/asignar";        
     }
+    
+    /**
+ * Controlador para procesar la asignación de un profesional de la salud como enfermero.
+ *
+ * Se verifica si el usuario ha iniciado sesión.
+ *
+ * @param id id del profesional de la salud que se desea asignar como enfermero.
+ * @param atributosMensaje para agregar mensajes que se mostrarán después de la redirección.
+ * @return Si el usuario ha iniciado sesión, procesa la asignación del profesional de la salud como enfermero y
+ * redirige a la página de enfermeros.
+ *  Si no, redirige al usuario a la página de inicio.
+ */
     
     @GetMapping("/asignar/{id}")
     public String procesarAsignacionEnfermero(@PathVariable("id") Long id,RedirectAttributes atributosMensaje){

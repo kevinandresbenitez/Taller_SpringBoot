@@ -85,7 +85,7 @@
     <form th:action="@{/profesionalSalud/asignarFuncionario/{id}(id=${funcionario.getId()})}" method="post">
         <input type="hidden" name="id" th:value="${funcionario.getId()}">
         <span>Agregar matrícula</span>
-        <input type="text" name="nroMatricula" min="3">
+        <input type="number" name="nroMatricula" min="3" minlength="3" required>
         <input type="submit" value="Asignar">
     </form>
 </div>
