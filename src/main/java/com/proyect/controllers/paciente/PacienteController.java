@@ -2,10 +2,7 @@ package com.proyect.controllers.paciente;
 
 import com.proyect.models.*;
 import com.proyect.repositories.TriageRepository;
-import com.proyect.services.ConsultaService;
-import com.proyect.services.PacienteService;
-import com.proyect.services.IngresoService;
-import com.proyect.services.TriageService;
+import com.proyect.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,9 @@ public class PacienteController {
     PacienteService pacienteService;
     @Autowired
     SessionUsuario sessionUser;
+
+    @Autowired
+    ContactoPacienteService contactoPacienteService;
 
     /**
      *
@@ -88,15 +88,17 @@ public class PacienteController {
                                 @RequestParam("domicilio") String domicilio,
                                 @RequestParam("telefonoCelular") long telefonoCelular,
                                 @RequestParam("telefonoFijo") long telefonoFijo,
+                                @RequestParam("nombreContacto") String nombreContacto,
+                                @RequestParam("numeroContacto") Long numeroContacto,
                                 @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
                                 @RequestParam("estadoCivil") String estadoCivil) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
         }
-        
         Optional<Paciente> VerificarPaciente = pacienteService.findByDni(dni);
         Paciente paciente = new Paciente();
+        ContactoPaciente contacto = new ContactoPaciente();
         paciente.setNombre(nombre);
         paciente.setDni(dni);
         paciente.setTelefonoFijo(telefonoFijo);
@@ -105,15 +107,19 @@ public class PacienteController {
         paciente.setTelefonoCelular(telefonoCelular);
         paciente.setDomicilio(domicilio);
         paciente.setEstadoCivil(estadoCivil);
-        
+        contacto.setPaciente(paciente);
+        contacto.setNombre(nombreContacto);
+        contacto.setNumeroTel(numeroContacto);
+        paciente.agregarContacto(contacto);
                 
         //Si esta creado ya, redirije a agregar ingreso
         if(VerificarPaciente.isPresent()){
             return "redirect:/pacientes/ingresos/agregar/"+VerificarPaciente.get().getId();
         }
         
-        
+
         pacienteService.guardarPaciente(paciente);
+        contactoPacienteService.guardarContacto(contacto);
         return "redirect:/pacientes/ingresos/agregar/"+paciente.getId();
     }
 

@@ -17,7 +17,7 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             height: 100vh;
         }
 
@@ -87,6 +87,12 @@
 
     <label for="email">Email:</label>
     <input type="email" id="email" name="email"  minlength="15" placeholder="Ej : correoFalso@gmail.com"  required oninput="validarYLimpiarEmail(this)">
+
+    <label for="nombreContacto">Nombre Contacto:</label>
+    <input type="text" id="nombreContacto" name="nombreContacto" minlength="5" placeholder="Ingrese Nombre" required oninput="validarYLimpiarCampoNombre(this)">
+
+    <label for="numeroContacto">Teléfono Celular del Contacto:</label>
+    <input type="number" id="numeroContacto" name="numeroContacto" placeholder="EJ: 3456110645"  minlength="10" maxlength="10" required oninput="validarYLimpiarTelefono(this)">
 
     <button type="submit">Crear Paciente</button>
 </form>
