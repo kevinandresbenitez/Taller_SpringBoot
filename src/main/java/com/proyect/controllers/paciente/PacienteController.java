@@ -70,12 +70,14 @@ public class PacienteController {
 
     /**
      *
-     * @param nombre nombre y apellido del paciente
-     * @param dni dni del paciente
-     * @param email email del paciente
-     * @param domicilio domicilio del paciente
-     * @param telefonoCelular telefono del paciente
-     * @param telefonoFijo telefono fijo del paciente
+     * @param nombre nombre y apellido a guardar del paciente
+     * @param dni dni a guardar del paciente
+     * @param email email a guardar del paciente
+     * @param domicilio domicilio a guardar del paciente
+     * @param telefonoCelular telefono a guardar del paciente
+     * @param telefonoFijo telefono fijo a guardar del paciente
+     * @param nombreContacto nombre a guardar del contacto de un paciente
+     * @param numeroContacto numero de telofono a guardar del contacto de un paciente
      * @param fechaNacimiento fecha de nacimiento del paciente
      * @param estadoCivil estado civil del paciente
      * @return vista para agregar un motivo de consulta
