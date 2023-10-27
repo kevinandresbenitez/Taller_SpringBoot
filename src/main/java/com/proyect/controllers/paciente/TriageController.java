@@ -150,7 +150,7 @@ public class TriageController {
         triageService.guardarTriage(triageAGuardar);
         
 
-        return "redirect:/triages/resultadotriage/"+id;
+        return "redirect:/triages/resultadotriage/"+triageAGuardar.getId();
     }
 
 

@@ -110,7 +110,18 @@
             background-color: #007bff;
             color: #fff;
         }
-
+        .result-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .result-section p {
+            color: #333;
+            text-align: center; /* Alineación centrada */
+        }
     </style>
 </head>
 <div th:insert="~{components/navbar :: navbar}"></div>
@@ -143,9 +154,9 @@
     </div>
 
 
-    <div id="resultMedicoCantPacientes" class="search-result">
-        <p th:if="${pacientesPorMedico != null}">El medico:  <span th:text="${medico.profesionalSalud.funcionario.nombre}"></span></p>
-        <p th:if="${pacientesPorMedico != null}">Atendio a: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
+    <div id="resultMedicoCantPacientes" class="search-result result-section">
+        <p  th:if="${pacientesPorMedico != null}">El medico:  <span th:text="${medico.profesionalSalud.funcionario.nombre}"></span></p>
+        <p  th:if="${pacientesPorMedico != null}">Atendio a: <span th:text="${pacientesPorMedico}"></span> pacientes</p>
     </div>
 
 
@@ -163,7 +174,7 @@
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <div id="cantidadpacientes" class="search-result">
+    <div id="cantidadpacientes" class="search-result result-section">
         <p th:if="${pacientesPorEdadYFecha != null}">En esas fechas se atendieron: <span th:text="${pacientesPorEdadYFecha}"></span> pacientes</p>
     </div>
 
@@ -179,7 +190,7 @@
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <table id= "pacientemasconsultoresult" class="search-result">
+    <table id= "pacientemasconsultoresult" class="search-result result-section">
         <tr th:if="${pacienteMasConsultado != null}">
             <th>Nombre</th>
             <td th:text="${pacienteMasConsultado.nombre}"></td>
@@ -205,7 +216,7 @@
             <button type="submit">Consultar</button>
         </form>
     </div>
-    <table id="datosDelMedico" class="search-result">
+    <table id="datosDelMedico" class="search-result result-section">
 
         <tr th:if="${medicoMasAtendio != null}">
             <th>Nombre</th>
@@ -233,7 +244,7 @@
     </div>
 
 
-    <div id="datosdetriages" class="search-result">
+    <div id="datosdetriages" class="search-result result-section">
         <p th:if="${triages != null}">Total de triages: <span th:text="${triages}"></span></p>
         <p th:if="${rojo != null}">Triages Rojos: <span th:text="${rojo}"></span></p>
         <p th:if="${naranja != null}">Triages Naranjas: <span th:text="${naranja}"></span></p>
@@ -246,12 +257,12 @@
         <h3>Todas las modificaciones de triage</h3>
         <form th:action="@{/estadisticas/modificacionestriage}" method="get">
 
-            <button type="submit" onclick="toggleTable()">Modificaciones de triages</button>
+            <button type="submit">Modificaciones de triages</button>
         </form>
 
     </div>
 
-    <div id= "resultadosdemodificaciones" class="search-result">
+    <div id= "resultadosdemodificaciones" class="search-result result-section">
         <p th:if="${modificaciones != null}">Se realizaron: <span th:text="${modificaciones.size()}"></span> cambios</p>
 
         <table id="cambioColorTable">
@@ -267,7 +278,7 @@
             <tr th:each="modificacion : ${modificaciones}">
                 <td th:text="${modificacion.colorViejo}"></td>
                 <td th:text="${modificacion.triage.color}"></td>
-                <td th:text="${modificacion.triage.medico.profesionalSalud.funcionario.nombre}"></td>
+                <td th:text="${modificacion.getTriage().getProfesionalSalud().getFuncionario().getNombre()}"></td>
             </tr>
             </tbody>
         </table>
