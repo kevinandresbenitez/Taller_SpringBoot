@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * interactua con el repositorio MedicoRepository para realizar operaciones de persistencia
  * y recuperación de datos relacionados con los medicos
  *
- * @Service
+ *
  */
 @Service
 public class MedicoService {
