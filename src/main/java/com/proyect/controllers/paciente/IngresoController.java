@@ -16,6 +16,9 @@ import java.time.LocalTime;
 import java.util.Optional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ *  en esta clase se realizan las operaciones con respecto a un ingreso de un paciente y el motivo de consulta
+ */
 
 @Controller
 @RequestMapping("/pacientes/ingresos")
@@ -26,9 +29,15 @@ public class IngresoController {
     PacienteService pacienteService;
     @Autowired
     SessionUsuario sessionUser;
-    
+
+    /**
+     *
+     * @return si un funcionario no inicio sesion o no tiene rol administrativo es redireccionado a la pagina principal
+     *          o al login
+     *          vista con el formulario para verificar existencia en el sistema por dni
+     */
     @GetMapping("/verificarExistencia")
-    public String formularioVerificarExistencia(Model model) {
+    public String formularioVerificarExistencia() {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
@@ -36,10 +45,19 @@ public class IngresoController {
         
         return "pacientes/ingresos/verificar";
     }
-    
-    
+
+    /**
+     *
+     * @param dni dni de un paciente para verificar que ya se encuentre registrado en el sistema
+     * @param atributos si no se encuentra registrado este parametro hace posible poder concatenarlo en
+     *                  el formulario de registro, en el campo dni
+     * @return si un funcionario no inicio sesion o no tiene rol administrativo es redireccionado a la pagina principal
+     *          o al login
+     *          si el paciente no esta registrado es redireccionado al formulario de registro, caso contrario
+     *          es enviado a rellenar el motivo de consulta
+     */
     @PostMapping("/verificarExistencia")
-    public String procesarVerificarExistencia(Model model,@RequestParam("dni")int dni, RedirectAttributes atributos) {
+    public String procesarVerificarExistencia(@RequestParam("dni")int dni, RedirectAttributes atributos) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
@@ -54,7 +72,14 @@ public class IngresoController {
         return "redirect:/pacientes/ingresos/agregar/"+paciente.get().getId();
     }
 
-    
+    /**
+     *
+     * @param model parametro que hace posible poder enviar variables del metodo a la vista
+     * @param id id para ubicar un paciente en el sistema
+     * @return si un funcionario no inicio sesion o no tiene rol administrativo es redireccionado a la pagina principal
+     *          o al login, caso contrario se redirecciona al formulario para agregar un motivo de consulta
+     *
+     */
     
     @GetMapping("/agregar/{id}")
     public String formulario(Model model,@PathVariable("id")Long id) {
@@ -68,6 +93,14 @@ public class IngresoController {
         return "pacientes/ingresos/agregar";
     }
 
+    /**
+     *
+     * @param id id para ubicar al paciente en el sistema, ademas para poder verificar si se encuentra ya en espera de atencion
+     * @param motivoConsulta motivo por el cual el paciente acude a atencion medica
+     * @param atribut parametro que nos posibilita comunicarme con la vista y enviar un mensaje segun un evento
+     * @return se retorna a la pagina principal
+     *
+     */
     @PostMapping("/agregar/{id}")
     public String formulario(@PathVariable("id")Long id,
                              @RequestParam("motivoConsulta")String motivoConsulta,RedirectAttributes atribut){
@@ -80,7 +113,7 @@ public class IngresoController {
         
         if(tieneIngresoPrevio){
             atribut.addFlashAttribute("mensaje","Este paciente ya esta esperando");
-            return "redirect:/pacientes/ingresos/verificarExistencia";
+            return "redirect:/";
         }
         
         Paciente paciente = pacienteService.obtenerPacienteById(id);
