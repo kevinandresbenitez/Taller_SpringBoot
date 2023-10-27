@@ -1,124 +1,123 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html lang="es">
+
 <head>
-    <title>Médicos</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/FUNCIONARIOTABLA.CSS"> <!-- Enlaza tu hoja de estilos personalizada -->
+    <title>Listado de Médicos</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}" />
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}" />
     <style>
-        /* Estilos específicos para esta página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
         .header {
-            background-color: #2c6eb4;
-            color: #fff;
-            padding: 10px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
             text-align: center;
         }
 
-        .header a.btn {
-            margin: 5px;
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-            background-color: #13253b;
-            border: 1px solid #0056b3;
-            border-radius: 4px;
-            font-size: 14px;
+        .header h1 {
+            color: #007BFF;
+            margin: 0;
         }
 
-        .header a.btn:hover {
-            background-color: #1f4b7a;
+        .btn {
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
         }
 
         h2 {
+            color: #007BFF;
             text-align: center;
         }
 
-        ul {
-            list-style: none;
-        }
-
         .medico {
-            border: 1px solid #ccc;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .medico:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Ajusta el ancho de la tabla según sea necesario */
+            box-sizing: border-box;
         }
 
         .medico-details {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        .medico-details table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        .medico-details th, .medico-details td {
-            border: 1px solid #ccc;
-            padding: 8px;
+            margin: 20px 0;
             text-align: left;
         }
 
+        .medico-details th,
+        .medico-details td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
         .medico-details th {
-            background-color: #1f4b7a;
+            background-color: #007BFF;
             color: #fff;
             font-weight: bold;
         }
 
-        .medico-details th:first-child,
-        .medico-details td:first-child {
-            width: 20%;
-        }
-
-        .medico-details td ul {
-            margin: 0;
-            padding: 0;
+        .medico-details td {
+            font-size: 14px;
         }
 
         .medico-actions {
-            clear: both;
-            display: flex;
-            justify-content: space-around;
+            margin-top: 20px;
             text-align: center;
-            padding-top: 10px;
         }
 
         .medico-actions .btn {
-            display: block;
-            margin: 5px;
-            text-align: center;
-            padding: 8px 16px;
-            background-color: #1f4b7a;
+            background-color: #007BFF;
             color: #fff;
             text-decoration: none;
-            border: 1px solid #1f4b7a;
-            border-radius: 4px;
-            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            display: inline-block;
         }
 
         .medico-actions .btn:hover {
             background-color: #0056b3;
         }
-
-        .medico-actions .btn-danger {
-            background-color: #FF5733;
-            border: 1px solid #FF5733;
-        }
-
-        .medico-actions .btn-danger:hover {
-            background-color: #D23D1F;
-        }
     </style>
 </head>
+
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="header">
     <h1>Médicos</h1>
     <a class="btn" href="/profesionalSalud/">Volver</a>
@@ -170,7 +169,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <a th:href="@{/profesionalSalud/medicos/titulaciones/{id}(id=${medico.getId()})}" class="btn">Configurar Titulaciones</a>
     </div>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
+
 </html>
 
 

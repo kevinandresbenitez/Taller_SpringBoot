@@ -61,37 +61,87 @@
 
 </head>
 <body>
-<form th:action="@{/pacientes/crear}" method="post">
+<form th:action="@{/pacientes/crear}" method="post"  onsubmit="return validarFormulario()">
     <h2>Registro de paciente</h2>
 
     <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
+   <input type="text" id="nombre" name="nombre" required oninput="validarYLimpiarCampoNombre(this)">
 
     <label for="dni">DNI:</label>
-    <input type="text" id="dni" th:value="${dni}" name="dni"required>
+    <input type="text" id="dni" th:value="${dni}" name="dni"required >
 
     <label for="domicilio">Domicilio:</label>
-    <input type="text" id="domicilio" name="domicilio" required>
+   <input type="text" id="domicilio" name="domicilio" required oninput="validarYLimpiarCampoDomicilio(this)">
 
     <label for="fechaNacimiento">Fecha de Nacimiento:</label>
     <input type="Date" id="fechaNacimiento" name="fechaNacimiento" min="1900-01-01" required>
 
     <label for="estadoCivil">Estado Civil:</label>
-    <input type="text" id="estadoCivil" name="estadoCivil" required>
+    <input type="text" id="estadoCivil" name="estadoCivil" required oninput="validarYLimpiarCampoNombre(this)">
 
     <label for="telefonoFijo">Teléfono Fijo:</label>
-    <input type="number" id="telefonoFijo" name="telefonoFijo" required>
+    <input type="number" id="telefonoFijo" name="telefonoFijo" required oninput="validarYLimpiarTelefono(this)">
 
     <label for="telefonoCelular">Teléfono Celular:</label>
-    <input type="number" id="telefonoCelular" name="telefonoCelular" required>
+    <input type="number" id="telefonoCelular" name="telefonoCelular" required oninput="validarYLimpiarTelefono(this)">
 
     <label for="email">Email:</label>
-    <input type="text" id="email" name="email" required>
+    <input type="text" id="email" name="email" required oninput="validarYLimpiarEmail(this)">
 
     <button type="submit">Crear Paciente</button>
 </form>
 <script>
     document.getElementById('fechaNacimiento').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+   
+
+   function validarFormulario() {
+    const nombre = document.getElementById('nombre').value;
+    if (!/^[a-zA-Z\s]*$/.test(nombre)) {
+        alert('El campo "Nombre" solo debe contener letras.');
+        return false;
+    }
+    const domicilio = document.getElementById('domicilio').value;
+    if (!/^[a-zA-Z0-9\s]*$/.test(domicilio)) {
+        alert('El campo "Domicilio" debe contener letras y números.');
+        return false;
+    }
+    const estadoCivil = document.getElementById('estadoCivil').value;
+    if (!/^[a-zA-Z\s]*$/.test(estadoCivil)) {
+        alert('El campo "Estado Civil" solo debe contener letras.');
+        return false;
+    }
+    
+    return true;
+}
+
+function validarYLimpiarCampoNombre(input) {
+    const valor = input.value;
+    if (!/^[a-zA-Z\s]*$/.test(valor)) {
+        alert('El campo "Nombre" solo debe contener letras.');
+        input.value = valor.replace(/[^a-zA-Z\s]/g, '');
+    }
+}
+
+function validarYLimpiarCampoDomicilio(input) {
+    const valor = input.value;
+    if (!/^[a-zA-Z0-9\s]*$/.test(valor)) {
+        alert('El campo "Domicilio" debe contener letras y números.');
+        input.value = valor.replace(/[^a-zA-Z0-9\s]/g, '');
+    }
+    
+}
+function validarYLimpiarTelefono(input) {
+    const valor = input.value;
+    if (!/^[0-9\-]*$/.test(valor)) {
+        alert('El campo de teléfono solo debe contener números y guiones.');
+        input.value = valor.replace(/[^0-9\-]/g, '');
+    }
+}
+
+
+
+
+
 </script>
 
 </body>

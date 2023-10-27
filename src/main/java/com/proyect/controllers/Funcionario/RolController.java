@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author kevin
+ * Controlador para gestionar roles de funcionarios
  */
 @Controller
 @Setter
@@ -36,6 +36,14 @@ public class RolController {
     @Autowired
     SessionUsuario sessionUser;
     
+    
+     /*
+        * Controlador para listar roles de funcionarios
+        *
+        *  @param modelo Modelo utilizado para agregar atributos que serán utilizados en la vista.
+         * @return Retorna la vista "funcionarios/index" con la lista de funcionarios si el usuario está autenticado.
+         *  Si no, redirige al inicio.
+         */
     @GetMapping("/")
     public String list(Model modelo){
         // Verificacion de session
@@ -48,6 +56,15 @@ public class RolController {
         return "funcionarios/roles/index";
     }
     
+    /**
+         * Controlador para asignar roles a un funcionario
+         *
+         * @param id_funcionario El ID del funcionario al que se asignarán los roles.
+         * @param modelo Modelo utilizado para agregar atributos que serán utilizados en la vista.
+         * @param atributosMensaje agrega mensajes que se mostrarán en la redirección.
+         * @return Retorna la vista "funcionarios/roles/asignar" con la información del funcionario y
+         *  la lista de roles disponibles si el usuario está autenticado. Si no, redirige al inicio o muestra un mensaje de error.
+         */
     @GetMapping("/asignar/{id_funcionario}")
     public String asignarRoles(@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -68,7 +85,16 @@ public class RolController {
         return "funcionarios/roles/asignar";
     }
     
-    
+    /**
+         * Controlador que permite asignar roles a un funcionario específico.
+         *
+         *
+         * @param id_funcionario El ID del funcionario al que se le asignarán los roles.
+         * @param modelo Objeto Modelo utilizado para agregar atributos que se utilizarán en la vista.
+         * @param atributosMensaje agrega mensajes que se mostrarán después de la redirección.
+         * @return Retorna la vista "funcionarios/roles/asignar" con información sobre el funcionario y la lista de roles disponibles,
+         * si el usuario está autenticado. Si no, redirige al inicio o muestra un mensaje de error.
+         */
     @PostMapping("/asignar/{id_funcionario}")
     public String procesarAsignacionRoles(@RequestParam("roles_id") List<Long> RolesId,@PathVariable("id_funcionario") Long id_funcionario,Model modelo , RedirectAttributes atributosMensaje){
         // Verificacion de session
@@ -110,7 +136,12 @@ public class RolController {
         return "redirect:/funcionarios/";
     }
     
-    
+     /**
+         * Controlador para mostrar el formulario de creación de roles de funcionarios.
+         *
+         * @return Retorna la vista "funcionarios/roles/crear" que contiene el formulario de creación de roles de funcionarios,
+         * si el usuario está autenticado. Si no, redirige al inicio.
+         */
     @GetMapping("/crear")
     public String createForm(){
         // Verificacion de session
@@ -120,7 +151,17 @@ public class RolController {
         
         return "funcionarios/roles/crear";
     }
-
+    
+    /**
+         * Controlador para procesar la creación de un nuevo rol de funcionario.
+         *
+         *
+         * @param nombre El nombre del nuevo rol, obtenido desde el formulario.
+         * @param atributosMensaje  agrega mensajes que se mostrarán después de la redirección.
+         * @return Retorna a la página de roles de funcionarios con un mensaje de creación exitosa si el rol se crea con éxito.
+         * Si el usuario no ha iniciado sesión, se redirige a la página de inicio o muestra un mensaje de error si el rol ya existe.
+         * 
+         */
     @PostMapping("/crear")
     public String processFormCreation(@RequestParam("nombre") String nombre,RedirectAttributes atributosMensaje){
         // Verificacion de session

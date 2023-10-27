@@ -5,10 +5,15 @@
     <title>TODO supply a title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -34,10 +39,10 @@
         }
 
         div {
-            margin-top: 20px;
+            margin-top: 0px;
         }
 
-        strong {
+        h4 {
             color: #dc3545;
         }
 
@@ -59,6 +64,7 @@
 </head>
 
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="container">
     <h1>Asignar un funcionario como administrador</h1>
 
@@ -69,12 +75,13 @@
 
         <div th:each="funcionario : ${funcionarios}">
 
-            <strong>Nombre Del funcionario:</strong><br>
+            <h4>Nombre Del funcionario:</h4><br>
             <span th:text="${funcionario.getNombre()}"></span><br>
             <a th:href="@{/administradores/asignarFuncionario/{id}(id=${funcionario.getId()})}">Asignar como administrador</a>
         </div>
     </div>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 
 </html>

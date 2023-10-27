@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>consultas</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -76,7 +81,7 @@
     </style>
 </head>
 <body>
-
+<div th:insert="~{components/navbar :: navbar}"></div>
 <div class="container mt-5">
     <h2 class="mb-4">Resultado de estudios del paciente: <span th:text="${consulta.getPaciente().getNombre()}"></span></h2>
 
@@ -104,6 +109,6 @@
         </tbody>
     </table>
 </div>
-
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>

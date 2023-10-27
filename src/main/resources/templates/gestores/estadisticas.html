@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE, edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -108,7 +113,10 @@
 
     </style>
 </head>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:insert="~{components/mensaje :: mensaje}"></div>
 <body>
+
 <div class="container">
     <h2>Estadísticas</h2>
 
@@ -281,5 +289,6 @@
         fecha.setAttribute('max', fechaActual);
     });
 </script>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>

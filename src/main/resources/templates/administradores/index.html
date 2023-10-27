@@ -5,10 +5,15 @@
     <title>TODO supply a title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/normalice.css}" />
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}" />
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
@@ -37,12 +42,12 @@
             color: #28a745;
         }
 
-        div {
-            margin-top: 20px;
+        h4 {
+            color: #dc3545;
         }
 
-        strong {
-            color: #dc3545;
+        div {
+            margin-top: 0px;
         }
 
         a {
@@ -63,28 +68,26 @@
 </head>
 
 <body>
+<div th:insert="~{components/navbar :: navbar}"></div>
+<div th:insert="~{components/mensaje :: mensaje}"></div>
 <div class="container">
     <h1>Página Principal de Administradores</h1>
 
     <a href="/">Volver</a>
     <a href="/administradores/asignarFuncionario">Asignar un funcionario como administrador</a>
 
-    <div>
-        <h2>Administradores</h2>
-        <h3 th:text="${mensaje}"></h3>
+    <div th:each="administrador : ${administradores}">
+        <h4>Nombre Del Administrador</h4>
+        <span th:text="${administrador.getFuncionario.getNombre()}"></span><br>
+        <h4>ID del administrador</h4>
+        <span th:text="${administrador.getId()}"></span><br>
+        <h4>ID del funcionario</h4>
+        <span th:text="${administrador.getFuncionario.getId()}"></span><br>
 
-        <div th:each="administrador : ${administradores}">
-            <strong>Nombre Del Administrador</strong><br>
-            <span th:text="${administrador.getFuncionario.getNombre()}"></span><br>
-            <strong>ID del administrador</strong><br>
-            <span th:text="${administrador.getId()}"></span><br>
-            <strong>ID del funcionario</strong><br>
-            <span th:text="${administrador.getFuncionario.getId()}"></span><br>
-
-            <a th:href="@{/administradores/eliminar/{id}(id=${administrador.getId()})}">Eliminar como administrador</a>
-        </div>
+        <a th:href="@{/administradores/eliminar/{id}(id=${administrador.getId()})}">Eliminar como administrador</a>
     </div>
 </div>
+<script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 
 </html>

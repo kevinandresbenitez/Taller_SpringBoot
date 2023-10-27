@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente,Long> {
 
@@ -27,6 +28,10 @@ public interface PacienteRepository extends JpaRepository<Paciente,Long> {
     List<Paciente> BuscarPacientesNecesitanSerAtendidosEnBox();
     
     /*Lista de pacientes para crear triages*/
-    @Query(value ="SELECT Paciente.* FROM paciente Paciente  LEFT JOIN ingreso on paciente.id = ingreso.id_paciente LEFT JOIN triage on paciente.id = triage.id_paciente WHERE ingreso.id NOT IN (SELECT id_ingreso FROM Consulta ) AND (paciente.id not in(SELECT id_paciente FROM triage) OR triage.id IN (SELECT id_triage from consulta))",nativeQuery = true)
+    @Query(value ="SELECT paciente.* FROM paciente LEFT JOIN ingreso on paciente.id = ingreso.id_paciente where (ingreso.id NOT IN (SELECT id_ingreso FROM Consulta )) AND (paciente.id not in(SELECT id_paciente FROM triage where triage.id not in (select id_triage from consulta)))",nativeQuery = true)
     List<Paciente> BuscarPacientesNecesitanSerTriagados();
+    
+    /*EL paciente tiene ingresos previos*/
+    @Query(value="SELECT * FROM paciente WHERE id = :id and (paciente.id in (SELECT id_paciente FROM ingreso WHERE ingreso.id not in(SELECT id_ingreso from consulta)));",nativeQuery = true)
+    Optional<Paciente> estaElPacienteEnIngreso(@Param("id") Long id);
 }
