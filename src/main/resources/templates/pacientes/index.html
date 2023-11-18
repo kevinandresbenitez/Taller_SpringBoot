@@ -141,16 +141,6 @@
         </form>
     </div>
 
-    <div id="resultado" style="display: none;">
-        <table>
-            <!-- Se muestra el paciente si se encuentra -->
-            <tr th:if="${paciente != null}">
-                <th>ID</th>
-                <td th:text="${paciente.id}"></td>
-            </tr>
-            <!-- Agrega aquí otras filas para mostrar los datos del paciente -->
-        </table>
-    </div>
     <table>
         <!-- Se muestra el paciente si se encuentra -->
         <tr th:if="${paciente != null}">

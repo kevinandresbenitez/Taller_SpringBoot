@@ -99,7 +99,7 @@
         </thead>
         <tbody>
 
-        <tr th:each="resultado : ${consulta.resultadoEstudios}">
+        <tr th:each="resultado : ${consulta.getResultadoEstudios()}">
             <td th:text="${resultado.fecha}"></td>
             <td th:text="${resultado.hora}"></td>
             <td th:text="${resultado.tipoInforme}"></td>
