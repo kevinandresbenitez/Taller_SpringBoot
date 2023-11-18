@@ -97,13 +97,13 @@ public class ConsultaController {
         }        
         
         Paciente paciente = pacienteService.obtenerPacienteById(id);
-        Box box = boxService.findByPacienteId(paciente.getId());
+        
         Consulta consulta = new Consulta();
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
-        List<Medico> medicos = medicoService.listarMedicos();
-        Medico medico = medicos.get(medicos.size() -1 );
-        consulta.setMedico(medico);
+        
+        //Agregando atributos de la consulta        
+        consulta.setMedico(this.sessionUser.getMedic());
         consulta.setHoraAtencion(tiempohoy);
         consulta.setFechaAtencion(fechahoy);
         consulta.setTipoAtencion(tipoAtencion);
@@ -113,7 +113,9 @@ public class ConsultaController {
         consulta.setIngreso(paciente.getIngresos().get(paciente.getIngresos().size()-1));
         consulta.setTriage(paciente.getTriages().get(paciente.getTriages().size()-1));
         consultaService.guardarConsulta(consulta);
-        pacienteService.guardarPaciente(paciente);
+        
+        //Vaciando el box en el que estaba el paciente  atendiendose
+        Box box = boxService.findByPacienteId(paciente.getId());
         box.setPaciente(null);
         boxService.guardarBox(box);
         
@@ -129,30 +131,29 @@ public class ConsultaController {
      * @param id id para poder ubicar a que consulta se le agregaran los resultados de estudios
      * @param PermitirCreacionResEst es la bandera que nos verifica si ya pasó el momento de agregar
      *                               los resultados de estudios
-     * @param redirectAttributes es un atributo flash, puede utilizarse una vez y en este momento
+     * @param atributos es un atributo flash, puede utilizarse una vez y en este momento
      *                           es usado para verificar que se pueda agregar resultados de estudios
      * @return vista del formulario para agregar resultados estudios
      */
     @GetMapping("/agregarresultadosestudios/{id}")
     public String formularioResultadoEstudios(Model model,@PathVariable("id")Long id
             ,@ModelAttribute("PermitirCreacionResEst") String PermitirCreacionResEst
-            ,RedirectAttributes redirectAttributes){
+            ,RedirectAttributes atributos){
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";
         }        
         
-        Consulta consulta = consultaService.obtenerConsultaPorId(id);
-        model.addAttribute("consulta",consulta);
-        
+        Optional<Consulta> consulta = consultaService.obtenerConsultaPorId(id);                
         // Si la consulta no existe o si la consulta es vieja( no se modifica )
-        if (!(PermitirCreacionResEst == "si") || consulta == null) {
-
+        if (!(PermitirCreacionResEst == "si") || consulta.isEmpty()) {
+            atributos.addFlashAttribute("mensaje","La consulta no existe o no esta disponible su modificacion");
             return "redirect:/";
         }
 
         // Agregando flash para solo agregar resultados de estudios 1 vez
-        redirectAttributes.addFlashAttribute("PermitirCreacionResEst", "si");
+        atributos.addFlashAttribute("PermitirCreacionResEst", "si");
+        model.addAttribute("consulta",consulta.get());
         return "pacientes/consultas/resultadosestudios/agregar";
     }
 
@@ -161,6 +162,7 @@ public class ConsultaController {
      *
      * @param tiposInformes lista de tipos de informes realizados a un paciente en su respectiva consulta
      * @param informesEstudios lista de informes de estudios realizados a un paciente en su respectiva consulta
+     * @param atributosMensaje Atributos para poder redirijir con un mensaje
      * @param id id para poder ubicar a que consulta se le agregaran los resultados de estudios
      * @return vista de los boxes de atencion
      */
@@ -172,13 +174,14 @@ public class ConsultaController {
         if(!sessionUser.existSession() || !sessionUser.isMedicalSpecialist()){
             return "redirect:/";
         }        
-        
-        Consulta consulta = consultaService.obtenerConsultaPorId(id);
-        
+
+        Optional<Consulta> consulta = consultaService.obtenerConsultaPorId(id);        
         // Si no existe la consulta
-        if(consulta == null){
+        if(consulta.isEmpty()){
+            atributosMensaje.addFlashAttribute("mensaje","La consulta no existe");
             return "redirect:/";
         }
+        
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         for(int i=0;i<tiposInformes.size();i++){
@@ -187,13 +190,13 @@ public class ConsultaController {
             resultadoEstudio.setFecha(fechahoy);
             resultadoEstudio.setTipoInforme(tiposInformes.get(i));
             resultadoEstudio.setInformeEstudio(informesEstudios.get(i));
-            resultadoEstudio.setPaciente(consulta.getPaciente());
+            resultadoEstudio.setPaciente(consulta.get().getPaciente());
             resultadoEstudioService.guardarResultadoEstudio(resultadoEstudio);
-            consulta.getResultadoEstudios().add(resultadoEstudio);
+            consulta.get().getResultadoEstudios().add(resultadoEstudio);
 
         }
-        atributosMensaje.addFlashAttribute("mensaje","consulta realizada");
-        consultaService.guardarConsulta(consulta);
+        atributosMensaje.addFlashAttribute("mensaje","Consulta Agregada exitosamente");
+        consultaService.guardarConsulta(consulta.get());
         return "redirect:/pacientes/atenciones/";
     }
 
@@ -203,21 +206,22 @@ public class ConsultaController {
      *
      * @param model se utiliza para pasar variables a la vista
      * @param id id para ubicar la consulta en el sistema
-     * @return vista para mostrar listado de resultado de estudios
+     * @param atributos Atributos para redirijr con un mensaje
+     * @return vista para mostrar listado de resultado de estudios si la encuentra, si no redirije a / con un mensaje
      */
     @GetMapping("/resultadosestudios/{id}")
-    public String listaResultadosEstudios(Model model, @PathVariable("id") Long id) {
+    public String listaResultadosEstudios(Model model, @PathVariable("id") Long id,RedirectAttributes atributos) {
         // Verificacion de session
         if(!sessionUser.existSession() || !(sessionUser.isMedic() || sessionUser.hashRol("Administrativo"))){
             return "redirect:/";
         }
         
-        
-        Consulta consulta = consultaService.obtenerConsultaPorId(id);
-        if (consulta == null) {
+        Optional<Consulta> consulta = consultaService.obtenerConsultaPorId(id);
+        if (consulta.isEmpty()) {
+            atributos.addFlashAttribute("mensaje","La consulta no existe");
             return "redirect:/";
         }
-        model.addAttribute("consulta", consulta);
+        model.addAttribute("consulta", consulta.get());
         return "pacientes/consultas/resultadosestudios/index";
     }
     

@@ -52,38 +52,25 @@ public class SessionUsuario{
     private ProfesionalSaludService profesionalSaludService;
     
     private Funcionario funcionario;
-    private ProfesionalSalud profSalud;
-    private Medico medic;
    
     
     
     // Metodos de sessiones estandar
     /**
-     * asigna un funcionario como profesional de la salud con un número de matricula
+     * Permite el inicio de session de la aplicacion 
      *
      * @param funcionario  Se guarda un funcionario, que es el de la session activa
      */
     public void startSession(Funcionario funcionario){
-        this.funcionario = funcionario;
-        
-        // Seteo las relaciones correspondientes(Por el lazy load de Spring boot)
-        if(this.isProfSalud()){
-            this.profSalud = this.profesionalSaludService.obtenerProfSaludPorFuncionarioId(this.funcionario.getId()).get();
-        }
-        if(this.isMedic()){
-            this.medic = this.medicoService.obtenerMedicoPorIdProfSalud(this.profSalud.getId()).get();
-        }
-        
+        this.funcionario = funcionario;                
     }
     
     /**
-     * Se elimina la session del funcionario
+     * Se elimina la session iniciada
      * 
      */
     public void endSession(){
         this.funcionario = null;
-        this.profSalud = null;
-        this.medic = null;
     }
     
     /**
@@ -97,11 +84,27 @@ public class SessionUsuario{
     
     // Metodos de clases
      /**
+     * Si es un funcionario profesional de la salud, retorna su instancia
+     * @return `ProfesionalSalud` Si el funcionario es un profesional de la salud, de otro mode retorna `null`
+     */
+    public ProfesionalSalud getProfesionalSalud(){        
+        return this.isProfSalud() ? this.profesionalSaludService.obtenerProfSaludPorFuncionarioId(this.getFuncionario().getId()).get():null;               
+    }
+    
+    /**
+     * Si es un funcionario medico, retorna su instancia
+     * @return `Medico` Si el funcionario es un medico, de otro mode retorna `null`
+     */
+    public Medico getMedic(){
+        return this.isMedic() ? this.medicoService.obtenerMedicoPorIdProfSalud(this.getProfesionalSalud().getId()).get():null;   
+    }
+    
+     /**
      * Verifica si es un funcionario administrador    
      * @return `true` si el funcionario es un administrador, en caso contrario `false`
      */
     public boolean isAdmin(){
-        return this.existSession() && this.administradorService.esFuncionarioAdministrador(this.funcionario.getId());
+        return this.existSession() && this.administradorService.esFuncionarioAdministrador(this.getFuncionario().getId());
     }
     
      /**
@@ -109,7 +112,7 @@ public class SessionUsuario{
      * @return `true` si el funcionario es un profesional de la salud, en caso contrario `false`
      */
     public boolean isProfSalud(){
-        return this.existSession() && this.profesionalSaludService.esFuncionarioProfesionalSalud(this.funcionario.getId());
+        return this.existSession() && this.profesionalSaludService.esFuncionarioProfesionalSalud(this.getFuncionario().getId());
     }
     
      /**
@@ -117,7 +120,7 @@ public class SessionUsuario{
      * @return `true` si el funcionario es medico, en caso contrario `false`
      */
     public boolean isMedic(){
-        return this.existSession() && this.isProfSalud() && this.medicoService.esProfSaludMedico(this.profSalud.getId());
+        return this.existSession() && this.isProfSalud() && this.medicoService.esProfSaludMedico(this.getProfesionalSalud().getId());
     }    
     
     /**
@@ -125,7 +128,7 @@ public class SessionUsuario{
      * @return `true` si el funcionario es medico con especialidades, en caso contrario `false`
      */
     public boolean isMedicalSpecialist(){
-       return this.isMedic() && this.medicoService.tieneEspecialidades(this.medic.getId());
+       return this.isMedic() && this.medicoService.tieneEspecialidades(this.getMedic().getId());
     }
     
     /**
@@ -134,14 +137,14 @@ public class SessionUsuario{
      */
     public boolean isNurse(){ 
         //Es enfermero en ingles (me arrepiendo de escribir en ingles XD) 
-        return  this.existSession() && this.isProfSalud() && this.enfermeroService.esProfSaludEnfermero(this.profSalud.getId());
+        return  this.existSession() && this.isProfSalud() && this.enfermeroService.esProfSaludEnfermero(this.getProfesionalSalud().getId());
     }
     // Metodos de clases
     
     // Metodos de funcionario
     /**
      * Verifica si es un funcionario trabaja en un sector
-     * * @param sectorVerificar  String
+     * @param sectorVerificar  String
      * @return `true` si el funcionario trabaja en, en caso contrario `false`
      */
     public boolean workIn(String sectorVerificar){
@@ -158,7 +161,7 @@ public class SessionUsuario{
     
      /**
      * Verifica si es un funcionario tiene un rol
-     * * @param rolVerificar  String
+     * @param rolVerificar  String
      * @return `true` si el funcionario tiene un rol en, en caso contrario `false`
      */
     public boolean hashRol(String rolVerificar){

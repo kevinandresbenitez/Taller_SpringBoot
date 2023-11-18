@@ -192,7 +192,7 @@ public class TriageController {
         triageAGuardar.setPaciente(paciente);
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
-        triageAGuardar.setProfesionalSalud(sessionUser.getProfSalud());
+        triageAGuardar.setProfesionalSalud(sessionUser.getProfesionalSalud());
         paciente.getTriages().add(triageAGuardar);
         triageService.guardarTriage(triageAGuardar);
         
