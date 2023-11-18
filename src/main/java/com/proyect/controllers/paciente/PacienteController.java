@@ -80,6 +80,7 @@ public class PacienteController {
      * @param numeroContacto numero de telofono a guardar del contacto de un paciente
      * @param fechaNacimiento fecha de nacimiento del paciente
      * @param estadoCivil estado civil del paciente
+     * @param mensaje Para enviar un mensaje flash en caso de que el paciente ya exista
      * @return vista para agregar un motivo de consulta
      */
 
@@ -93,7 +94,8 @@ public class PacienteController {
                                 @RequestParam("nombreContacto") String nombreContacto,
                                 @RequestParam("numeroContacto") Long numeroContacto,
                                 @RequestParam("fechaNacimiento") LocalDate fechaNacimiento,
-                                @RequestParam("estadoCivil") String estadoCivil) {
+                                @RequestParam("estadoCivil") String estadoCivil,
+                                RedirectAttributes mensaje) {
         // Verificacion de session
         if(!sessionUser.existSession() || !sessionUser.hashRol("Administrativo")){
             return "redirect:/";
@@ -116,6 +118,7 @@ public class PacienteController {
                 
         //Si esta creado ya, redirije a agregar ingreso
         if(VerificarPaciente.isPresent()){
+            mensaje.addFlashAttribute("mensaje","Este Paciente ya se encuentra registrado");
             return "redirect:/pacientes/ingresos/agregar/"+VerificarPaciente.get().getId();
         }
         
