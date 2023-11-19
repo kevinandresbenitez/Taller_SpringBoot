@@ -4,75 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triage del paciente</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
         }
 
-        .container {
+        
+        .container__triages {
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            margin:auto;
         }
 
-        table {
+        .container__triages table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 18px;
         }
 
-        th, td {
+        .container__triages th,.container__triages td {
             border: 1px solid #3498db;
             padding: 10px;
             text-align: left;
         }
 
-        th {
+        .container__triages th {
             background-color: #3498db;
             color: #ffffff;
         }
 
-        .triage {
+        .container__triages .triage {
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Triage del paciente</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Color de triage</th>
-            <th>Fecha de realizacion</th>
-            <th>Hora de realizacion</th>
-        </tr>
-        <tr th:each="triage : ${triages}">
-            <td th:style="'background-color:' + ${triage.getId()}">
-                <span class="triage" th:text="${triage.getId()}"></span>
-            </td>
-            <td th:style="'background-color:' + ${triage.getColor()}">
-                <span class="triage" th:text="${triage.getColor()}"></span>
-            </td>
-            <td th:style="'background-color:' + ${triage.getColor()}">
-                <span class="triage" th:text="${triage.getFechaEvaluacion()}"></span>
-            </td>
-            <td th:style="'background-color:' + ${triage.getColor()}">
-                <span class="triage" th:text="${triage.getHoraEvaluacion()}"></span>
-            </td>
-        </tr>
-    </table>
-</div>
+
+    <div th:insert="~{components/navbar :: navbar}"></div>
+
+    <div class="container__triages">
+        <h1>Triages del paciente</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Color de triage</th>
+                <th>Fecha de realizacion</th>
+                <th>Hora de realizacion</th>
+                <th>Realizado por</th>
+            </tr>
+            <tr th:each="triage : ${triages}">
+                <td th:style="'background-color:' + ${triage.getId()}">
+                    <span class="triage" th:text="${triage.getId()}"></span>
+                </td>
+                <td th:style="'background-color:' + ${triage.getColor()}">
+                    <span class="triage" th:text="${triage.getColor()}"></span>
+                </td>
+                <td th:style="'background-color:' + ${triage.getColor()}">
+                    <span class="triage" th:text="${triage.getFechaEvaluacion()}"></span>
+                </td>
+                <td th:style="'background-color:' + ${triage.getColor()}">
+                    <span class="triage" th:text="${triage.getHoraEvaluacion()}"></span>
+                </td>
+                <td th:style="'background-color:' + ${triage.getColor()}">
+                    <span class="triage" th:text="${triage.getProfesionalSalud().getFuncionario().getNombre()}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
 </body>
 </html>
