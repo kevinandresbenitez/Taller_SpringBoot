@@ -15,6 +15,8 @@ import com.proyect.services.PacienteService;
 import com.proyect.services.ResultadoEstudioService;
 import com.proyect.session.SessionUsuario;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,13 +51,13 @@ public class ResultadoEstudioController {
             return "redirect:/";
         }
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
         
-        if(paciente == null) {
+        if(paciente.isEmpty()) {
             return "redirect:/pacientes/";
         }
         
-        model.addAttribute("resultadosEstudios", paciente.getResultadosEstudios());
+        model.addAttribute("resultadosEstudios", paciente.get().getResultadosEstudios());
         return "pacientes/resultadosEstudios/index";
     }
     

@@ -81,12 +81,12 @@ public class TriageController {
             return "redirect:/";
         }
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
-        if(paciente == null){
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
+        if(paciente.isEmpty()){
             return "redirect:/pacientes/";
         }
         
-        model.addAttribute("triages",paciente.getTriages());
+        model.addAttribute("triages",paciente.get().getTriages());
         return "pacientes/triages/index";
     }
     
@@ -106,13 +106,13 @@ public class TriageController {
             return "redirect:/";
         }
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
         
-        if(paciente == null){
+        if(paciente.isEmpty()){
             return "redirect:/pacientes/";
         }
         
-        model.addAttribute("paciente",paciente);
+        model.addAttribute("paciente",paciente.get());
         return "pacientes/triages/crear";
     }
     
@@ -161,9 +161,9 @@ public class TriageController {
         // Calculando triage
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
         
-        if(paciente == null){
+        if(paciente.isEmpty()){
             return "redirect:/pacientes/";
         }
         
@@ -181,7 +181,7 @@ public class TriageController {
         triage.setSignosShock(signosShock);
         triage.setLesionesLeves(lesionesLeves);
         triage.setSangrado(sangrado);
-        triage.setEdad(ChronoUnit.YEARS.between(paciente.getFechaNacimiento(),fechahoy));
+        triage.setEdad(ChronoUnit.YEARS.between(paciente.get().getFechaNacimiento(),fechahoy));
         // Obteniendo punuacion y respectivo color, tiempo de espera ...
         TriageObject triageResultante = triage.segunPuntuacionObtenerTriageObject(triage.obtenerPuntuacion());
         
@@ -189,11 +189,11 @@ public class TriageController {
         // Creando el triage
         Triage triageAGuardar = new Triage();
         triageAGuardar.setColor(triageResultante.getColor());
-        triageAGuardar.setPaciente(paciente);
+        triageAGuardar.setPaciente(paciente.get());
         triageAGuardar.setFechaEvaluacion(fechahoy);
         triageAGuardar.setHoraEvaluacion(tiempohoy);
         triageAGuardar.setProfesionalSalud(sessionUser.getProfesionalSalud());
-        paciente.getTriages().add(triageAGuardar);
+        paciente.get().getTriages().add(triageAGuardar);
         triageService.guardarTriage(triageAGuardar);
         
 

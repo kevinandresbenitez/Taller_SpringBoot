@@ -67,12 +67,12 @@ public class ConsultaController {
             return "redirect:/";
         }        
 
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
 
-        if(paciente == null){
+        if(paciente.isEmpty()){
             return "redirect:/pacientes/";
         }
-        model.addAttribute("paciente",paciente);
+        model.addAttribute("paciente",paciente.get());
         return "/pacientes/consultas/crear";
     }
 
@@ -96,7 +96,7 @@ public class ConsultaController {
             return "redirect:/";
         }        
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
         
         Consulta consulta = new Consulta();
         LocalDate fechahoy = LocalDate.now();
@@ -109,13 +109,13 @@ public class ConsultaController {
         consulta.setTipoAtencion(tipoAtencion);
         consulta.setDiagnostico(diagnostico);
         consulta.setDiagnosticosClinicos(diagnosticosClinicos);
-        consulta.setPaciente(paciente);
-        consulta.setIngreso(paciente.getIngresos().get(paciente.getIngresos().size()-1));
-        consulta.setTriage(paciente.getTriages().get(paciente.getTriages().size()-1));
+        consulta.setPaciente(paciente.get());
+        consulta.setIngreso(paciente.get().getIngresos().get(paciente.get().getIngresos().size()-1));
+        consulta.setTriage(paciente.get().getTriages().get(paciente.get().getTriages().size()-1));
         consultaService.guardarConsulta(consulta);
         
         //Vaciando el box en el que estaba el paciente  atendiendose
-        Box box = boxService.findByPacienteId(paciente.getId());
+        Box box = boxService.findByPacienteId(paciente.get().getId());
         box.setPaciente(null);
         boxService.guardarBox(box);
         

@@ -157,8 +157,8 @@ public class EstadisticaController {
                     ,"No es posible usar una fecha mayor de inicio que la fecha fin");
             return "redirect:/estadisticas/";
         };
-        Paciente pacienteMasConsultado = pacienteService.pacienteMasConsultado(fechaInicio, fechaFin);
-        model.addAttribute("pacienteMasConsultado", pacienteMasConsultado);
+        Optional<Paciente> pacienteMasConsultado = pacienteService.pacienteMasConsultado(fechaInicio, fechaFin);
+        model.addAttribute("pacienteMasConsultado", pacienteMasConsultado.get());
         cargarDatosMedicos(model);
         return "gestores/estadisticas";
     }
