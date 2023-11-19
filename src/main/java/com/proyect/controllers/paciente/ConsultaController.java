@@ -69,7 +69,7 @@ public class ConsultaController {
 
         Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
 
-        if(paciente == null){
+        if(paciente.isEmpty()){
             return "redirect:/pacientes/";
         }
         model.addAttribute("paciente",paciente.get());
