@@ -88,8 +88,8 @@ public class IngresoController {
             return "redirect:/";
         }
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
-        model.addAttribute("paciente",paciente);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
+        model.addAttribute("paciente",paciente.get());
         return "pacientes/ingresos/agregar";
     }
 
@@ -116,17 +116,17 @@ public class IngresoController {
             return "redirect:/";
         }
         
-        Paciente paciente = pacienteService.obtenerPacienteById(id);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id);
         Ingreso ingreso = new Ingreso();
         LocalDate fechahoy = LocalDate.now();
         LocalTime tiempohoy = LocalTime.now().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         ingreso.setFechaRegistro(fechahoy);
         ingreso.setHoraRegistro(tiempohoy);
-        ingreso.setPaciente(paciente);
+        ingreso.setPaciente(paciente.get());
         ingreso.setMotivo(motivoConsulta);
-        paciente.getIngresos().add(ingreso);
+        paciente.get().getIngresos().add(ingreso);
         ingresoService.guardarIngreso(ingreso);
-        pacienteService.guardarPaciente(paciente);
+        pacienteService.guardarPaciente(paciente.get());
         atribut.addFlashAttribute("mensaje","Paciente agregado correctamente");
         return "redirect:/";
     }

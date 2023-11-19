@@ -195,7 +195,7 @@ public class AtencionController {
         }
         
         Optional<Box> box = boxService.obtenerBoxPorId(id_box);
-        Paciente paciente = pacienteService.obtenerPacienteById(id_paciente);
+        Optional<Paciente> paciente = pacienteService.obtenerPacienteById(id_paciente);
         
         
         //Si el box no existe o si no hay nadie trabajando en el 
@@ -216,7 +216,7 @@ public class AtencionController {
         }
         
         // Asignamos el paciente al box
-        box.get().setPaciente(paciente);
+        box.get().setPaciente(paciente.get());
         boxService.guardarBox(box.get());
         atributos.addFlashAttribute("mensaje","Se agrego el paciente correctamente");
         return "redirect:/pacientes/atenciones/";

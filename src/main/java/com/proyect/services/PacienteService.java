@@ -64,14 +64,8 @@ public class PacienteService {
      * @param id identificador unico del paciente
      * @return objeto Paciente si se encuentra, o `null` si no se encuentra
      */
-    public Paciente obtenerPacienteById(Long id){
-        Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
-
-        if (pacienteOptional.isPresent()) {
-            return pacienteOptional.get();
-        } else {
-            return null;
-        }
+    public Optional<Paciente> obtenerPacienteById(Long id){
+        return pacienteRepository.findById(id);
     }
     /**
      * obtiene una lista de pacientes que necesitan ser triagados
@@ -122,11 +116,11 @@ public class PacienteService {
      * @return objeto Paciente más consultado
      */
 
-    public Paciente pacienteMasConsultado(LocalDate fechaInicio, LocalDate fechaFin) {
+    public Optional<Paciente> pacienteMasConsultado(LocalDate fechaInicio, LocalDate fechaFin) {
 
         List<Paciente> pacientesOrdenadosPorCantConsultas = pacienteRepository.findByConsultasFechaAtencionBetweenOrderByConsultasDesc(fechaInicio, fechaFin);
 
-        return pacientesOrdenadosPorCantConsultas.get(pacientesOrdenadosPorCantConsultas.size()-1);
+        return Optional.ofNullable(pacientesOrdenadosPorCantConsultas.get(pacientesOrdenadosPorCantConsultas.size() - 1));
     }
     /**
      * verifica si un paciente está en espera
