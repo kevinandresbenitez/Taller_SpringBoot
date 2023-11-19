@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.proyect.models.Medico;
+import com.proyect.models.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConsultaRepository extends JpaRepository<Consulta,Long> {

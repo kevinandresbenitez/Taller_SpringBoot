@@ -61,4 +61,6 @@ public class ConsultaService {
 
         return pacientesAtendidos.size();
     }
+
+
 }
