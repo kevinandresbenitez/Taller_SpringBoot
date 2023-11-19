@@ -124,20 +124,9 @@ public class PacienteService {
 
     public Paciente pacienteMasConsultado(LocalDate fechaInicio, LocalDate fechaFin) {
 
-        // Obtener las consultas realizadas en el rango de fechas
-        List<Consulta> consultas = consultaRepository.findByFechaAtencionBetween(fechaInicio, fechaFin);
+        List<Paciente> pacientesOrdenadosPorCantConsultas = pacienteRepository.findByConsultasFechaAtencionBetweenOrderByConsultasDesc(fechaInicio, fechaFin);
 
-        Map<Paciente, Long> conteoPacientes = consultas.stream()
-                //Esto crea un mapa donde la clave es el paciente y el valor es el recuento de consultas para ese paciente.
-                .collect(Collectors.groupingBy(Consulta::getPaciente, Collectors.counting()));
-
-        Paciente pacienteMasConsultado = conteoPacientes.entrySet().stream()
-                //Busca el mayor
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
-        return pacienteMasConsultado;
+        return pacientesOrdenadosPorCantConsultas.get(pacientesOrdenadosPorCantConsultas.size()-1);
     }
     /**
      * verifica si un paciente está en espera
