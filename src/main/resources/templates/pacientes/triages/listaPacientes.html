@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <style>
+<head>   
+    <title>Lista de pacientes en espera</title>
+        <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
         }
 
-        a.button {
+        .container a.button {
             background-color: #007bff;
             color: #fff;
             padding: 8px 16px;
@@ -22,40 +28,40 @@
             transition: background-color 0.3s ease;
         }
 
-        a.button:hover {
+        .container a.button:hover {
             background-color: #0056b3;
         }
 
-        table {
+        .container table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        th, td {
+        .containerth,.container td {
             border: 1px solid #dee2e6;
             padding: 8px;
             text-align: left;
         }
 
-        th {
+        .container th {
             background-color: #007bff;
             color: #fff;
         }
 
-        tr:nth-child(even) {
+        .containertr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
-        div {
+        .container div {
             margin-top: 20px;
         }
     </style>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <div th:insert="~{components/navbar :: navbar}"></div>
+    
+    <div class="container">
 <div>
     <a class="button" href="/">Volver</a>
 </div>
@@ -69,6 +75,7 @@
         <th>MOTIVO DE CONSULTA</th>
         <th>FECHA CONSULTA</th>
         <th>HORA CONSULTA</th>
+        <th>ACCIONES</th>
     </tr>
     </thead>
     <tbody>
@@ -86,5 +93,6 @@
     </tr>
     </tbody>
 </table>
+        </div>
 </body>
 </html>
