@@ -4,23 +4,28 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
-  <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fuentes.css}"/>
   <title>Formulario de registro de paciente</title>
 
   <style>
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .container{
             display: flex;
+            background-color: #f8f9fa;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: calc(100vh - 80px); 
         }
-
-        form {
+        
+        .container form {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -30,24 +35,24 @@
             text-align: left;
         }
 
-        h2 {
+        .container h2 {
             color: #007bff;
             text-align: center;
         }
 
-        label {
+        .container label {
             display: block;
             margin-top: 10px;
         }
 
-        input {
+        .container input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
 
-        button {
+        .container button {
             background-color: #007bff;
             color: #fff;
             padding: 10px;
@@ -60,15 +65,20 @@
 
 </head>
 <body>
-<div th:insert="~{components/mensaje :: mensaje}"></div>
-<form th:action="@{/pacientes/ingresos/agregar/{id}(id=${paciente.id})}" method="post">
-  <h2>Agregar motivo de consulta</h2>
+    <div th:insert="~{components/navbar :: navbar}"></div>
+    <div th:insert="~{components/mensaje :: mensaje}"></div>
+    <div class="container">
+        <form th:action="@{/pacientes/ingresos/agregar/{id}(id=${paciente.id})}" method="post">
+          <h2>Agregar motivo de consulta</h2>
 
-  <label for="motivoConsulta">Motivo de consulta:</label>
-  <input type="text" id="motivoConsulta" name="motivoConsulta" required>
+          <label for="motivoConsulta">Motivo de consulta:</label>
+          <input type="text" id="motivoConsulta" name="motivoConsulta" required>
 
 
-  <button type="submit">Asignar motivo</button>
-</form>
+          <button type="submit">Asignar motivo</button>
+        </form>
+    </div>
+    
+    <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>

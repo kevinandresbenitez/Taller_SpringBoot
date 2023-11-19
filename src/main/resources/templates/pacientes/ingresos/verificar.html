@@ -4,26 +4,29 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
     <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
     <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fuentes.css}"/>
 
     
   <title>Formulario de registro de paciente</title>
 
   <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Roboto', sans-serif;
         }
 
-        form {
+        .container{
+            display: flex;
+            background-color: #f8f9fa;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px); 
+        }
+        
+        .container form {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -33,24 +36,24 @@
             text-align: left;
         }
 
-        h2 {
+        .container h2 {
             color: #007bff;
             text-align: center;
         }
 
-        label {
+        .container label {
             display: block;
             margin-top: 10px;
         }
 
-        input {
+        .container input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
 
-        button {
+        .container button {
             background-color: #007bff;
             color: #fff;
             padding: 10px;
@@ -63,24 +66,29 @@
 
 </head>
 <body>
+    <div th:insert="~{components/navbar :: navbar}"></div>
     <div th:insert="~{components/mensaje :: mensaje}"></div>
 
-    <form action="/pacientes/ingresos/verificarExistencia" onsubmit="return verificarForm(this)" method="post">
-        <h2>Verificar existencia del paciente</h2>
-      <input type="text" id="dni" name="dni" class="form-control" minlength="8" maxlength="8" placeholder="Ej : 53457456" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required />
-      <button type="submit">Verificar</button>
-    </form>
+    <div class="container">
+        <form action="/pacientes/ingresos/verificarExistencia" onsubmit="return verificarForm(this)" method="post">
+            <h2>Verificar existencia del paciente</h2>
+          <input type="text" id="dni" name="dni" class="form-control" minlength="8" maxlength="8" placeholder="Ej : 53457456" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required />
+          <button type="submit">Verificar</button>
+        </form>
+    </div>
+
   
-<script>
-        function verificarForm(formulario){
-          // Verificando el dni
-          if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
-            alert("Dni incorrecto")
-            return false;    
-          }
-          return true
-        }
+    <script>
+            function verificarForm(formulario){
+              // Verificando el dni
+              if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
+                alert("Dni incorrecto")
+                return false;    
+              }
+              return true
+            }
     </script>
+    <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>
 

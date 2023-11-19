@@ -14,13 +14,19 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
         }
 
-        .container {
+        .container{
+            display: flex;
+            background-color: #f8f9fa;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px); 
+        }
+
+        .container__user {
             max-width: 800px;
+            min-width: 600px;
             margin: auto; /* Agregado para centrar horizontalmente */
             padding: 20px;
             background-color: #ffffff;
@@ -28,19 +34,19 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
+        .container__user h2 {
             color: #007bff;
             text-align: center;
             margin-top: 0;
             padding-top: 20px;
         }
 
-        .button-container {
+        .container__user  .button-container {
             text-align: center; /* Modificado para centrar horizontalmente */
             padding: 20px;
         }
 
-        .button-container a {
+        .container__user  .button-container a {
             background-color: #007bff;
             color: #fff;
             padding: 12px 24px;
@@ -50,36 +56,36 @@
             margin-right: 10px; /* Añadido espacio entre botones */
         }
 
-        .button-container a:last-child {
+        .container__user  .button-container a:last-child {
             margin-right: 0; /* Elimina el espacio derecho en el último botón */
         }
 
-        .button-container a:hover {
+        .container__user  .button-container a:hover {
             background-color: #0056b3;
         }
 
-        .search-container {
+        .container__user  .search-container {
             text-align: center;
             margin-top: 20px;
         }
 
-        .search-container label {
+        .container__user  .search-container label {
             color: #007bff;
             font-size: 20px;
         }
 
-        .search-container form {
+        .container__user  .search-container form {
             display: flex;
             flex-direction: column; /* Cambiado para alinear elementos verticalmente */
             align-items: center; /* Cambiado para centrar elementos horizontalmente */
         }
 
-        .search-container input {
+        .container__user  .search-container input {
             font-size: 16px;
             padding: 8px;
         }
 
-        .search-container button {
+        .container__user  .search-container button {
             background-color: #007bff;
             color: #fff;
             padding: 10px 20px;
@@ -89,25 +95,25 @@
             margin-top: 10px; /* Añadido espacio arriba */
         }
 
-        table {
+        .container__user  table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        th, td {
+        .container__user  th, td {
             border: 1px solid #dee2e6;
             padding: 8px;
             text-align: left;
             background-color: #f2f2f2;
         }
 
-        th {
+        .container__user  th {
             background-color: #007bff;
             color: #fff;
         }
 
-        .boton-estilo {
+        .container__user  .boton-estilo {
             display: inline-block;
             padding: 10px 20px;
             background-color: #007bff;
@@ -118,7 +124,7 @@
             justify-content: space-around
         }
 
-        .boton-estilo:hover {
+        .container__user  .boton-estilo:hover {
             background-color: #2980b9;
         }
         </style>
@@ -126,7 +132,10 @@
 <body>
 <div th:insert="~{components/navbar :: navbar}"></div>
 <div th:insert="~{components/mensaje :: mensaje}"></div>
-<div class="container mt-5">
+
+<div class="container">
+
+<div class="container__user mt-5">
     <h2 class="mb-4">Detalles del Paciente</h2>
 
     <div class="button-container">
@@ -187,6 +196,7 @@
         </td>
     </tr>
 </div>
+</div>    
 <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>

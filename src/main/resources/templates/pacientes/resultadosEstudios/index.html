@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de Estudios del Paciente</title>
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/fuentes.css}"/>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
         }
 
         .container {
@@ -23,35 +25,38 @@
             max-width: 800px;
         }
 
-        h1 {
+        .container  h1 {
             color: #3498db;
         }
 
-        .resultados {
+        .container  .resultados {
             font-size: 18px;
             color: #333;
             margin: 10px;
         }
 
-        table {
+        .container table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        th, td {
+        .container  th,.container  td {
             border: 1px solid #3498db;
             padding: 10px;
             text-align: left;
         }
 
-        th {
+        .container th {
             background-color: #3498db;
             color: #ffffff;
         }
     </style>
 </head>
 <body>
+    
+<div th:insert="~{components/navbar :: navbar}"></div>
+
 <div class="container">
     <h1>Resultados de Estudios del Paciente</h1>
     <table>

@@ -5,23 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de registro de paciente</title>
-
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" th:href="@{/css/normalice.css}"/>
+    <link rel="stylesheet" th:href="@{/Font-Awesome/all.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/mensaje.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fuentes.css}"/>
 
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
         }
 
-        form {
+        .container{
+            display: flex;
+            background-color: #f8f9fa;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+        }
+
+        .container form {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -29,26 +32,27 @@
             max-width: 400px;
             width: 100%;
             text-align: left;
+            margin: 20px 0px;
         }
 
-        h2 {
+        .container h2 {
             color: #007bff;
             text-align: center;
         }
 
-        label {
+        .container label {
             display: block;
             margin-top: 10px;
         }
 
-        input {
+        .container input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
 
-        button {
+        .container button {
             background-color: #007bff;
             color: #fff;
             padding: 10px;
@@ -61,41 +65,47 @@
 
 </head>
 <body>
-<form th:action="@{/pacientes/crear}" method="post"  onsubmit="return validarFormulario()">
-    <h2>Registro de paciente</h2>
+    <div th:insert="~{components/navbar :: navbar}"></div>
+    <div th:insert="~{components/mensaje :: mensaje}"></div>
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" minlength="5" placeholder="Ingrese Nombre" required oninput="validarYLimpiarCampoNombre(this)">
+    <div class="container">
+    <form th:action="@{/pacientes/crear}" method="post"  onsubmit="return validarFormulario()">
+        <h2>Registro de paciente</h2>
 
-    <label for="dni">DNI:</label>
-    <input type="text" id="dni" th:value="${dni}" min="30000000" max="60000000" minlength="8" maxlength="8" placeholder="Ingrese DNI"  name="dni"required />
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" minlength="5" placeholder="Ingrese Nombre" required oninput="validarYLimpiarCampoNombre(this)">
 
-    <label for="domicilio">Domicilio:</label>
-   <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese Domicilio" minlength="10" required oninput="validarYLimpiarCampoDomicilio(this)">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" th:value="${dni}" min="30000000" max="60000000" minlength="8" maxlength="8" placeholder="Ingrese DNI"  name="dni"required />
 
-    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-    <input type="Date" id="fechaNacimiento" name="fechaNacimiento" min="1900-01-01" required>
+        <label for="domicilio">Domicilio:</label>
+       <input type="text" id="domicilio" name="domicilio" placeholder="Ingrese Domicilio" minlength="10" required oninput="validarYLimpiarCampoDomicilio(this)">
 
-    <label for="estadoCivil">Estado Civil:</label>
-    <input type="text" id="estadoCivil" name="estadoCivil" minlength="4"  placeholder="Ingrese Estado Civil" required oninput="validarYLimpiarCampoNombre(this)">
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="Date" id="fechaNacimiento" name="fechaNacimiento" min="1900-01-01" required>
 
-    <label for="telefonoFijo">Teléfono Fijo:</label>
-    <input type="text" id="telefonoFijo" name="telefonoFijo" placeholder="Ej : 4212121" minlength="7" maxlength="7"  required oninput="validarYLimpiarTelefono(this)">
+        <label for="estadoCivil">Estado Civil:</label>
+        <input type="text" id="estadoCivil" name="estadoCivil" minlength="4"  placeholder="Ingrese Estado Civil" required oninput="validarYLimpiarCampoNombre(this)">
 
-    <label for="telefonoCelular">Teléfono Celular:</label>
-    <input type="text" id="telefonoCelular" name="telefonoCelular" placeholder="EJ: 3456110645"  minlength="10" maxlength="10" required oninput="validarYLimpiarTelefono(this)">
+        <label for="telefonoFijo">Teléfono Fijo:</label>
+        <input type="text" id="telefonoFijo" name="telefonoFijo" placeholder="Ej : 4212121" minlength="7" maxlength="7"  required oninput="validarYLimpiarTelefono(this)">
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"  minlength="15" placeholder="Ej : correoFalso@gmail.com"  required oninput="validarYLimpiarEmail(this)">
+        <label for="telefonoCelular">Teléfono Celular:</label>
+        <input type="text" id="telefonoCelular" name="telefonoCelular" placeholder="EJ: 3456110645"  minlength="10" maxlength="10" required oninput="validarYLimpiarTelefono(this)">
 
-    <label for="nombreContacto">Nombre Contacto:</label>
-    <input type="text" id="nombreContacto" name="nombreContacto" minlength="5" placeholder="Ingrese Nombre" required oninput="validarYLimpiarCampoNombre(this)">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"  minlength="15" placeholder="Ej : correoFalso@gmail.com"  required oninput="validarYLimpiarEmail(this)">
 
-    <label for="numeroContacto">Teléfono Celular del Contacto:</label>
-    <input type="text" id="numeroContacto" name="numeroContacto" placeholder="EJ: 3456110645"  minlength="10" maxlength="10" required oninput="validarYLimpiarTelefono(this)">
+        <label for="nombreContacto">Nombre Contacto:</label>
+        <input type="text" id="nombreContacto" name="nombreContacto" minlength="5" placeholder="Ingrese Nombre" required oninput="validarYLimpiarCampoNombre(this)">
 
-    <button type="submit">Crear Paciente</button>
-</form>
+        <label for="numeroContacto">Teléfono Celular del Contacto:</label>
+        <input type="text" id="numeroContacto" name="numeroContacto" placeholder="EJ: 3456110645"  minlength="10" maxlength="10" required oninput="validarYLimpiarTelefono(this)">
+
+        <button type="submit">Crear Paciente</button>
+    </form>
+     
+    </div>
 <script>
     document.getElementById('fechaNacimiento').max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
    
@@ -161,6 +171,6 @@ function validarYLimpiarTelefono(input) {
 
 
 </script>
-
+    <script type="text/javascript" th:src="@{/js/components/navbar.js}"></script>
 </body>
 </html>
