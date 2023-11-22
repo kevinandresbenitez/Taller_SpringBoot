@@ -17,13 +17,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @Configuration
-public class ConfiguracionPreCargaTh implements WebMvcConfigurer {
+public class Configuraciones implements WebMvcConfigurer {
    
     @Autowired
     private PreCargaSession preCargaSession;
-   
+     /**
+     *
+     * @param registro Se utiliza el registro de interceptores de spring boot, para poder agregar nuevos interceptores,
+     * estos se utilizan para ejecutar codigo pre y post procesamiento de solicitudes en los controladores
+     */
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(preCargaSession);
+    public void addInterceptors(InterceptorRegistry registro) {
+        registro.addInterceptor(preCargaSession);
     }
 }
