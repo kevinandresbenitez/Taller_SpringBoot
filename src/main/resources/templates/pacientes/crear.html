@@ -129,13 +129,13 @@
     
     
         // Verificando el dni
-    if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
-      alert("Dni incorrecto, Tiene que estar entre 30000 y 60000")
+    if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 1 || parseInt(formulario.dni.value) > 60000000){
+      alert("Dni incorrecto, Tiene que ser mayor a 0 y menor a 60000000");
       return false;    
     }
     // Verificando email
     if(formulario.email.value.split("@")[1] != "gmail.com"){
-      alert("correo electronico mal")
+      alert("correo electronico mal");
       return false;
     }
           
