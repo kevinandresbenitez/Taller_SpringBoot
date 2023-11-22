@@ -81,7 +81,7 @@
     <tbody>
     <!-- Se listan los pacientes -->
     <tr th:each="paciente : ${pacientes}">
-        <td th:text="${paciente.getDni()}"></td>
+        <td th:text="${paciente.getId()}"></td>
         <td th:text="${paciente.getNombre()}"></td>
         <td th:text="${paciente.getDni()}"></td>
         <td th:text="${paciente.getIngresos().get(paciente.getIngresos().size()-1).getMotivo()}"></td>
