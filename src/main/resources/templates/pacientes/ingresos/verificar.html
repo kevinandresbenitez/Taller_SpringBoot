@@ -81,8 +81,8 @@
     <script>
             function verificarForm(formulario){
               // Verificando el dni
-              if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 30000000 || parseInt(formulario.dni.value) > 60000000){
-                alert("Dni incorrecto")
+              if(!(formulario.dni.value.split("").length == 8) || parseInt(formulario.dni.value) < 1 || parseInt(formulario.dni.value) > 60000000){
+                alert("Dni incorrecto, Tiene que ser mayor a 0 y menor a 60000000")
                 return false;    
               }
               return true
